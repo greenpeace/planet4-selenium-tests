@@ -1,13 +1,16 @@
 <?php
+
 class P3_LU_Test extends PHPUnit_Framework_TestCase {
 
     /**
      * @var \RemoteWebDriver
      */
-    protected $webDriver;
+
+  protected $webDriver;
 
 	public function setUp()
     {
+        $configs = include('./config/config.php');
         $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
         $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
     }
@@ -40,7 +43,7 @@ class P3_LU_Test extends PHPUnit_Framework_TestCase {
         );
 
         $this->assertContains(
-            'Login', 
+            'Login',
             $this->webDriver->getTitle()
         );
 
@@ -57,12 +60,12 @@ class P3_LU_Test extends PHPUnit_Framework_TestCase {
         //Click on log in
         $login = $this->webDriver->findElement(WebDriverBy::id('ctl00_cphContentArea_ucLogin_btnLogin'));
         $login->click();
-        
+
         //$driver->wait(10, 1000)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('ctl00_hlLoggedIn')));
         //$this->assertElementContainsText($this->findById('ctl00_hlLoggedIn'),'Welcome back');
         $this->assertContains('Work for Greenpeace International', $this->webDriver->getTitle());
-    } 
-    
+    }
+
     protected function assertElementNotFound($by)
     {
         $els = $this->webDriver->findElements($by);
@@ -71,7 +74,7 @@ class P3_LU_Test extends PHPUnit_Framework_TestCase {
         }
         // increment assertion counter
         $this->assertTrue(true);
-        
+
     }
 
     public function tearDown()
