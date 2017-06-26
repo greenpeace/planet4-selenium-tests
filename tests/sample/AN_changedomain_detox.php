@@ -8,8 +8,8 @@ class P3_AN_Test_Detox extends PHPUnit_Framework_TestCase {
 
 	public function setUp()
     {
-        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => 'firefox');
-        $this->webDriver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
+        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
+        $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
     }
 
     protected $url = 'http://detox-outdoor.org/';
