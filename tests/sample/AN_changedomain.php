@@ -6,7 +6,7 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
      * @var \RemoteWebDriver
      */
 
-    protected $webDriver;
+  protected $webDriver;
 
 	public function setUp()
     {
@@ -15,14 +15,6 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
         $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
         $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
     }
-
-    /*public function testHomepage()
-    {
-        $this->webDriver->get($this->url);
-        // checking that page title contains word 'GitHub'
-        $this->assertContains('Detox', $this->webDriver->getTitle());
-    } */
-
 
     /**
      * @group gpi
@@ -45,8 +37,8 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
 
          $this->assertEquals('http://www.greenpeace.org/belgium/nl/', $this->webDriver->getCurrentURL());
 
-    } 
-    
+    }
+
     protected function assertElementNotFound($by)
     {
         $els = $this->webDriver->findElements($by);
@@ -55,7 +47,6 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
         }
         // increment assertion counter
         $this->assertTrue(true);
-        
     }
 
     public function tearDown()
