@@ -8,8 +8,8 @@ class P3_LU_Test extends PHPUnit_Framework_TestCase {
 
 	public function setUp()
     {
-        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => 'firefox');
-        $this->webDriver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
+        $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
+        $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
     }
 
     //Start from login page
