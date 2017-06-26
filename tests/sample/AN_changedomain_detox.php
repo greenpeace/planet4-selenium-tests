@@ -1,26 +1,21 @@
 <?php
+
 class P3_AN_Test_Detox extends PHPUnit_Framework_TestCase {
 
     /**
      * @var \RemoteWebDriver
      */
-    protected $webDriver;
+
+  protected $webDriver;
 
 	public function setUp()
     {
+        $configs = include('./config/config.php');
         $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
         $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
     }
 
     protected $url = 'http://detox-outdoor.org/';
-
-    /*public function testHomepage()
-    {
-        $this->webDriver->get($this->url);
-        // checking that page title contains word 'GitHub'
-        $this->assertContains('Detox', $this->webDriver->getTitle());
-    } */
-
 
     public function testchangeDomain()
     {
@@ -31,7 +26,7 @@ class P3_AN_Test_Detox extends PHPUnit_Framework_TestCase {
 
         // typing into field
         //$this->webDriver->getKeyboard()->sendKeys('save the arctic');
-        
+
         // pressing "Enter"
         //$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
 
@@ -43,12 +38,12 @@ class P3_AN_Test_Detox extends PHPUnit_Framework_TestCase {
         $domains->click();
 
          $this->assertEquals(
-            'http://detox-outdoor.org/it-IT', 
+            'http://detox-outdoor.org/it-IT',
             $this->webDriver->getCurrentURL()
         );
 
-    } 
-    
+    }
+
     protected function assertElementNotFound($by)
     {
         $els = $this->webDriver->findElements($by);
@@ -57,7 +52,6 @@ class P3_AN_Test_Detox extends PHPUnit_Framework_TestCase {
         }
         // increment assertion counter
         $this->assertTrue(true);
-        
     }
 
     public function tearDown()
