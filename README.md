@@ -60,9 +60,9 @@ Step by step build
 
         vendor/bin/phpunit tests/sample/AN_changedomain.php;
 
-* A bash script has been created to run all tests and can be run as follows (currently only runs 1 test)
+* A bash script has been created to run all tests and can be run as follows:
 
-        $ ./run_sampletest.sh
+        $ ./run_all_sample.sh
 
 
 About Facebook php-webdriver

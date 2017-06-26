@@ -1,0 +1,27 @@
+# Greenpeace.org Testsuitei
+
+This sections contains the testsuite to test all greenpeace.org sites. The folder GP-All contains the tests that apply to the vanilla GP site (GPI) and additional folders should be created to include tests that apply only to a specific NRO. 
+
+i.e. GP-NL folder should be created to include tests that apply only to Greenpeace Netherlands site. 
+
+Tests use tags to indicate their NRO, capability and feature they apply to. This makes possible to execute different tests that meet a specific scope by using group unions and exclusions.
+ 
+### How to run test groups
+To add a test to a specifc group just add a comment before the test function including a @ tag and the group name like this:
+  
+    /**
+     * @group gpi
+     */ 
+
+To execute only tests that correspond to a specific group then add "--group" followed by the group name at the end of the command to execute the tests. The command to run the tests of a specific group called gpi will look like this:
+
+	vendor/bin/phpunit -c tests/ --group gpi;
+
+To exclude a group of tests to be run in the tests execution then add a "--exclude-group" followed by the group name at the end of the command. The command to run the tests excluding a specific group called gpi will look like this:
+	
+	vendor/bin/phpunit -c tests/ --exclude-group gpi;
+
+
+
+### Tests coding standars
+Coming soon...

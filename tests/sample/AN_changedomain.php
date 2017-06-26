@@ -5,7 +5,7 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
     /**
      * @var \RemoteWebDriver
      */
-    
+
     protected $webDriver;
 
 	public function setUp()
@@ -23,6 +23,10 @@ class P3_AN_Test extends PHPUnit_Framework_TestCase {
         $this->assertContains('Detox', $this->webDriver->getTitle());
     } */
 
+
+    /**
+     * @group gpi
+     */
 
     public function testchangeDomain()
     {
