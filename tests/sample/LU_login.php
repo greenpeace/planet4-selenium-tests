@@ -79,7 +79,7 @@ class P3_LU_Test extends PHPUnit_Framework_TestCase {
 
   public function tearDown()
   {
-    $this->webDriver->close();
+    $this->webDriver->quit();
   }
 
 }
