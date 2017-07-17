@@ -2,3 +2,7 @@
 *.jar
 *.phar
 *.swp
+
+vendor
+
+.idea

@@ -46,7 +46,7 @@ Step by step build
 
 *   You can download PHPunit using your local package manager (apt-get, yum, brew, etc), for example
 
-        apt-get phpunit
+        apt-get install phpunit
 
 *   If you don't want to use your local package manager you can download the composer.phar
 
@@ -66,7 +66,7 @@ Step by step build
 
 ## Geckodriver dependency
 
-For Mac operating system, the simplest way to install it is using brew.
+For Firefox testing on Mac operating system, the simplest way to install it is using brew.
 
         brew install geckodriver
 
@@ -77,6 +77,20 @@ By giving absolute path of the geckodriver which can be dowloaded [here](https:/
         java -Dwebdriver.gecko.driver=C:/geckodriver/geckodriver.exe -jar selenium-server-standalone-x.x.x.jar
 
 Make sure to give the absolute path for webdriver.gecko.driver={PATH} in the above command. Also there is no space for -Dwebdriver
+
+## Chromedriver dependency
+
+For Chrome testing on Unix (replace 2.30 with latest)
+
+```
+wget -N http://chromedriver.storage.googleapis.com/2.30/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+sudo mv chromedriver /usr/local/bin/
+```
+ 
+Then set 'browser' value to 'chrome' inside config.php and start your selenium server
+
 
 About Facebook php-webdriver
 ===========================================
