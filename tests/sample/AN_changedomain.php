@@ -1,6 +1,6 @@
 <?php
 
-class P3_AN_Test extends PHPUnit_Framework_TestCase {
+class P3_AN_Test extends PHPUnit\Framework\TestCase {
 
   /**
    * @var \RemoteWebDriver
