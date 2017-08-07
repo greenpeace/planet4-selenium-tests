@@ -1,18 +1,17 @@
 <?php
 
-class P3_LU_Test extends PHPUnit\Framework\TestCase {
+require_once __DIR__ . '/../AbstractClass.php';
+
+class P3_LU_Test extends AbstractClass {
 
   /**
    * @var \RemoteWebDriver
    */
-
   protected $webDriver;
 
   public function setUp()
   {
-    $configs = include('./config/config.php');
-    $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
-    $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
+	parent::setUp();
   }
 
   //Start from login page
@@ -24,7 +23,7 @@ class P3_LU_Test extends PHPUnit\Framework\TestCase {
     /*public function testHomepage()
     {
         $this->webDriver->get($this->url);
-        // checking that page title contains word 'GitHub'
+        // checking that page title contains word 'Detox'
         $this->assertContains('Detox', $this->webDriver->getTitle());
     } */
 
@@ -79,7 +78,14 @@ class P3_LU_Test extends PHPUnit\Framework\TestCase {
 
   public function tearDown()
   {
-    $this->webDriver->quit();
+//    $this->webDriver->quit();
+//	file_put_contents('tmp/empty',serialize(['sessionID' => $this->webDriver->getSessionID()]));
+//	file_put_contents('tmp/empty',$this->webDriver->getSessionID());
+//	$this->webDriver->quit();
+//	$sessionID = $this->webDriver->getSessionID();
+//	echo $sessionID;
+//	file_put_contents('tmp/empty',"hello world");
+	
   }
 
 }

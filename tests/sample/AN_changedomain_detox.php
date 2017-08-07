@@ -1,18 +1,17 @@
 <?php
 
-class P3_AN_Test_Detox extends PHPUnit\Framework\TestCase {
+require_once __DIR__ . '/../AbstractClass.php';
+
+class P3_AN_Test_Detox extends AbstractClass {
 
   /**
    * @var \RemoteWebDriver
    */
-
   protected $webDriver;
 
   public function setUp()
   {
-    $configs = include('./config/config.php');
-    $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
-    $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
+	parent::setUp();
   }
 
   protected $url = 'http://detox-outdoor.org/';
@@ -56,7 +55,6 @@ class P3_AN_Test_Detox extends PHPUnit\Framework\TestCase {
 
   public function tearDown()
   {
-    $this->webDriver->quit();
   }
 
 }

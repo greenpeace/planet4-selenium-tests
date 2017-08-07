@@ -1,18 +1,20 @@
 <?php
 
-class P3_AN_Test extends PHPUnit\Framework\TestCase {
+require_once __DIR__ . '/../AbstractClass.php';
+
+
+class P3_AN_Test extends AbstractClass {
 
   /**
    * @var \RemoteWebDriver
    */
-
   protected $webDriver;
+  protected $_quit;
+  protected $_failing;
 
   public function setUp()
   {
-    $configs = include('./config/config.php');
-    $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $configs['browser']);
-    $this->webDriver = RemoteWebDriver::create($configs['host'], $capabilities);
+	parent::setUp();
   }
 
   /**
@@ -33,7 +35,6 @@ class P3_AN_Test extends PHPUnit\Framework\TestCase {
     );
 
     $domains->click();
-
     $this->assertEquals('http://www.greenpeace.org/belgium/nl/', $this->webDriver->getCurrentURL());
   }
 
@@ -49,8 +50,6 @@ class P3_AN_Test extends PHPUnit\Framework\TestCase {
 
   public function tearDown()
   {
-    $this->webDriver->quit();
   }
-
 }
 ?>
