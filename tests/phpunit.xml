@@ -3,22 +3,25 @@
 <phpunit>
   <testsuites>
     <testsuite name="Sample">
-<!--      <directory>./sample</directory> -->
+      <directory suffix=".php">sample</directory>  
+      <exclude>AbstractClass.php</exclude>
 
-<!-- order of tests to be executed can also be specified as following: -->
-	<file>./sample/AN_changedomain.php</file>
-	<file>./sample/AN_changedomain_detox.php</file>
-	<file>./sample/LU_login.php</file>
-<!--	<groups>
-  		<include>
- 			<group>GPI</group>
-  		</include>
-		<exclude>
-   			<group>GPI</group>
- 		 </exclude>
-	</groups>
+<!-- order of tests to be executed can also be specified as following:    
+        <file>./sample/AN_changedomain.php</file>
+        <file>./sample/AN_changedomain_detox.php</file>
+        <file>./sample/LU_login.php</file>    -->
+<!--    <groups>
+                <include>
+                        <group>GPI</group>
+                </include>
+                <exclude>
+                        <group>GPI</group>
+                 </exclude>
+        </groups>
 -->
 
     </testsuite>
   </testsuites>
 </phpunit>
+
+
