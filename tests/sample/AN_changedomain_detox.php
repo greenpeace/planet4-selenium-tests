@@ -53,9 +53,6 @@ class P3_AN_Test_Detox extends AbstractClass {
     $this->assertTrue(true);
   }
 
-  public function tearDown()
-  {
-  }
 
 }
 ?>

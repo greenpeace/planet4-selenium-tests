@@ -76,17 +76,6 @@ class P3_LU_Test extends AbstractClass {
 
   }
 
-  public function tearDown()
-  {
-//    $this->webDriver->quit();
-//	file_put_contents('tmp/empty',serialize(['sessionID' => $this->webDriver->getSessionID()]));
-//	file_put_contents('tmp/empty',$this->webDriver->getSessionID());
-//	$this->webDriver->quit();
-//	$sessionID = $this->webDriver->getSessionID();
-//	echo $sessionID;
-//	file_put_contents('tmp/empty',"hello world");
-	
-  }
 
 }
 ?>
