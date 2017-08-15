@@ -38,24 +38,26 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		$initialized = true;
 	}
 	
-     $_config = include('./config/config.php');
+	$_config = include('./config/config.php');
         $this->_url = $_config['url'];
-        if ( !self::$_handle ) {
-                $capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $_config['browser']);
-		$driver = $this->webDriver = RemoteWebDriver::create($_config['host'], $capabilities);
-                self::$_driverInstances[] = $driver;
-		file_put_contents('tmp/empty',$this->webDriver->getSessionID());
+	$capabilities = array(\WebDriverCapabilityType::BROWSER_NAME => $_config['browser']);
+	$driver = $this->webDriver = RemoteWebDriver::create($_config['host'], $capabilities);
+	//  Set width and height of browser
+	$this->webDriver->manage()->window()->setSize(new WebDriverDimension(1366, 996));
+	self::$_driverInstances[] = $driver;
+	file_put_contents('tmp/empty',$this->webDriver->getSessionID());
 		
-      	} else {
-		$sessionID = file_get_contents('tmp/empty');
-               	$driver =  $this->webDriver = RemoteWebDriver::createBySessionID($sessionID);
-            	self::$_driverInstances[] = $driver;
-
-           }
-
         $this->_driver = $driver;
         $this->_driver->get($this->_url);
         self::$_handle = $this->_driver->getWindowHandle();
+    }
+
+   public function tearDown()
+    {
+	 try{
+               $this->_driver->close();
+            } catch ( Exception $e ) {
+            }
     }
     
 }

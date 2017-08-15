@@ -48,5 +48,10 @@ class P3_AN_Test extends AbstractClass {
     $this->assertTrue(true);
   }
 
+  public function tearDown()
+  {
+   	parent::tearDown();
+  }
+
 }
 ?>

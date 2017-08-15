@@ -54,5 +54,10 @@ class P3_AN_Test_Detox extends AbstractClass {
   }
 
 
+  public function tearDown()
+  {
+   	parent::tearDown();
+  }
+
 }
 ?>

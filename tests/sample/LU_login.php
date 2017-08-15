@@ -76,6 +76,11 @@ class P3_LU_Test extends AbstractClass {
 
   }
 
+ public function tearDown()
+  {
+   	parent::tearDown();
+  }
+
 
 }
 ?>
