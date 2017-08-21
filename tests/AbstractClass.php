@@ -25,7 +25,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		register_shutdown_function( function() use ( &$drivers ) {
 			foreach ( $drivers as $driv ) {
                 		try {
-					$driv->quit();
+					$driv->close();
 				} catch ( Exception $e ) {
 					}                
 			}
