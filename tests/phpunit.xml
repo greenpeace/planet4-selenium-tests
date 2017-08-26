@@ -2,8 +2,8 @@
 
 <phpunit>
   <testsuites>
-    <testsuite name="Sample">
-      <directory suffix=".php">sample</directory>  
+    <testsuite name="Planet 4">
+      <directory suffix=".php">p4</directory>  
       <exclude>AbstractClass.php</exclude>
 
 <!-- order of tests to be executed can also be specified as following:    
