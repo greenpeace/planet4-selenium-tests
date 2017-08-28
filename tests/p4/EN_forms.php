@@ -62,12 +62,13 @@ class P4_EN_forms extends P4_login {
 
   protected function assertElementNotFound($by)
   {
-    $els = $this->webDriver->findElements($by);
-    if (count($els)) {
-      $this->fail("Unexpectedly element was found");
-    }
-    // increment assertion counter
-    $this->assertTrue(true);
+	$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
+	$els = $this->webDriver->findElements($by);
+	if (count($els)) {
+		$this->fail("Unexpectedly element was found");
+	}
+	// increment assertion counter
+	$this->assertTrue(true);
 
   }
 
