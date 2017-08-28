@@ -24,7 +24,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	try{
 		register_shutdown_function( function() use ( &$drivers ) {
 			foreach ( $drivers as $driv ) {
-                		try {
+				try {
 					$driv->close();
 				} catch ( Exception $e ) {
 					}                
@@ -51,10 +51,17 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 
    public function tearDown()
     {
+	$classname = get_called_class();
+	$failed = parent::hasFailed();
+	if ($failed){
+		$this->webDriver->takeScreenshot('reports/screenshots/'.$classname.'.png');
+	}
+
 	 try{
                $this->_driver->close();
             } catch ( Exception $e ) {
             }
+
     }
     
 }

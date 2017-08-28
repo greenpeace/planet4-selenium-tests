@@ -41,12 +41,11 @@ class P3_AN_Test_Detox extends AbstractClass {
 		$this->webDriver->getCurrentURL()
 	);
  
-	$this->webDriver->takeScreenshot(__FUNCTION__.".png");
-
   }
 
   protected function assertElementNotFound($by)
   {
+	$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
 	$els = $this->webDriver->findElements($by);
 	if (count($els)) {
 		$this->fail("Unexpectedly element was found");
