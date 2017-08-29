@@ -20,7 +20,7 @@ class P4_EN_forms extends P4_login {
     $this->webDriver->wait(3);
     $ENlink = $this->webDriver->findElement(WebDriverBy::linktext("EngagingNetworks"));
     $ENlink->click();
-    $this->webDriver->findElement(WebDriverBy::id('en_pages_div'));
+//    $this->webDriver->findElement(WebDriverBy::id('en_pages_div'));
 
     //Click on second EN menu link
     $this->webDriver->wait(3);
@@ -28,12 +28,11 @@ class P4_EN_forms extends P4_login {
     $ENlink->click();
     $this->webDriver->findElement(WebDriverBy::id('en_pages_table_wrapper'));
 
-    //Click on subtype field
+    //Select Donation subtype
     $this->webDriver->findElement(WebDriverBy::id("p4en_pages_subtype"))->click();
     $this->webDriver->findElement(WebDriverBy::xpath("//*[@id='p4en_pages_subtype']/option[8]"))->click();
-    //$this->select(WebDriverBy::id('p4en_pages_subtype'))->selectOptionByValue('ND');
 
-    //Select Donation subtype
+    //Select live status
     $this->webDriver->findElement(WebDriverBy::id("p4en_pages_status"))->click();
     $this->webDriver->findElement(WebDriverBy::xpath("//*[@id='p4en_pages_status']/option[4]"))->click();
 
