@@ -1,1 +1,1 @@
-vendor/bin/phpunit tests/sample/AN_changedomain.php
+vendor/bin/phpunit tests/sample/AN_changedomain_detox.php
