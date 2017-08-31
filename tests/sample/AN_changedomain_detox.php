@@ -41,7 +41,7 @@ class P3_AN_Test_Detox extends AbstractClass {
 		$this->webDriver->getCurrentURL()
 	);
  
-	$this->webDriver->takeScreenshot("target/screenshots/".__FUNCTION__.".png");
+	$this->webDriver->takeScreenshot("$WORKSPACE/screenshots/".__FUNCTION__.".png");
 
   }
 
