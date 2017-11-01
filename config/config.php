@@ -6,7 +6,7 @@ return array(
     // Production
 //    'url'=> 'http://planet4.greenpeace.org/wp-admin'      
     //Staging
-    'url'=> 'http://dev.greenpeace.org/wp-admin'  
+    'url'=> 'http://dev.p4.greenpeace.org/wp-admin'  
     //P3 sample tests
 //    'url' => 'http://www.greenpeace.org/international/en/about/jobs/'
 );
