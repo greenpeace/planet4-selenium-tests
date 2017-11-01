@@ -40,7 +40,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	$driver = $this->webDriver = RemoteWebDriver::create($_config['host'], $capabilities);
 	
 	//  Set width and height of browser
-	$this->webDriver->manage()->window()->setSize(new WebDriverDimension(1366, 996));
+//	$this->webDriver->manage()->window()->setSize(new WebDriverDimension(1366, 996));
 	self::$_driverInstances[] = $driver;
 	file_put_contents('tmp/empty',$this->webDriver->getSessionID());
 		

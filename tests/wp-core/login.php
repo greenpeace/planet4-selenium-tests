@@ -28,7 +28,7 @@ class P4_login extends AbstractClass {
     //Enter username
     $usernamefield = $this->webDriver->findElement(WebDriverBy::id('user_login'));
     $usernamefield->click();
-    $this->webDriver->getKeyboard()->sendKeys('dev');
+    $this->webDriver->getKeyboard()->sendKeys('test_user');
 
     //Enter password
     $passfield = $this->webDriver->findElement(WebDriverBy::id('user_pass'));
@@ -47,13 +47,15 @@ class P4_login extends AbstractClass {
   public function wpLogout()
   {
     $usermenu = $this->webDriver->findElement(WebDriverBy::id('wp-admin-bar-my-account'));
+//    $usermenu = $this->webDriver->findElement(WebDriverBy::id('wp-admin-bar-top-secondary'));
     $this->webDriver->getMouse()->mouseMove( $usermenu->getCoordinates() );    
 
     //Waits for hidden menu to be visible
     $this->webDriver->wait(10, 1000)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::id('wp-admin-bar-logout')));
     
     //Locates log out option and clicks on it
-    $logout = $this->webDriver->findElement(WebDriverBy::xpath("/html/body/div[1]/div[2]/div[1]/div/ul[2]/li/div/ul/li[3]/a"));
+//    $logout = $this->webDriver->findElement(WebDriverBy::xpath("/html/body/div[1]/div[2]/div[1]/div/ul[2]/li/div/ul/li[3]/a"));
+    $logout = $this->webDriver->findElement(WebDriverBy::linkText('Log Out'));
     $logout->click();
 
     // Validates user is logged out by locating login form
