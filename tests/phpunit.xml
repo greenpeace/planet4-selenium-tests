@@ -2,9 +2,10 @@
 
 <phpunit>
   <testsuites>
-    <testsuite name="Planet 4">
-      <directory suffix=".php">p4</directory>  
-      <exclude>AbstractClass.php</exclude>
+	<testsuite name="Planet 4">
+	<directory suffix=".php">p4</directory>  
+<!--	<exclude>AbstractClass.php</exclude> -->
+	<exclude>./p4/EN_forms.php</exclude>
 
 <!-- order of tests to be executed can also be specified as following:    
         <file>./sample/AN_changedomain.php</file>
