@@ -130,9 +130,12 @@ class P4_Static4Column extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$this->webDriver->findElement(WebDriverBy::xPath("//ul[contains(@class,'attachments']/li[1]"))->click();
+	$ul_id= $this->webDriver->findElement(WebDriverBy::className("attachments"))->getAttribute('id');
+        $xpath = "//*[@id='".$ul_id."']/li[2]";
+        $this->webDriver->findElement(WebDriverBy::xPath("{$xpath}"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	**/
+
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_2'))->click();
 	$this->webDriver->getKeyboard()->sendKeys('Column 2 Test');
