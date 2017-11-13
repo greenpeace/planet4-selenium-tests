@@ -113,7 +113,7 @@ class P4_CarouselHeader extends P4_login {
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('header_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Hader 1 Test');
+	$this->webDriver->getKeyboard()->sendKeys('Header 1 Test');
 	$this->webDriver->findElement(WebDriverBy::name('subheader_1'))->click();
 	$this->webDriver->getKeyboard()->sendKeys('Subheader 1 Test');
 	$this->webDriver->findElement(WebDriverBy::name('description_1'))->click();
@@ -185,7 +185,17 @@ class P4_CarouselHeader extends P4_login {
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
-
+	try{
+		$this->webDriver->findElement(WebDriverBy::className("carousel_header"));
+		$this->assertEquals('Header 1 Test',
+			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header h1"))->getText());
+		$this->assertEquals('Subheader 1 Test',
+			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header h3"))->getText());
+		$this->assertEquals('This is test content created by an automated test for testing content in slide 1 of carousel header block',
+			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header p"))->getText());
+	}catch(Exception $e){
+		$this->fail("->Fields corresponding to 'Carousel Header' block not found");
+	}
 	
 
 	// I log out after test
