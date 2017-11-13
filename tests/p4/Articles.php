@@ -13,6 +13,9 @@ class P4_Articles extends P4_login {
   public function testArticles()
   {
 
+  	$page_title = 'Test aumtomated - Articles';
+  	$block_title = 'Articles  Block Test';
+
    	//I log in
 	try{
    		$this->wpLogin();
@@ -46,7 +49,7 @@ class P4_Articles extends P4_login {
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Articles test - automated');
+	$this->webDriver->getKeyboard()->sendKeys($page_title);
 
 	
 	//Click on Add Post Element button to select block
@@ -71,12 +74,20 @@ class P4_Articles extends P4_login {
 		$this->fail("->Failed to select 'Articles' post element");
 	}
 
+	//Validate block elements are present
+	try{
+		$this->webDriver->findElement(WebDriverBy::name("article_heading"));
+		$this->webDriver->findElement(WebDriverBy::name("article_count"));
+	}catch(Exception $e){
+		$this->fail('->Failed to see all related fields when adding block');
+	}
+
 	//Enter Block Title and Number of articles
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('article_heading')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Articles  Block Test');
+	$this->webDriver->getKeyboard()->sendKeys($block_title);
 	
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('article_count')
@@ -100,6 +111,11 @@ class P4_Articles extends P4_login {
 	WebDriverBy::id('publish')
 	)->click();
 	
+	//Wait to see successful message
+	$this->webDriver->wait(10, 1000)->until(
+		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverBy::id('message')));
+
 	try{
 		//Validate I see successful message
 		$this->assertContains(
@@ -110,6 +126,7 @@ class P4_Articles extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
         }
 
+
 	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
@@ -117,6 +134,16 @@ class P4_Articles extends P4_login {
 	$link->click();
 
 	
+	//Validate elements are present
+	try{
+		$this->webDriver->findElement(WebDriverBy::className("article"));
+		$this->webDriver->findElement(WebDriverBy::className("col-md-8 col-lg-9"));
+		$this->webDriver->findElement(WebDriverBy::className("topicwise-article-section"));
+		$this->assertEquals($block_title,
+			$this->webDriver->findElement(WebDriverBy::cssSelector("div.article h3"))->getText());
+	}catch(Exception $e){
+		$this->fail('->Failed to see some of the created content on front end page');
+	}
 
 	// I log out after test
 	$this->wpLogout();

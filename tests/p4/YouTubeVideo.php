@@ -46,7 +46,7 @@ class P4_YouTubeVideo extends P4_login {
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('YouTube Video test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - YouTube Video');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

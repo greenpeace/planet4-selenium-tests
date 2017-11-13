@@ -46,7 +46,7 @@ class P4_CampaignThumbnail extends P4_login {
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Campaign Thumbnail block test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Campaign Thumbnail');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(
@@ -96,8 +96,12 @@ class P4_CampaignThumbnail extends P4_login {
                 WebDriverBy::id('publish')
 	)->click();
 	
+	//Wait to see successful message
+	$this->webDriver->wait(10, 1000)->until(
+		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverBy::id('message')));
+	//Validate I see successful message
 	try{
-		//Validate I see successful message
 		$this->assertContains(
 			'Page published',$this->webDriver->findElement(
 			WebDriverBy::id('message'))->getText()
@@ -110,7 +114,16 @@ class P4_CampaignThumbnail extends P4_login {
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')
 	);	
-	$link->click();	
+	$link->click();
+	try{
+		$this->assertContains(
+			'Page published',$this->webDriver->findElement(
+			WebDriverBy::id('message'))->getText()
+		);
+	}catch(Exception $e){
+		$this->fail('->Failed to publish content - no sucessful message after saving content');
+	}
+
 
 	// I log out after test
     $this->wpLogout();

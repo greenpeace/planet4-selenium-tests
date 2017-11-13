@@ -45,7 +45,7 @@ class P4_Subheader extends P4_login {
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Subheader test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Subheader');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

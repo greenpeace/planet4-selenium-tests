@@ -46,7 +46,7 @@ class P4_Static4Column extends P4_login {
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Static 4 Column test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Static 4 Column');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

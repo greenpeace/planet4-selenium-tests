@@ -46,7 +46,7 @@ class P4_TwoColumn_Content extends P4_login {
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Two Column Content test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Two Column Content');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

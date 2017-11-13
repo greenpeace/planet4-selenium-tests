@@ -46,7 +46,7 @@ class P4_MediaBlock extends P4_login {
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Media block test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Media block');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

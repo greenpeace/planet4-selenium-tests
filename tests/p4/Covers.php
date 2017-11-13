@@ -47,7 +47,7 @@ class P4_TakeAction extends P4_login {
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Take Action test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Take Action test');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

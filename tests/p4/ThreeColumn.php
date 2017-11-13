@@ -46,7 +46,7 @@ class P4_ThreeColumn extends P4_login {
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Three Column Content test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Three Column Content');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

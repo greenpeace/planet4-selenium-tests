@@ -45,7 +45,7 @@ class P4_CarouselSplit extends P4_login {
 	WebDriverBy::id('title-prompt-text')
     );
     $field->click();
-    $this->webDriver->getKeyboard()->sendKeys('Carousel Split test - automated');
+    $this->webDriver->getKeyboard()->sendKeys('Test automated - Carousel Split');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

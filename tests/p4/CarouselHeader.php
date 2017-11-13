@@ -45,7 +45,7 @@ class P4_CarouselHeader extends P4_login {
 	WebDriverBy::id('title-prompt-text')
     );
     $field->click();
-    $this->webDriver->getKeyboard()->sendKeys('Carousel Header test - automated');
+    $this->webDriver->getKeyboard()->sendKeys('Test automated - Carousel Header');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(

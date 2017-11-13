@@ -46,7 +46,7 @@ class P4_Header extends P4_login {
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Header test - automated');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Header');
 
 
 	//Validate corresponding block fields are present
