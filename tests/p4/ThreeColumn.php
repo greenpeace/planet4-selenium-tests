@@ -124,9 +124,13 @@ class P4_ThreeColumn extends P4_login {
 	$this->webDriver->findElement(
 	WebDriverBy::id('publish')
 	)->click();
-	
+
+	//Wait to see successful message
+	$this->webDriver->wait(10, 1000)->until(
+		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverBy::id('message')));
+	//Validate I see successful message
 	try{
-		//Validate I see successful message
 		$this->assertContains(
 		'Page published',$this->webDriver->findElement(
  		WebDriverBy::id('message'))->getText()
