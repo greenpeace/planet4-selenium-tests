@@ -41,12 +41,18 @@ class P4_CampaignThumbnail extends P4_login {
 	);
 
 
-	//Enter title of page
+	//Enter needed page fields
 	$field	= $this->webDriver->findElement(
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Campaign Thumbnail');
+	$field	= $this->webDriver->findElement(
+		WebDriverBy::id('new-tag-post_tag')
+	);
+	$field->click();
+	$this->webDriver->getKeyboard()->sendKeys('FixFood');
+	$this->webDriver->findElement(WebDriverBy::className('tagadd'))->click();
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(
@@ -110,23 +116,23 @@ class P4_CampaignThumbnail extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 
-	//Wait to see successful message
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
-		WebDriverBy::id('message')));
-
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')
 	);	
 	$link->click();
 	try{
-		$this->assertContains(
-			'Page published',$this->webDriver->findElement(
-			WebDriverBy::id('message'))->getText()
+		$this->webDriver->findElement(WebDriverBy::className('campaign-thumbnail-block'));
+		$this->webDriver->findElement(WebDriverBy::className('thumbnail-largeview-container'));
+		$this->assertEquals(
+			'Test title',$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.campaign-thumbnail-block h2'))->getText()
+		);
+		$this->assertEquals('FixFood', $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.thumbnail-largeview-container a'))->getText()
 		);
 	}catch(Exception $e){
-		$this->fail('->Failed to publish content - no sucessful message after saving content');
+		$this->fail('->Failed to see some content in front end page');
 	}
 
 
