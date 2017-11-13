@@ -14,7 +14,7 @@ class P4_Articles extends P4_login {
   {
 
   	$page_title = 'Test aumtomated - Articles';
-  	$block_title = 'Articles  Block Test';
+  	$block_title = 'Articles Block Test';
 
    	//I log in
 	try{
@@ -133,14 +133,14 @@ class P4_Articles extends P4_login {
 	);	
 	$link->click();
 
-	
 	//Validate elements are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("article"));
 		$this->webDriver->findElement(WebDriverBy::className("col-md-8 col-lg-9"));
 		$this->webDriver->findElement(WebDriverBy::className("topicwise-article-section"));
-		$this->assertEquals($block_title,
-			$this->webDriver->findElement(WebDriverBy::cssSelector("div.article h3"))->getText());
+		$this->assertContains('Articles Block Test', $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".article h3"))->getText()
+		);
 	}catch(Exception $e){
 		$this->fail('->Failed to see some of the created content on front end page');
 	}
