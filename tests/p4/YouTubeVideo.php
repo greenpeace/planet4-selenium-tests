@@ -79,10 +79,12 @@ class P4_YouTubeVideo extends P4_login {
 	}
 
 	//Fill in fields
+	$titl = 'Test video';
+	$ytid = 'wNN-Yl-SBTM';
 	$this->webDriver->findElement(WebDriverBy::name('video_title'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Test video');
+	$this->webDriver->getKeyboard()->sendKeys("$titl");
 	$this->webDriver->findElement(WebDriverBy::name('youtube_id'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('wNN-Yl-SBTM');
+	$this->webDriver->getKeyboard()->sendKeys("$ytid");
 
 	//Insert block
 	try{
@@ -112,12 +114,26 @@ class P4_YouTubeVideo extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')
 	);	
 	$link->click();	
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('video-block'));
+		$this->assertEquals("$titl",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.video-block h1'))->getText());
+		$this->assertContains("$ytid",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.video-block .video-section iframe'))->getAttribute('src'));
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 
 	// I log out after test
     $this->wpLogout();
