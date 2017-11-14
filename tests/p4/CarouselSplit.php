@@ -76,7 +76,6 @@ class P4_CarouselSplit extends P4_login {
 		$this->fail("->Fields corresponding to 'Carousel Split' block not found");
 	}
 
-
 	//Add images
 	$this->webDriver->findElement(WebDriverBy::id('multiple_images'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
@@ -86,6 +85,8 @@ class P4_CarouselSplit extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
+	$srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	
@@ -99,7 +100,6 @@ class P4_CarouselSplit extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to insert element');
 	}
-
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -120,13 +120,23 @@ class P4_CarouselSplit extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
+
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
-
-	
+	$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		->getAttribute('src')), 0, -4);
+	try{
+		$this->webDriver->findElement(WebDriverBy::className("split-carousel-wrap"));
+		$this->assertContains("$srcimg","$srcfirstchild");
+	}catch(Exception $e){
+		$this->fail("->Some of the content created is not displayed in front end page");
+	}
 
 	// I log out after test
 	$this->wpLogout();
