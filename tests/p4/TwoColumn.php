@@ -85,43 +85,59 @@ class P4_TwoColumn_Content extends P4_login {
 	}
 
 
-	//Enter Block Title and Description
+	//-- Fill in fields column 1
+	$titl1 = 'Column 1 Block Test';
+	$desc1 = 'This is content created by an automated test for testing content in column 1 block';
+	$btext1 = 'See on youtube';
+	$blink1 = 'www.youtube.com';
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('title_1')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Column 1 Block Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl1");
 	
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('description_1')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing content in column 1 block');
-
-
+	$this->webDriver->getKeyboard()->sendKeys("$desc1");
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('button_text_1')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('See on youtube');
-
+	$this->webDriver->getKeyboard()->sendKeys("$btext1");
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('button_link_1')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('www.youtube.com');
-
+	$this->webDriver->getKeyboard()->sendKeys("$blink1");
+	
+	//-- Fill in fields column 2
+	$titl2 = 'Column 2 Block Test';
+	$desc2 = 'This is content created by an automated test for testing content in column 2 Block';
+	$btext2 = 'See on planet';
+	$blink2 = 'www.greenpeace.org';
     $field = $this->webDriver->findElement(
 	WebDriverBy::name('title_2')
     );
     $field->click();
-    $this->webDriver->getKeyboard()->sendKeys('Column 2 Block Test');
+    $this->webDriver->getKeyboard()->sendKeys("$titl2");
 
     $field = $this->webDriver->findElement(
 	WebDriverBy::name('description_2')
     );
     $field->click();
-    $this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing content in column 2 Block');
+    $this->webDriver->getKeyboard()->sendKeys("$desc2");
+    $field = $this->webDriver->findElement(
+	WebDriverBy::name('button_text_2')
+	);
+	$field->click();
+	$this->webDriver->getKeyboard()->sendKeys("$btext2");
+	$field = $this->webDriver->findElement(
+	WebDriverBy::name('button_link_2')
+	);
+	$field->click();
+	$this->webDriver->getKeyboard()->sendKeys("$blink2");
 
 	//Insert block
 	try{
@@ -151,14 +167,38 @@ class P4_TwoColumn_Content extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
 	//Go to page to validate page contains Take Action Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
-
-	
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+	try{
+		$this->webDriver->findElement(WebDriverBy::id('p4bks_two_columns_container'));
+		$this->assertEquals("$titl1",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) h2'))->getText());
+		$this->assertEquals("$desc1",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) p'))->getText());
+		$this->assertEquals("$btext1",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getText());
+		$this->assertContains("$blink1",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getAttribute('href'));
+		$this->assertEquals("$titl2",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) h2'))->getText());
+		$this->assertEquals("$desc2",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) p'))->getText());
+		$this->assertEquals("$btext2",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getText());
+		$this->assertContains("$blink2",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getAttribute('href'));
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 
 	// I log out after test
 	$this->wpLogout();
