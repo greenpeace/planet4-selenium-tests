@@ -168,7 +168,7 @@ class P4_CarouselHeader extends P4_login {
 
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 	//Validate I see successful message
 	try{
@@ -180,21 +180,25 @@ class P4_CarouselHeader extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
+
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
+
 	try{
-		$this->webDriver->findElement(WebDriverBy::className("carousel_header"));
+		$this->webDriver->findElement(WebDriverBy::className("carousel-header"));
 		$this->assertEquals('Header 1 Test',
-			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header h1"))->getText());
+			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h1"))->getText());
 		$this->assertEquals('Subheader 1 Test',
-			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header h3"))->getText());
+			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h3"))->getText());
 		$this->assertEquals('This is test content created by an automated test for testing content in slide 1 of carousel header block',
-			$this->webDriver->findElement(WebDriverBy::cssSelector("div.carousel_header p"))->getText());
+			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header p"))->getText());
 	}catch(Exception $e){
-		$this->fail("->Fields corresponding to 'Carousel Header' block not found");
+		$this->fail("->Some of the content created is not displayed in front end page");
 	}
 	
 
