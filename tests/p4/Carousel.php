@@ -87,6 +87,16 @@ class P4_Carousel extends P4_login {
 	);
 	$tab->click();
 	
+	//Wait for media library to load
+	$this->webDriver->wait(10, 1000)->until(
+		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverBy::cssSelector('ul.attachments')));
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
+	//Select first image of media library
+	$srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
+	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
 	//Insert block
 	try{
@@ -117,14 +127,30 @@ class P4_Carousel extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait =5;
 
-	//Go to page to validate page contains Take Action Block
+	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
 
-	
+	//Get image source and remove format extension so that we can compare it to the thumbnail src
+	$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		->getAttribute('src')), 0, -4);
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('carousel-wrap'));
+		$this->webDriver->findElement(WebDriverBy::className('slide'));
+		$this->assertEquals(
+		'Carousel Block Test',$this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText()
+		);
+		$this->assertContains("$srcimg","$srcfirstchild");
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 
 	// I log out after test
 	$this->wpLogout();
