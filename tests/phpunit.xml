@@ -6,10 +6,11 @@
 	<directory suffix=".php">p4</directory>  
 	<exclude>./p4/EN_forms.php</exclude>
 
-<!-- order of tests to be executed can also be specified as following:    
-        <file>./sample/AN_changedomain.php</file>
-        <file>./sample/AN_changedomain_detox.php</file>
-        <file>./sample/LU_login.php</file>    -->
+<!-- order of tests to be executed can also be specified as following:   
+        <file>./p4/Articles.php</file>
+        <file>./p4/Carousel.php</file>
+        <file>./p4/MediaBlock.php</file>  
+--> 
 <!--    <groups>
                 <include>
                         <group>GPI</group>
