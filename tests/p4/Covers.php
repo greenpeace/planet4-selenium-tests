@@ -3,14 +3,14 @@
 //This class is needed to start the session and open/close the browser
 require_once __DIR__ . '/../wp-core/login.php';
 
-class P4_TakeAction extends P4_login {
+class P4_Covers extends P4_login {
 
   /**
    * @var \RemoteWebDriver
    */
 
 
-  public function testTakeAction()
+  public function testCovers()
   {
 
    	//I log in
@@ -41,13 +41,12 @@ class P4_TakeAction extends P4_login {
 	WebDriverBy::className('shortcake-add-post-element'))->getText()
 	);
 
-
 	//Enter title of page
 	$field	= $this->webDriver->findElement(
 	WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Test automated - Take Action test');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Take Action Covers test');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(
@@ -82,7 +81,7 @@ class P4_TakeAction extends P4_login {
 	WebDriverBy::name('description')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing take action blocks');
+	$this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing take action covers block');
 
 	//Insert block
 	try{
@@ -114,13 +113,25 @@ class P4_TakeAction extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('subheader'));
+		$this->webDriver->findElement(WebDriverBy::className('covers-block'));
+		$this->assertEquals('Take Action Block Test', $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.subheader .container h2'))->getText());
+		$this->assertEquals('This is content created by an automated test for testing take action covers block',
+			$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.subheader .container p'))->getText());
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 
-	
 	// I log out after test
 	$this->wpLogout();
   }
