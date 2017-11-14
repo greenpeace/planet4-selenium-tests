@@ -126,12 +126,17 @@ class P4_Articles extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
         }
 
-
+    //Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
 	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
 
 	//Validate elements are present
 	try{

@@ -121,18 +121,22 @@ class P4_CarouselSplit extends P4_login {
 	}
 
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
-
-	//Go to page to validate page contains added block
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
+	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
-	$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
-		->getAttribute('src')), 0, -4);
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+	
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("split-carousel-wrap"));
+		$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		->getAttribute('src')), 0, -4);
 		$this->assertContains("$srcimg","$srcfirstchild");
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");

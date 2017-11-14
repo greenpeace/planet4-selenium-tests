@@ -183,18 +183,17 @@ class P4_CarouselHeader extends P4_login {
 	}
 
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
-
-	//Go to page to validate page contains added block
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
+	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
 
-	//Get image source and remove format extension so that we can compare it to the thumbnail src
-	$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
-		->getAttribute('src')), 0, -4);
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("carousel-header"));
 		$this->assertEquals('Header 1 Test',
@@ -203,6 +202,10 @@ class P4_CarouselHeader extends P4_login {
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h3"))->getText());
 		$this->assertEquals('This is test content created by an automated test for testing content in slide 1 of carousel header block',
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header p"))->getText());
+		//Get image source and remove format extension so that we can compare it to the thumbnail src
+		$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		->getAttribute('src')), 0, -4);
 		$this->assertContains("$srcimg","$srcfirstchild");
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
