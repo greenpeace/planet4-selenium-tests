@@ -249,7 +249,7 @@ class P4_Static4Column extends P4_login {
 		WebDriverBy::linkText('View page')
 	);	
 	$link->click();	
-
+	//If alert shows up asking to confirm leaving the page, confirm
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
