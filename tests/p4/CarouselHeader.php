@@ -109,6 +109,8 @@ class P4_CarouselHeader extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
+	$srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
@@ -189,6 +191,10 @@ class P4_CarouselHeader extends P4_login {
 	);	
 	$link->click();
 
+	//Get image source and remove format extension so that we can compare it to the thumbnail src
+	$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		->getAttribute('src')), 0, -4);
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("carousel-header"));
 		$this->assertEquals('Header 1 Test',
@@ -197,6 +203,7 @@ class P4_CarouselHeader extends P4_login {
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h3"))->getText());
 		$this->assertEquals('This is test content created by an automated test for testing content in slide 1 of carousel header block',
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header p"))->getText());
+		$this->assertContains("$srcimg","$srcfirstchild");
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
 	}
