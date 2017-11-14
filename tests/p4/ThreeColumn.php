@@ -82,18 +82,19 @@ class P4_ThreeColumn extends P4_login {
 	}
 
 	//Enter Block Title and Description
+	$titl = 'Three column block Test';
+	$desc = 'This is content created by an automated test for testing content in 3-column block';
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('title')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Three column  block Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl");
 	
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('description')
  	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing content in 3-column block');
-
+	$this->webDriver->getKeyboard()->sendKeys("$desc");
 	//Upload an image on column 1
 	$field = $this->webDriver->findElement(
 	WebDriverBy::id('image_1'))->click();
@@ -105,6 +106,8 @@ class P4_ThreeColumn extends P4_login {
 	);
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
     //Select first image
+    $srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
@@ -138,15 +141,33 @@ class P4_ThreeColumn extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
 	$link->click();
-
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('split-three-column'));
+		$this->assertEquals("$titl",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.three-column-info h2'))->getText());
+		$this->assertEquals("$desc",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.three-column-info p'))->getText());
+		$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('.col:nth-child(1) .first-column img'))
+		->getAttribute('src')), 0, -4);
+		$this->assertContains("$srcimg","$srcfirstchild");
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.col:nth-child(2)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.col:nth-child(3)'));
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 	
-
 	// I log out after test
 	$this->wpLogout();
   }
