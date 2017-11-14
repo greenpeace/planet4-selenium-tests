@@ -86,6 +86,8 @@ class P4_MediaBlock extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
+	$srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
@@ -117,12 +119,23 @@ class P4_MediaBlock extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')
 	);	
 	$link->click();	
+
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('block-media'));
+		$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::className('block-media'))
+		->getCSSValue('background-image')), 5, -6);
+		$this->assertContains("$srcimg","$srcfirstchild");
+	}catch(Exception $e){
+		$this->fail("->Some of the content created is not displayed in front end page");
+	}
 
 	// I log out after test
     $this->wpLogout();
