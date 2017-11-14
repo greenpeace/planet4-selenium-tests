@@ -96,7 +96,12 @@ class P4_Static4Column extends P4_login {
 		$this->fail("->Fields corresponding to 'Static Four Column' block not found");
 	}
 
-	//-----Fill in fields for column 1
+	//----- FILL IN FIELDS FOR COLUMN 1
+	//Define test content
+	$title1 = "Column 1 Test";
+	$description1 = "This is test content created by an automated test for testing content in column 1 of static 4 column block";
+	$linktext1 = "Detox Germany";
+	$linkurl1 = "http://www.detox-outdoor.org/de-CH/";
 	$this->webDriver->findElement(WebDriverBy::id('attachment_1'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
 	//Wait for media library to load
@@ -105,23 +110,29 @@ class P4_Static4Column extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
+	$srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Column 1 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$title1");
 	$this->webDriver->findElement(WebDriverBy::name('description_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in column 1 of static 4 column block');
+	$this->webDriver->getKeyboard()->sendKeys("$description1");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox Germany');
+	$this->webDriver->getKeyboard()->sendKeys("$linktext1");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/de-CH/');
+	$this->webDriver->getKeyboard()->sendKeys("$linkurl1");
 	
 
-	//-----Fill in fields for column 2
+	//----- FILL IN FIELDS FOR COLUMN 2
 	
+	//Define test content
+	$title2 = "Column 2 Test";
+	$description2 = "This is test content created by an automated test for testing content in column 2 of static 4 column block";
+	$linktext2 = "Detox Italy";
+	$linkurl2 = "http://www.detox-outdoor.org/it-IT";
 	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-
 	$this->webDriver->findElement(WebDriverBy::id('attachment_2'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
 	//Wait for media library to load
@@ -135,21 +146,24 @@ class P4_Static4Column extends P4_login {
         $this->webDriver->findElement(WebDriverBy::xPath("{$xpath}"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	**/
-
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Column 2 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$title2");
 	$this->webDriver->findElement(WebDriverBy::name('description_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in column 2 of static 4 column block');
+	$this->webDriver->getKeyboard()->sendKeys("$description2");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox Italy');
+	$this->webDriver->getKeyboard()->sendKeys("$linktext2");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/it-IT');
+	$this->webDriver->getKeyboard()->sendKeys("$linkurl2");
 
-	//-----Fill in fields for column 3
-
+	//----- FILL IN FIELDS FOR COLUMN 3
+	
+	//Define test content
+	$title3 = "Column 3 Test";
+	$description3 = "This is test content created by an automated test for testing content in column 3 of static 4 column block";
+	$linktext3 = "Detox France";
+	$linkurl3 = "http://www.detox-outdoor.org/fr-CH";
 	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-
 	$this->webDriver->findElement(WebDriverBy::id('attachment_3'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
 	//Wait for media library to load
@@ -163,18 +177,22 @@ class P4_Static4Column extends P4_login {
 	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_3'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Column 3 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$title3");
 	$this->webDriver->findElement(WebDriverBy::name('description_3'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in column 3 of static 4 column block');
+	$this->webDriver->getKeyboard()->sendKeys("$description3");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_3'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox France');
+	$this->webDriver->getKeyboard()->sendKeys("$linktext3");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_3'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/fr-CH');
+	$this->webDriver->getKeyboard()->sendKeys("$linkurl3");
 
-	//-----Fill in fields for column 4
+	//----- FILL IN FIELDS FOR COLUMN 4
 	
+	//Define test content
+	$title4 = "Column 4 Test";
+	$description4 = "This is test content created by an automated test for testing content in column 4 of static 4 column block";
+	$linktext4 = "Detox Finland";
+	$linkurl4 = "http://www.detox-outdoor.org/fi";
 	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-
 	$this->webDriver->findElement(WebDriverBy::id('attachment_4'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
 	//Wait for media library to load
@@ -188,13 +206,13 @@ class P4_Static4Column extends P4_login {
 	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_4'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Column 4 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$title4");
 	$this->webDriver->findElement(WebDriverBy::name('description_4'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in column 4 of static 4 column block');
+	$this->webDriver->getKeyboard()->sendKeys("$description4");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_4'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox Finland');
+	$this->webDriver->getKeyboard()->sendKeys("$linktext4");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_4'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/fi');
+	$this->webDriver->getKeyboard()->sendKeys("$linkurl4");
 
 
 	//Insert block
@@ -224,13 +242,63 @@ class P4_Static4Column extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-
+	//Wait for saved changes to load
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')
 	);	
 	$link->click();	
 
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+
+	try{
+		$this->webDriver->findElement(WebDriverBy::className('four-coloum'));
+		//Validate column 1 fields
+		$srcimg = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.four-coloum-symbol:nth-child(1) img'))
+		->getAttribute('src')), 0, -4);
+		$this->assertContains("$srcimg","$srcfirstchild");
+		$this->assertEquals("$title1",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) h5'))->getText());
+		$this->assertEquals("$description1",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) p'))->getText());
+		$this->assertEquals("$linktext1",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getText()); 
+		$this->assertEquals("$linkurl1",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getAttribute('href'));
+		//Validate column 2 fields
+		$this->assertEquals("$title2",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information h5'))->getText());
+		$this->assertEquals("$description2",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information p'))->getText());
+		$this->assertEquals("$linktext2",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getText()); 
+		$this->assertEquals("$linkurl2",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getAttribute('href'));	
+		//Validate column 3 fields
+		$this->assertEquals("$title3",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information h5'))->getText());
+		$this->assertEquals("$description3",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information p'))->getText());
+		$this->assertEquals("$linktext3",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information a'))->getText()); 
+		$this->assertEquals("$linkurl3",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information a'))->getAttribute('href'));	
+		//Validate column 4 fields
+		$this->assertEquals("$title4",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information h5'))->getText());
+		$this->assertEquals("$description4",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information p'))->getText());
+		$this->assertEquals("$linktext4",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information a'))->getText()); 
+		$this->assertEquals("$linkurl4",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information a'))->getAttribute('href'));	
+	}catch(Exception $e){
+		$this->fail('->Some of the content created is not displayed in front end page');
+	}
 	// I log out after test
     $this->wpLogout();
   }
