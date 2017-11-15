@@ -48,7 +48,6 @@ class P4_Header extends P4_login {
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Header');
 
-
 	//Validate corresponding block fields are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::id("p4_title"));
@@ -62,6 +61,11 @@ class P4_Header extends P4_login {
 	}
 
 	//Fill in fields
+	/**$hfields = $this->webDriver->findElement(WebDriverBy::id("p4_title"));
+	$hfields->location_in_view();
+	$hfields->click();**/
+	$this->webDriver->getLocationOnScreenOnceScrolledIntoView($this->webDriver->findElement(WebDriverBy::id("p4_title")));
+	//$this->webDriver->findElement(WebDriverBy::id("p4_title"))
 	$this->webDriver->findElement(WebDriverBy::id("p4_title"))->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test Header');
 	$this->webDriver->findElement(WebDriverBy::id("p4_subtitle"))->click();
@@ -104,7 +108,7 @@ class P4_Header extends P4_login {
 	
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 	//Validate I see successful message
 	try{

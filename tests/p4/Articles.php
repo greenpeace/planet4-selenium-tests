@@ -113,7 +113,7 @@ class P4_Articles extends P4_login {
 	
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 
 	try{

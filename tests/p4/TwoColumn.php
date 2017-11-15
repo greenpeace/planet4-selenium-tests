@@ -156,7 +156,7 @@ class P4_TwoColumn_Content extends P4_login {
 	
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 	//Validate I see successful message
 	try{

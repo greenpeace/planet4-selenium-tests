@@ -3,6 +3,7 @@
 //This class is needed to start the session and open/close the browser
 require_once __DIR__ . '/../wp-core/login.php';
 
+
 class P4_CampaignThumbnail extends P4_login {
 
   /**
@@ -47,11 +48,10 @@ class P4_CampaignThumbnail extends P4_login {
 	);
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Campaign Thumbnail');
-	$field	= $this->webDriver->findElement(
-		WebDriverBy::id('new-tag-post_tag')
-	);
-	$field->click();
+	$this->webDriver->findElement(WebDriverBy::name("newtag[post_tag]"))->click();
 	$this->webDriver->getKeyboard()->sendKeys('FixFood');
+	$this->webDriver->getKeyboard()->pressKey('DOWN');
+	$this->webDriver->getKeyboard()->pressKey('ENTER');
 	$this->webDriver->findElement(WebDriverBy::className('tagadd'))->click();
 
 	//Click on button to add blocks
@@ -104,7 +104,7 @@ class P4_CampaignThumbnail extends P4_login {
 	
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 	//Validate I see successful message
 	try{
@@ -126,10 +126,10 @@ class P4_CampaignThumbnail extends P4_login {
 		$this->webDriver->findElement(WebDriverBy::className('thumbnail-largeview-container'));
 		$this->assertEquals(
 			'Test title',$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.campaign-thumbnail-block h2'))->getText()
+			WebDriverBy::cssSelector('.campaign-thumbnail-block h2'))->getText()
 		);
 		$this->assertEquals('FixFood', $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.thumbnail-largeview-container a'))->getText()
+			WebDriverBy::cssSelector('.thumbnail-largeview-container a'))->getText()
 		);
 	}catch(Exception $e){
 		$this->fail('->Failed to see some content in front end page');

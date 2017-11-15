@@ -231,7 +231,7 @@ class P4_Static4Column extends P4_login {
 	)->click();
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
 	//Validate I see successful message
 	try{
