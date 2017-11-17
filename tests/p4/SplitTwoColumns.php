@@ -145,6 +145,11 @@ class P4_Split_TwoColumns extends P4_login {
 	);	
 	$link->click();
 
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+
 	try{
 		$this->webDriver->findElement(WebDriverBy::id('split_two_column'));
 		$this->webDriver->findElement(WebDriverBy::className('split-two-column-skewed-left'));
