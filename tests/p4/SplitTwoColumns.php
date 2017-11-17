@@ -145,18 +145,17 @@ class P4_Split_TwoColumns extends P4_login {
 	);	
 	$link->click();
 
-	//try{
+	try{
 		$this->webDriver->findElement(WebDriverBy::id('split_two_column'));
 		$this->webDriver->findElement(WebDriverBy::className('split-two-column-skewed-left'));
 		$this->webDriver->findElement(WebDriverBy::className('split-two-column-skewed-right'));
 		$this->assertEquals("$issue",$this->webDriver->findElement(
 			WebDriverBy::cssSelector('.split-two-column-skewed-left .part-left h2'))->getText());
 		$this->assertEquals("$desc",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.split-two-column-skewed-left .part-left p'))->getText());
-	
-/**	}catch(Exception $e){
+			WebDriverBy::cssSelector('.split-two-column-skewed-right .part-right h5'))->getText());
+	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
-	}**/
+	}
 
 	// I log out after test
 	$this->wpLogout();
