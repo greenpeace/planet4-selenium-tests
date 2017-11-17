@@ -14,7 +14,6 @@ class P4_Articles extends P4_login {
   {
 
   	$page_title = 'Test aumtomated - Articles';
-  	$block_title = 'Articles Block Test';
 
    	//I log in
 	try{
@@ -83,6 +82,7 @@ class P4_Articles extends P4_login {
 	}
 
 	//Enter Block Title and Number of articles
+	$block_title = 'Articles Block Test';
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('article_heading')
 	);
@@ -142,7 +142,7 @@ class P4_Articles extends P4_login {
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("article"));
 		$this->webDriver->findElement(WebDriverBy::className("topicwise-article-section"));
-		$this->assertContains('Articles Block Test', $this->webDriver->findElement(
+		$this->assertContains("$block_title", $this->webDriver->findElement(
 			WebDriverBy::cssSelector(".article .container .row .col-md-8.col-lg-9 h3"))->getText()
 		);
 	}catch(Exception $e){
