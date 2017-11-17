@@ -101,6 +101,11 @@ class P4_CarouselHeader extends P4_login {
 
 
 	//---Fill in fields for slide 1
+	$titl1 = 'Header 1 Test';
+	$subtitl1 = 'Subheader 1 Test';
+	$desc1 = 'This is test content created by an automated test for testing content in slide 1 of carousel header block';
+	$blink1 = 'Detox Germany';
+	$burl1 = 'http://www.detox-outdoor.org/de-CH/';
 	$this->webDriver->findElement(WebDriverBy::id('image_1'))->click();
 	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
 	//Wait for media library to load
@@ -115,17 +120,22 @@ class P4_CarouselHeader extends P4_login {
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('header_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Header 1 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl1");
 	$this->webDriver->findElement(WebDriverBy::name('subheader_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Subheader 1 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$subtitl1");
 	$this->webDriver->findElement(WebDriverBy::name('description_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in slide 1 of carousel header block');
+	$this->webDriver->getKeyboard()->sendKeys("$desc1");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox Germany');
+	$this->webDriver->getKeyboard()->sendKeys("$blink1");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_1'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/de-CH/');
+	$this->webDriver->getKeyboard()->sendKeys("$burl1");
 	
 	//---Fill in fields for slide 2
+	$titl2 = 'Header 2 Test';
+	$subtitl2 = 'Subheader 2 Test';
+	$desc2 = 'This is test content created by an automated test for testing content in slide 2 of carousel header block';
+	$blink2 = 'Detox Italy';
+	$burl2 = 'http://www.detox-outdoor.org/it-IT/';
 	/** Adding second image pending after fixing bug
 
 	$this->webDriver->findElement(WebDriverBy::id('image_1'))->click();
@@ -141,15 +151,15 @@ class P4_CarouselHeader extends P4_login {
 	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('header_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Hader 2 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl2");
 	$this->webDriver->findElement(WebDriverBy::name('subheader_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Subheader 2 Test');
+	$this->webDriver->getKeyboard()->sendKeys("$subtitl2");
 	$this->webDriver->findElement(WebDriverBy::name('description_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is test content created by an automated test for testing content in slide 2 of carousel header block');
+	$this->webDriver->getKeyboard()->sendKeys("$desc2");
 	$this->webDriver->findElement(WebDriverBy::name('link_text_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Detox Italy');
+	$this->webDriver->getKeyboard()->sendKeys("$blink2");
 	$this->webDriver->findElement(WebDriverBy::name('link_url_2'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('http://www.detox-outdoor.org/it-IT');
+	$this->webDriver->getKeyboard()->sendKeys("$burl2");
 
 	//Insert block
 	try{
@@ -196,11 +206,11 @@ class P4_CarouselHeader extends P4_login {
 
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("carousel-header"));
-		$this->assertEquals('Header 1 Test',
+		$this->assertEquals("$titl1",
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h1"))->getText());
-		$this->assertEquals('Subheader 1 Test',
+		$this->assertEquals("$subtitl1",
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h3"))->getText());
-		$this->assertEquals('This is test content created by an automated test for testing content in slide 1 of carousel header block',
+		$this->assertEquals("$desc1",
 			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header p"))->getText());
 		//Get image source and remove format extension so that we can compare it to the thumbnail src
 		$srcimg = substr(($this->webDriver->findElement(

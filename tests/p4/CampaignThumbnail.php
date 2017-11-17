@@ -43,13 +43,14 @@ class P4_CampaignThumbnail extends P4_login {
 
 
 	//Enter needed page fields
+	$tg = 'FixFood';
 	$field	= $this->webDriver->findElement(
 		WebDriverBy::id('title-prompt-text')
 	);
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Campaign Thumbnail');
 	$this->webDriver->findElement(WebDriverBy::name("newtag[post_tag]"))->click();
-	$this->webDriver->getKeyboard()->sendKeys('FixFood');
+	$this->webDriver->getKeyboard()->sendKeys("$tg");
 	$this->webDriver->getKeyboard()->pressKey('DOWN');
 	$this->webDriver->getKeyboard()->pressKey('ENTER');
 	$this->webDriver->findElement(WebDriverBy::className('tagadd'))->click();
@@ -84,8 +85,9 @@ class P4_CampaignThumbnail extends P4_login {
 	}
 
 	//Fill in field
+	$titl = 'Test title';
 	$this->webDriver->findElement(WebDriverBy::name('title'))->click();
-	$this->webDriver->getKeyboard()->sendKeys('Test title');
+	$this->webDriver->getKeyboard()->sendKeys();
 
 	//Insert block
 	try{
@@ -125,10 +127,10 @@ class P4_CampaignThumbnail extends P4_login {
 		$this->webDriver->findElement(WebDriverBy::className('campaign-thumbnail-block'));
 		$this->webDriver->findElement(WebDriverBy::className('thumbnail-largeview-container'));
 		$this->assertEquals(
-			'Test title',$this->webDriver->findElement(
+			"$titl",$this->webDriver->findElement(
 			WebDriverBy::cssSelector('.campaign-thumbnail-block h2'))->getText()
 		);
-		$this->assertEquals('FixFood', $this->webDriver->findElement(
+		$this->assertEquals("$tg", $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.thumbnail-largeview-container a'))->getText()
 		);
 	}catch(Exception $e){

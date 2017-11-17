@@ -71,17 +71,19 @@ class P4_Covers extends P4_login {
 	}
 
 	//Enter Block Title and Description
+	$titl = 'Take Action Block Test';
+	$desc = 'This is content created by an automated test for testing take action covers block';
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('title')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Take Action Block Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl");
 	
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('description')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('This is content created by an automated test for testing take action covers block');
+	$this->webDriver->getKeyboard()->sendKeys("$desc");
 
 	//Insert block
 	try{
@@ -127,9 +129,9 @@ class P4_Covers extends P4_login {
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('subheader'));
 		$this->webDriver->findElement(WebDriverBy::className('covers-block'));
-		$this->assertEquals('Take Action Block Test', $this->webDriver->findElement(
+		$this->assertEquals("$titl", $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.subheader .container h2'))->getText());
-		$this->assertEquals('This is content created by an automated test for testing take action covers block',
+		$this->assertEquals("$desc",
 			$this->webDriver->findElement(
 			WebDriverBy::cssSelector('.subheader .container p'))->getText());
 	}catch(Exception $e){

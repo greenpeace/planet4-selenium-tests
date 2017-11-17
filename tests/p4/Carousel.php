@@ -70,11 +70,12 @@ class P4_Carousel extends P4_login {
 	}
 
 	//Enter Block Title
+	$titl = 'Carousel Block Test';
 	$field = $this->webDriver->findElement(
 	WebDriverBy::name('carousel_block_title')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Carousel Block Test');
+	$this->webDriver->getKeyboard()->sendKeys("$titl");
 	
 	//Upload Carousel Images
 	$btn = $this->webDriver->findElement(
@@ -143,7 +144,7 @@ class P4_Carousel extends P4_login {
 		$this->webDriver->findElement(WebDriverBy::className('carousel-wrap'));
 		$this->webDriver->findElement(WebDriverBy::className('slide'));
 		$this->assertEquals(
-		'Carousel Block Test',$this->webDriver->findElement(
+		"$titl",$this->webDriver->findElement(
 		WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText()
 		);
 		$srcimg = substr(($this->webDriver->findElement(
