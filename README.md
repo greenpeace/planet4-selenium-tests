@@ -5,9 +5,11 @@ The purpose of this project is to have [Selenium][] running to test greenpeace.o
 ### Requisites
 This repository is verified to be run in UNIX operating systems with the following characteristics
 
-    PHP            5.3.29
-    Firefox        47.0.1
+    PHP            7.0
+    Chrome         62.0
+    Firefox        Not supported
     Selenium       2.53.1
+    Chromedriver   2.30
 
 
 Step by step build
