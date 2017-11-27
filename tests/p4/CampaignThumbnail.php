@@ -45,14 +45,15 @@ class P4_CampaignThumbnail extends P4_login {
 	//Enter needed page fields
 	$tg = 'FixFood';
 	$field	= $this->webDriver->findElement(
-		WebDriverBy::id('title-prompt-text')
-	);
+		WebDriverBy::id('title-prompt-text'));
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Campaign Thumbnail');
 	$this->webDriver->findElement(WebDriverBy::name("newtag[post_tag]"))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$tg");
-	$this->webDriver->getKeyboard()->pressKey('DOWN');
-	$this->webDriver->getKeyboard()->pressKey('ENTER');
+	//Sleep for 3 seconds for suggestion to appear
+	usleep(3000000); 
+	//Select suggestion
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
 	$this->webDriver->findElement(WebDriverBy::className('tagadd'))->click();
 
 	//Click on button to add blocks
@@ -87,7 +88,7 @@ class P4_CampaignThumbnail extends P4_login {
 	//Fill in field
 	$titl = 'Test title';
 	$this->webDriver->findElement(WebDriverBy::name('title'))->click();
-	$this->webDriver->getKeyboard()->sendKeys();
+	$this->webDriver->getKeyboard()->sendKeys("$titl");
 
 	//Insert block
 	try{
@@ -120,28 +121,29 @@ class P4_CampaignThumbnail extends P4_login {
 
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
-		WebDriverBy::linkText('View page')
-	);	
+		WebDriverBy::linkText('View page'));	
 	$link->click();
+	//If alert shows up asking to confirm leaving the page, confirm
+	try{
+		$this->webDriver->switchTo()->alert()->accept();
+	}catch(Exception $e){}
+	//Validate elements corresponding to block are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('campaign-thumbnail-block'));
 		$this->webDriver->findElement(WebDriverBy::className('thumbnail-largeview-container'));
-		$this->assertEquals(
-			"$titl",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.campaign-thumbnail-block h2'))->getText()
-		);
-		$this->assertEquals("$tg", $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.thumbnail-largeview-container a'))->getText()
-		);
+		$subtg = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.thumbnail-largeview-container a'))->getText()), 1, strlen("$tg"));
 	}catch(Exception $e){
 		$this->fail('->Failed to see some content in front end page');
 	}
-
+	$this->assertEquals(
+		"$titl",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('.campaign-thumbnail-block h2'))->getText());
+	$this->assertEquals("$tg", "$subtg");
 
 	// I log out after test
     $this->wpLogout();
   }
-
 
   protected function assertElementNotFound($by)
   {
