@@ -96,7 +96,14 @@ class P4_Carousel extends P4_login {
 	//Select first image of media library
 	$srcfirstchild = $this->webDriver->findElement(
 		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$srcsecondchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src');
+	$srcthirdchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
+	$thirdimg = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(3)"));
+	//Press shift key while clicking on third image so that 3 images are selected
+	$this->webDriver->action()->keyDown(null,WebDriverKeys::SHIFT)->click($thirdimg)->keyUp(null,WebDriverKeys::SHIFT)->perform();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
 	//Insert block
@@ -108,7 +115,6 @@ class P4_Carousel extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to insert element');
 	}
-
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -140,21 +146,27 @@ class P4_Carousel extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 
+
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('carousel-wrap'));
 		$this->webDriver->findElement(WebDriverBy::className('slide'));
-		$this->assertEquals(
-		"$titl",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText()
-		);
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
+		$srcimg1 = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:first-child img'))
 		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
+		$srcimg2 = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(2) img'))
+		->getAttribute('src')), 0, -4);
+		$srcimg3 = substr(($this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(3) img'))
+		->getAttribute('src')), 0, -4);
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-
+	$this->assertEquals("$titl",$this->webDriver->findElement(
+		WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText());
+	$this->assertContains("$srcimg1","$srcfirstchild");
+	$this->assertContains("$srcimg2","$srcsecondchild");
+	$this->assertContains("$srcimg3","$srcthirdchild");
 	// I log out after test
 	$this->wpLogout();
   }
