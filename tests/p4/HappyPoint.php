@@ -93,14 +93,12 @@ class P4_HappyPoint extends P4_login {
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-
-	$this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->click();
-
+	
 	$chckbx = $this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->getAttribute('value');
 	if ($chckbx != "true"){
 		$this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->click();
 	}
-		
+
 	//Insert block
 	try{
 		$insert = $this->webDriver->findElement(
@@ -143,15 +141,28 @@ class P4_HappyPoint extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 
-	//try{
+	try{
 		$srcimg = substr($this->webDriver->findElement(
-			WebDriverBy::className('happy-point-block-wrap'))->getAttribute('src'), 0, -4);
-		/**
+			WebDriverBy::className('happy-point-block-wrap'))->getCssValue('background-image'), 5, -6);
+
+		$this->webDriver->findElement(
+			WebDriverBy::xPath('/html/body/div[2]/div/div/div/iframe')); 
+		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
+			WebDriverBy::xpath('/html/body/div[2]/div/div/div/iframe')));
+		$this->webDriver->findElement(
+			WebDriverBy::name('supporter.emailAddress'));
+		$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.en__component.en__component--formblock.row.justify-content-md-center'));
+		$this->webDriver->findElement(
+			WebDriverBy::id('en__field_supporter_country'));
+		$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.btn.btn-primary.btn-medium.subscriber-btn'));
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	**/
 	$this->assertContains("$srcimg","$srcfirstchild");
+	$this->webDriver->switchTo()->defaultContent();
+
 
 	// I log out after test
 	$this->wpLogout();
