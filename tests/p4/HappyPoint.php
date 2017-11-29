@@ -40,7 +40,6 @@ class P4_HappyPoint extends P4_login {
 	WebDriverBy::className('shortcake-add-post-element'))->getText()
 	);
 
-
 	//Enter title of page
 	$field	= $this->webDriver->findElement(
 	WebDriverBy::id('title-prompt-text')
@@ -73,11 +72,6 @@ class P4_HappyPoint extends P4_login {
 	//Validate corresponding fields are visible
 	try{
 		$this->webDriver->findElement(WebDriverBy::id("background"));
-		$this->webDriver->findElement(WebDriverBy::name("opacity"));
-		$this->webDriver->findElement(WebDriverBy::id("boxout_title"));
-		$this->webDriver->findElement(WebDriverBy::name("boxout_descr"));
-		$this->webDriver->findElement(WebDriverBy::name("boxout_link_text"));
-		$this->webDriver->findElement(WebDriverBy::name("boxout_link_url"));
 		$this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"));
 	}catch(Exception $e){
 		$this->fail("->Could not find tasks fields for 'Happy Point' block post element");
@@ -100,32 +94,12 @@ class P4_HappyPoint extends P4_login {
 	$img->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
-	$op = '50';
-	$titl = 'Happy test title';
-	$desc = 'This is content created by an automated test for testing happy point block';
-	$blink = 'Test button';
-	$burl = 'http://www.greenpeace.org';	
+	$this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->click();
 
-	$field = $this->webDriver->findElement(
-		WebDriverBy::name('opacity'));
-	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$op");
-	$field = $this->webDriver->findElement(
-		WebDriverBy::name('boxout_title'));
-	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$titl");
-	$field = $this->webDriver->findElement(
-		WebDriverBy::name('boxout_descr'));
-	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$desc");
-	$field = $this->webDriver->findElement(
-		WebDriverBy::name('boxout_link_text'));
-	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$blink");
-	$field = $this->webDriver->findElement(
-		WebDriverBy::name('boxout_link_url'));
-	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$burl");
+	$chckbx = $this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->getAttribute('value');
+	if ($chckbx != "true"){
+		$this->webDriver->findElement(WebDriverBy::name("mailing_list_iframe"))->click();
+	}
 		
 	//Insert block
 	try{
@@ -170,36 +144,14 @@ class P4_HappyPoint extends P4_login {
 	}catch(Exception $e){}
 
 	//try{
-		
-		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
 		$srcimg = substr($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-10 pt-20 iframe'))->getAttribute('src'), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
-
-
-
-		$this->webDriver->findElement(WebDriverBy::id('p4bks_tasks_container'));
-		$this->assertEquals("$ttitle",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#p4bks_tasks_container .container h3'))->getText());
-		$this->assertEquals("$tdesc",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#p4bks_tasks_container .container div.col-md-12'))->getText());
+			WebDriverBy::className('happy-point-block-wrap'))->getAttribute('src'), 0, -4);
 		/**
-		$this->assertEquals('1',$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col:nth-child(1) .step-info-wrap span'))->getText());
-		$this->assertEquals("$title1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information h5'))->getText());
-		$this->assertEquals("$desc1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information p'))->getText());
-		$this->assertEquals("2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('span.step-number:nth-child(2)'))->getText());
-		$this->assertEquals("$title2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information h5'))->getText());
-		$this->assertEquals("$desc2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information p'))->getText());
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
 	**/
+	$this->assertContains("$srcimg","$srcfirstchild");
 
 	// I log out after test
 	$this->wpLogout();
