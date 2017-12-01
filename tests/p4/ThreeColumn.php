@@ -95,7 +95,8 @@ class P4_ThreeColumn extends P4_login {
  	);
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys("$desc");
-	//Upload an image on column 1
+	
+	//UPLOAD IMAGE ON COLUMN 1
 	$field = $this->webDriver->findElement(
 	WebDriverBy::id('image_1'))->click();
 	$tab = $this->webDriver->findElement(WebDriverBy::linkText('Media Library'));
@@ -112,6 +113,73 @@ class P4_ThreeColumn extends P4_login {
 	$img->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
+	/**
+	//Insert block
+	try{
+		$insert = $this->webDriver->findElement(
+		WebDriverBy::className('media-button-insert')
+		);
+		$insert -> click();
+	}catch(Exception $e){
+		$this->fail('->Failed to insert element');
+	}
+
+	$this->webDriver->switchTo()->frame("content_ifr");
+	$cnt = $this->webDriver->findElement(WebDriverBy::cssSelector("[data-id='content']"));
+	$cnt->click();
+	$this->webDriver->action()->moveToElement($cnt)->perform();
+	//$btn = $this->webDriver->findElement(WebDriverBy::id("mceu_57"));
+	//$this->webDriver->switchTo()->frame($this->webDriver->findElement(WebDriverBy::id("mceu_57")));
+	$this->webDriver->switchTo()->defaultContent();
+	$this->webDriver->findElement(WebDriverBy::id("mceu_55"))->click();
+
+	
+
+	//UPLOAD IMAGE ON COLUMN 2
+	$field = $this->webDriver->findElement(
+	WebDriverBy::id('image_2'))->click();
+	$tab = $this->webDriver->findElement(WebDriverBy::linkText('Media Library'));
+	$tab->click();
+    //Wait for media library to load
+	$this->webDriver->wait(10, 1000)->until(
+	WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('ul.attachments'))
+	);
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
+    //Select second image
+    $srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src');
+	//$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(2)"));
+	$modalid = $this->webDriver->findElement(WebDriverBy::cssSelector("ul.attachments"))->getAttribute("id");;
+	$xpth = '"//*[@id=\''.$modalid.'\']/li[2]"';
+	//$this->webDriver->switchTo()->window($this->webDriver->findElement(
+	//	WebDriverBy::id("__wp-uploader-id-3")));
+	//$this->webDriver->switchTo()->activeElement();
+	//$img->click();
+	$this->webDriver->findElement(WebDriverBy::xpath("$xpth"))->click();
+	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
+
+
+
+
+
+	//UPLOAD IMAGE ON COLUMN 3
+	$field = $this->webDriver->findElement(
+	WebDriverBy::id('image_3'))->click();
+	$tab = $this->webDriver->findElement(WebDriverBy::linkText('Media Library'));
+	$tab->click();
+    //Wait for media library to load
+	$this->webDriver->wait(10, 1000)->until(
+	WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('ul.attachments'))
+	);
+	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
+    //Select third image
+    $srcfirstchild = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src');
+	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(3)"));
+	$img->click();
+	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
+
+**/
 
 	//Insert block
 	try{
