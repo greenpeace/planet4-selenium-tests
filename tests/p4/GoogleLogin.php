@@ -22,12 +22,10 @@ class P4_googlelogin extends AbstractClass {
   {
 
     //find login form
-    usleep(2000000);
     $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
     $form = $this->webDriver->findElement(WebDriverBy::className('galogin'));
     $form->click();
-    usleep(2000000);
     $this->webDriver->wait(10, 1000)->until(
       WebDriverExpectedCondition::titleIs('Sign in - Google Accounts'));
 
