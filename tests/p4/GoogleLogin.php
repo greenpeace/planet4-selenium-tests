@@ -56,10 +56,8 @@ class P4_googlelogin extends AbstractClass {
       $acc->click();
     }
 
-    $this->webDriver->wait(10, 1000)->until(
-      WebDriverExpectedCondition::titleIs('Dashboard'));
+    usleep(3000000);
 
-    // Validates user is logged in by locating dashboard
     $this->assertContains('Dashboard', $this->webDriver->getTitle());
 
   }
