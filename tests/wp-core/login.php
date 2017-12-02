@@ -6,9 +6,13 @@ require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_login extends AbstractClass {
 
+  
+  /** @var array */
+    private static $_config = array();
   /**
    * @var \RemoteWebDriver
    */
+
 
   protected $webDriver;
 
@@ -18,9 +22,11 @@ class P4_login extends AbstractClass {
   }
 
 
-  public function wpLogin()
+  public function testLogin()
   {
-
+    $_config = include('./config/config.php');
+    $p4_user = $_config['p4_user'];
+    $p4_pass = $_config['p4_password'];
     // find login form
     $form = $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
@@ -28,12 +34,12 @@ class P4_login extends AbstractClass {
     //Enter username
     $usernamefield = $this->webDriver->findElement(WebDriverBy::id('user_login'));
     $usernamefield->click();
-    $this->webDriver->getKeyboard()->sendKeys('test_user');
+    $this->webDriver->getKeyboard()->sendKeys("$p4_user");
 
     //Enter password
     $passfield = $this->webDriver->findElement(WebDriverBy::id('user_pass'));
     $passfield->click();
-    $this->webDriver->getKeyboard()->sendKeys('u3vsREsvjwo');
+    $this->webDriver->getKeyboard()->sendKeys("$p4_pass");
 	
     //Click on log in
     $login = $this->webDriver->findElement(WebDriverBy::id('wp-submit'));
