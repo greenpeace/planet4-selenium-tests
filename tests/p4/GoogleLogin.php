@@ -53,7 +53,7 @@ class P4_googlelogin extends AbstractClass {
       $this->webDriver->getKeyboard()->sendKeys("$pass");
       //Click on Next
       $this->webDriver->findElement(WebDriverBy::id('passwordNext'))->click();
-    }else{
+    }elseif($heading=="Choose an account"){
       $acc = $this->webDriver->findElement(
         WebDriverBy::cssSelector("p[data-email='".$email."']"));
       $acc->click();
