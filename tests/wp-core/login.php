@@ -22,7 +22,7 @@ class P4_login extends AbstractClass {
   }
 
 
-  public function testLogin()
+  public function wpLogin()
   {
     $_config = include('./config/config.php');
     $p4_user = $_config['p4_user'];
