@@ -6,6 +6,8 @@ require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_googlelogin extends AbstractClass {
 
+  /** @var array */
+    private static $_config = array();
   /**
    * @var \RemoteWebDriver
    */
@@ -21,6 +23,9 @@ class P4_googlelogin extends AbstractClass {
   public function testGoogleLogin()
   {
 
+    $_config = include('./config/config.php');
+    $email = $_config['email'];
+    $pass = $_config['email_password'];
     //find login form
     $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
@@ -35,7 +40,7 @@ class P4_googlelogin extends AbstractClass {
       //Enter email
       $usernamefield = $this->webDriver->findElement(WebDriverBy::id('identifierId'));
       $usernamefield->click();
-      $this->webDriver->getKeyboard()->sendKeys('tester.greenwire@gmail.com');
+      $this->webDriver->getKeyboard()->sendKeys("$email");
       usleep(2000000);
       //Click on Next
       $this->webDriver->findElement(WebDriverBy::id('identifierNext'))->click();
@@ -45,12 +50,12 @@ class P4_googlelogin extends AbstractClass {
       $passfield->click();
       $passfield = $this->webDriver->findElement(WebDriverBy::name('password'));
       $passfield->click();
-      $this->webDriver->getKeyboard()->sendKeys('u3vsREsvjwo');
+      $this->webDriver->getKeyboard()->sendKeys("$pass");
       //Click on Next
       $this->webDriver->findElement(WebDriverBy::id('passwordNext'))->click();
     }else{
       $acc = $this->webDriver->findElement(
-        WebDriverBy::cssSelector("p[data-email='lreyes@greenpeace.org']"));
+        WebDriverBy::cssSelector("p[data-email='".$email."']"));
       $acc->click();
     }
 
