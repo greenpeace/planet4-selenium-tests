@@ -12,14 +12,13 @@ class P4_ThreeColumn extends P4_login {
 
   public function testThreeColumn()
   {
-
-   	//I log in
+  	//Log in
 	try{
 		$this->wpLogin();
 	}catch(Exception $e){
 		$this->fail('->Failed to log in, verify credentials and URL');
 	}
-
+  	
 	//Go to pages and create content  
    	$this->webDriver->wait(3);
 	$pages = $this->webDriver->findElement(
@@ -111,9 +110,13 @@ class P4_ThreeColumn extends P4_login {
 		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
+	//Get info needed to upload image 1 and 2
+	$img2 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2)"))->getAttribute('data-id');
+	$img3 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3)"))->getAttribute('data-id');
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
-	/**
 	//Insert block
 	try{
 		$insert = $this->webDriver->findElement(
@@ -124,72 +127,13 @@ class P4_ThreeColumn extends P4_login {
 		$this->fail('->Failed to insert element');
 	}
 
-	$this->webDriver->switchTo()->frame("content_ifr");
-	$cnt = $this->webDriver->findElement(WebDriverBy::cssSelector("[data-id='content']"));
-	$cnt->click();
-	$this->webDriver->action()->moveToElement($cnt)->perform();
-	//$btn = $this->webDriver->findElement(WebDriverBy::id("mceu_57"));
-	//$this->webDriver->switchTo()->frame($this->webDriver->findElement(WebDriverBy::id("mceu_57")));
-	$this->webDriver->switchTo()->defaultContent();
-	$this->webDriver->findElement(WebDriverBy::id("mceu_55"))->click();
-
-	
-
-	//UPLOAD IMAGE ON COLUMN 2
-	$field = $this->webDriver->findElement(
-	WebDriverBy::id('image_2'))->click();
-	$tab = $this->webDriver->findElement(WebDriverBy::linkText('Media Library'));
-	$tab->click();
-    //Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-	WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('ul.attachments'))
-	);
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-    //Select second image
-    $srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src');
-	//$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(2)"));
-	$modalid = $this->webDriver->findElement(WebDriverBy::cssSelector("ul.attachments"))->getAttribute("id");;
-	$xpth = '"//*[@id=\''.$modalid.'\']/li[2]"';
-	//$this->webDriver->switchTo()->window($this->webDriver->findElement(
-	//	WebDriverBy::id("__wp-uploader-id-3")));
-	//$this->webDriver->switchTo()->activeElement();
-	//$img->click();
-	$this->webDriver->findElement(WebDriverBy::xpath("$xpth"))->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-
-
-
-
-
-	//UPLOAD IMAGE ON COLUMN 3
-	$field = $this->webDriver->findElement(
-	WebDriverBy::id('image_3'))->click();
-	$tab = $this->webDriver->findElement(WebDriverBy::linkText('Media Library'));
-	$tab->click();
-    //Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-	WebDriverExpectedCondition::presenceOfElementLocated(WebDriverBy::cssSelector('ul.attachments'))
-	);
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-    //Select third image
-    $srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src');
-	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(3)"));
-	$img->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-
-**/
-
-	//Insert block
-	try{
-		$insert = $this->webDriver->findElement(
-		WebDriverBy::className('media-button-insert')
-		);
-		$insert -> click();
-	}catch(Exception $e){
-		$this->fail('->Failed to insert element');
-	}
+	//Edit WYSIWYG text to add image 2 and 3
+	$this->webDriver->findElement(WebDriverBy::id("content-html"))->click();
+	$this->webDriver->findElement(WebDriverBy::id("content"))->click();
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ARROW_RIGHT);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->sendKeys("image_2=$img2 image_3=$img3 /]");
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -235,9 +179,9 @@ class P4_ThreeColumn extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	
 	// I log out after test
 	$this->wpLogout();
+	
   }
 
 
