@@ -41,6 +41,15 @@ class P4_login extends AbstractClass {
     $passfield->click();
     $this->webDriver->getKeyboard()->sendKeys("$p4_pass");
 	
+    //Fill in prove you are human field
+    $q = $this->webDriver->findElement(WebDriverBy::cssSelector('#loginform div'))->getText();
+    $q = substr($q, strpos($q, ":") + 1);
+    $q = substr($q, 0, -3);
+    $a = eval('return '.$q.';');
+    $ans = $this->webDriver->findElement(WebDriverBy::name('jetpack_protect_num'));
+    $ans->click();
+    $this->webDriver->getKeyboard()->sendKeys("$a");
+
     //Click on log in
     $login = $this->webDriver->findElement(WebDriverBy::id('wp-submit'));
     $login->click();
