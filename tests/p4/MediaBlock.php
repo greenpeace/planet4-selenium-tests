@@ -121,7 +121,8 @@ class P4_MediaBlock extends P4_login {
 	}
 	//Wait for saved changes to load
 	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
-	//Go to page to validate page contains Articles Block
+	
+	//Go to page to validate page contains Media Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
 	);	
