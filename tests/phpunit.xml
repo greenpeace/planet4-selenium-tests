@@ -5,7 +5,7 @@
 	<testsuite name="Planet 4">
 	<directory suffix=".php">p4</directory>
 	<exclude>./p4/EN_forms.php</exclude>
-  <exclude>./p4/Header.php</exclude>
+  <exclude>./p4/Varnish.php</exclude>
   <exclude>./p4/FourColumn.php</exclude>
 
 <!-- order of tests to be executed can also be specified as following:   
