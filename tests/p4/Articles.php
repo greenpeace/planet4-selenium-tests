@@ -14,13 +14,15 @@ class P4_Articles extends P4_login {
   {
 
   	$page_title = 'Test aumtomated - Articles';
-
+  	//Verify if user is already logged in
+  	$this->webDriver->getTitle();
    	//I log in
-	try{
+
+	//try{
    		$this->wpLogin();
-	}catch(Exception $e){
-		$this->fail('->Failed to log in, verify credentials and URL');
-	}
+	//}catch(Exception $e){
+	//	$this->fail('->Failed to log in, verify credentials and URL');
+	///}
 
 	//Go to pages to create content  
    	$this->webDriver->wait(3);
@@ -104,17 +106,14 @@ class P4_Articles extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to insert element');
 	}
-
-
+	//Wait for content to load
+	usleep(2000000);
 	//Publish content
 	$this->webDriver->findElement(
 	WebDriverBy::id('publish')
 	)->click();
-	
-	//Wait to see successful message
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::visibilityOfElementLocated(
-		WebDriverBy::id('message')));
+	//Wait for content to load
+	usleep(2000000);
 
 	try{
 		//Validate I see successful message
