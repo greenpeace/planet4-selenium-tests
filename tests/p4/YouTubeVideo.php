@@ -40,11 +40,9 @@ class P4_YouTubeVideo extends P4_login {
 		WebDriverBy::className('shortcake-add-post-element'))->getText()
 	);
 
-
 	//Enter title of page
 	$field	= $this->webDriver->findElement(
-		WebDriverBy::id('title-prompt-text')
-	);
+		WebDriverBy::id('title-prompt-text'));
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - YouTube Video');
 
@@ -127,13 +125,15 @@ class P4_YouTubeVideo extends P4_login {
 	}catch(Exception $e){}
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('video-block'));
-		$this->assertEquals("$titl",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.video-block h1'))->getText());
-		$this->assertContains("$ytid",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.video-block .video-section iframe'))->getAttribute('src'));
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.video-block h2'))->getText();
+		$ytid_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.video-block .video-section iframe'))->getAttribute('src');
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
+	$this->assertEquals("$titl","$titl_pg");
+	$this->assertContains("$ytid","$ytid_pg");
 
 	// I log out after test
     $this->wpLogout();
