@@ -94,12 +94,15 @@ class P4_Carousel extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
-	$srcsecondchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src');
-	$srcthirdchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src');
+	$srcfirstchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $srcfirstchild[1];
+	$srcsecondchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src'));
+	$srcsecondchild = $srcsecondchild[1];
+	$srcthirdchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src'));
+	$srcthirdchild = $srcthirdchild[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$thirdimg = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:nth-child(3)"));
 	//Press shift key while clicking on third image so that 3 images are selected
@@ -150,20 +153,21 @@ class P4_Carousel extends P4_login {
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('carousel-wrap'));
 		$this->webDriver->findElement(WebDriverBy::className('slide'));
-		$srcimg1 = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:first-child img'))
-		->getAttribute('src')), 0, -4);
-		$srcimg2 = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(2) img'))
-		->getAttribute('src')), 0, -4);
-		$srcimg3 = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(3) img'))
-		->getAttribute('src')), 0, -4);
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText();
+		$srcimg1 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:first-child img'))->getAttribute('src'));
+		$srcimg1 = $srcimg1[1];
+		$srcimg2 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(2) img'))->getAttribute('src'));
+		$srcimg2 = $srcimg2[1];
+		$srcimg3 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(3) img'))->getAttribute('src'));
+		$srcimg3 = $srcimg3[1];
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	$this->assertEquals("$titl",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText());
+	$this->assertEquals("$titl","$titl_pg");
 	$this->assertContains("$srcimg1","$srcfirstchild");
 	$this->assertContains("$srcimg2","$srcsecondchild");
 	$this->assertContains("$srcimg3","$srcthirdchild");
