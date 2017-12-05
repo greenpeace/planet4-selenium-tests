@@ -43,7 +43,8 @@ class P4_Covers extends P4_login {
 
 	//Enter title of page
 	$field	= $this->webDriver->findElement(
-	WebDriverBy::id('title-prompt-text')
+	//WebDriverBy::id('title-prompt-text')
+		WebDriverBy::id('titlewrap')
 	);
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys('Test automated - Take Action Covers test');
@@ -137,18 +138,27 @@ class P4_Covers extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 	try{
-		$this->webDriver->findElement(WebDriverBy::className('subheader'));
 		$this->webDriver->findElement(WebDriverBy::className('covers-block'));
-		$subtg = substr(($this->webDriver->findElement(
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('h2.page-section-header'))->getText();
+		$desc_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('p.page-section-description'))->getText();
+		$subtg1 = substr(($this->webDriver->findElement(
 			WebDriverBy::cssSelector('.col-lg-4.col-md-6:first-child .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+		$subtg2 = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-lg-4.col-md-6:nth-child(2) .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+		$subtg3 = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-lg-4.col-md-6:nth-child(2) .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+		$btntxt = $this->webDriver->findElement(WebDriverBy::cssSelector('.cover-card:first-child .cover-card-btn'))->getText();
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	$this->assertEquals("$titl", $this->webDriver->findElement(
-		WebDriverBy::cssSelector('.subheader .container h2'))->getText());
-	$this->assertEquals("$desc", $this->webDriver->findElement(
-		WebDriverBy::cssSelector('.subheader .container p'))->getText());
-	$this->assertEquals("$tg", "$subtg");
+	$this->assertEquals("$titl", "$titl_pg");
+	$this->assertEquals("$desc", "$desc_pg");
+	$this->assertEquals("$tg", "$subtg1");
+	$this->assertEquals("$tg", "$subtg2");
+	$this->assertEquals("$tg", "$subtg3");
+	$this->assertEquals("TAKE ACTION", "$btntxt");
 
 	// I log out after test
 	$this->wpLogout();
