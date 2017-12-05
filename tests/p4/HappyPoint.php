@@ -140,15 +140,11 @@ class P4_HappyPoint extends P4_login {
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
-
 	try{
 		$srcimg = substr($this->webDriver->findElement(
 			WebDriverBy::className('happy-point-block-wrap'))->getCssValue('background-image'), 5, -6);
-
-		$this->webDriver->findElement(
-			WebDriverBy::xPath('/html/body/div[2]/div/div/div/iframe')); 
 		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
-			WebDriverBy::xpath('/html/body/div[2]/div/div/div/iframe')));
+			WebDriverBy::cssSelector('.container iframe')));
 		$this->webDriver->findElement(
 			WebDriverBy::name('supporter.emailAddress'));
 		$this->webDriver->findElement(
@@ -162,7 +158,6 @@ class P4_HappyPoint extends P4_login {
 	}
 	$this->assertContains("$srcimg","$srcfirstchild");
 	$this->webDriver->switchTo()->defaultContent();
-
 
 	// I log out after test
 	$this->wpLogout();
