@@ -71,9 +71,9 @@ class P4_Header extends P4_login {
 	$this->webDriver->getKeyboard()->sendKeys("$titl");
 	$this->webDriver->findElement(WebDriverBy::id("p4_subtitle"))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$subtitl");
-	$fld = $this->webDriver->findElement(
-		WebDriverBy::cssSelector('.cmb2-id-p4-description #wp-p4_description-wrap #wp-p4_description-editor-container iframe'));
-	$fld->click();
+	$this->webDriver->findElement(WebDriverBy::className("cmb2-id-p4-description"));
+	$this->webDriver->findElement(
+		WebDriverBy::cssSelector("div[data-fieldtype='wysiwyg']"))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$desc");
 	$this->webDriver->findElement(WebDriverBy::id("p4_button_title"))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$blink");
@@ -88,8 +88,9 @@ class P4_Header extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$srcfirstchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $srcfirstchild[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
@@ -126,24 +127,28 @@ class P4_Header extends P4_login {
 	//Validate Block contains corresponding classes and content
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('page-header'));
-		$srcimg = substr(($this->webDriver->findElement(
-			WebDriverBy::className('hero-img-wrap'))->getCSSValue('background-image')), 5, -6);
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-header h1'))->getText();
+		$subtitl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-header h3'))->getText();
+		$desc_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-header p'))->getText();
+		$blink_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-header .col-md-4 a'))->getText();
+		$burl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-header .col-md-4 a'))->getAttribute('href');
+		$srcimg = explode("-",$this->webDriver->findElement(
+			WebDriverBy::className('page-header-image'))->getAttribute('src'));
+		$srcimg = $srcimg[1];
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	$this->assertEquals("$titl",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.page-header h1'))->getText());
-	$this->assertEquals("$subtitl",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.page-header h3'))->getText());
-	$this->assertEquals("$desc",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.page-header p'))->getText());
-	$blink = strtoupper ("$blink");
-	$this->assertEquals("$blink",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.page-header .col-md-4 a'))->getText());
-	$this->assertContains("$burl",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.page-header .col-md-4 a'))->getAttribute('href'));
+	$this->assertEquals("$titl","$titl_pg");
+	$this->assertEquals("$subtitl","$subtitl_pg");
+	$this->assertEquals("$desc","$desc_pg");
+	$this->assertEquals(strtoupper($blink),"$blink_pg");
+	$this->assertContains("$burl","$burl_pg");
 	$this->assertContains("$srcimg","$srcfirstchild");
-
 	// I log out after test
     $this->wpLogout();
   }
