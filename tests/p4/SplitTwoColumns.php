@@ -143,21 +143,23 @@ class P4_Split_TwoColumns extends P4_login {
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
-
 	try{
-		$this->webDriver->findElement(WebDriverBy::id('split_two_column'));
-		$this->webDriver->findElement(WebDriverBy::className('split-two-column-skewed-left'));
-		$this->webDriver->findElement(WebDriverBy::className('split-two-column-skewed-right'));
+		$this->webDriver->findElement(WebDriverBy::className('split-two-column'));
+		$issue_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.split-two-column-item.item--left h2.split-two-column-item-title'))->getText();
 		$subtg = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.split-two-column-skewed-right .part-right a'))->getText()), 1, strlen("$tg"));
+			WebDriverBy::cssSelector('.split-two-column-item.item--right a.split-two-column-item-tag'))->getText()), 1, strlen("$tg"));
+		$desc_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.split-two-column-item.item--right p.split-two-column-item-subtitle'))->getText();
+		$btn_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.split-two-column-item.item--right a.split-two-column-item-button'))->getText();
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	$this->assertEquals("$issue",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.split-two-column-skewed-left .part-left h2'))->getText());
+	$this->assertEquals("$issue","$issue_pg");
 	$this->assertEquals("$tg","$subtg");
-	$this->assertEquals("$desc",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('.split-two-column-skewed-right .part-right h5'))->getText());
+	$this->assertEquals("$desc","$desc_pg");
+	$this->assertEquals("SUPPORT THIS CAMPAIGN","$btn_pg");
 	
 	// I log out after test
 	$this->wpLogout();
