@@ -114,8 +114,15 @@ class P4_CarouselHeader extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$tmp = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $tmp[1];
+	//Get info needed to upload image 2
+	$img2 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2)"))->getAttribute('data-id');
+	$tmp = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src'));
+	$src2child = $tmp[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
@@ -136,19 +143,6 @@ class P4_CarouselHeader extends P4_login {
 	$desc2 = 'This is test content created by an automated test for testing content in slide 2 of carousel header block';
 	$blink2 = 'Detox Italy';
 	$burl2 = 'http://www.detox-outdoor.org/it-IT/';
-	/** Adding second image pending after fixing bug
-
-	$this->webDriver->findElement(WebDriverBy::id('image_1'))->click();
-	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
-	//Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
-		WebDriverBy::cssSelector('ul.attachments')));
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-	//Select first image of media library
-	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('header_2'))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$titl2");
@@ -171,6 +165,13 @@ class P4_CarouselHeader extends P4_login {
 		$this->fail('->Failed to insert element');
 	}
 
+	//Edit WYSIWYG text to add image 2 and 3
+	$this->webDriver->findElement(WebDriverBy::id("content-html"))->click();
+	$this->webDriver->findElement(WebDriverBy::id("content"))->click();
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ARROW_RIGHT);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->sendKeys("image_2=$img2 /]");
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -203,24 +204,55 @@ class P4_CarouselHeader extends P4_login {
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
-
+	//Validate elements from first slide
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("carousel-header"));
-		$this->assertEquals("$titl1",
-			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h1"))->getText());
-		$this->assertEquals("$subtitl1",
-			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header h3"))->getText());
-		$this->assertEquals("$desc1",
-			$this->webDriver->findElement(WebDriverBy::cssSelector(".carousel-caption .page-header p"))->getText());
 		//Get image source and remove format extension so that we can compare it to the thumbnail src
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
-		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
+		$tmp = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper-header .carousel-item.active img'))->getAttribute('src'));
+		$srcimg = $tmp[1];
+		$tmp = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper-header .carousel-item:nth-child(2) img'))->getAttribute('src'));
+		$srcimg2 = $tmp[1];
+		$titl1_pg = $this->webDriver->findElement(
+				WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header h1"))->getText();
+		$subtitl1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header h3"))->getText();
+		$desc1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header p"))->getText();
+		$blink1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header .action-button"))->getText();
+		$burl1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header .action-button a"))->getAttribute('href');
+		//Change to next slide
+		$this->webDriver->findElement(
+			WebDriverBy::className("carousel-control-next-icon"))->click();
+		$titl2_pg = $this->webDriver->findElement(
+				WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header h1"))->getText();
+		$subtitl2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header h3"))->getText();
+		$desc2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header p"))->getText();
+		$blink2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header .action-button"))->getText();
+		$burl2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header .action-button a"))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
 	}
 	
+	$this->assertEquals("$titl1","$titl1_pg");
+	$this->assertEquals("$subtitl1","$subtitl1_pg");
+	$this->assertEquals("$desc1","$desc1_pg");
+	$this->assertContains("$srcfirstchild","$srcimg");
+	$this->assertEquals(strtoupper($blink1),"$blink1_pg");
+	$this->assertEquals("$burl1","$burl1_pg");
+	$this->assertEquals("$titl2","$titl2_pg");
+	$this->assertEquals("$subtitl2","$subtitl2_pg");
+	$this->assertEquals("$desc2","$desc2_pg");
+	$this->assertContains("$src2child","$srcimg2");
+	$this->assertEquals(strtoupper($blink2),"$blink2_pg");
+	$this->assertEquals("$burl2","$burl2_pg");
 
 	// I log out after test
 	$this->wpLogout();
