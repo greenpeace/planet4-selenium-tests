@@ -138,10 +138,17 @@ class P4_Tasks extends P4_login {
 	);
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$srcfirstchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $srcfirstchild[1];
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
+	//Get info needed to upload image 2
+	$img2 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2)"))->getAttribute('data-id');
+	$src2child = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src'));
+	$src2child = $src2child[1];
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
 	//--- FILL IN FIELDS FOR TASK 2
@@ -157,7 +164,7 @@ class P4_Tasks extends P4_login {
 	);
 	$field->click();
  	$this->webDriver->getKeyboard()->sendKeys("$desc2");
-		
+
 	//Insert block
 	try{
 		$insert = $this->webDriver->findElement(
@@ -168,6 +175,13 @@ class P4_Tasks extends P4_login {
 		$this->fail('->Failed to insert element');
 	}
 
+	//Edit WYSIWYG text to add image 2
+	$this->webDriver->findElement(WebDriverBy::id("content-html"))->click();
+	$this->webDriver->findElement(WebDriverBy::id("content"))->click();
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ARROW_RIGHT);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->sendKeys("attachment_2=$img2 /]");
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -188,45 +202,52 @@ class P4_Tasks extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
+	usleep(2000000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
-	WebDriverBy::linkText('View page')
-	);	
+		WebDriverBy::linkText('View page'));	
 	$link->click();
 	//If alert shows up asking to confirm leaving the page, confirm
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
-
-	//try{
+	try{
 		$this->webDriver->findElement(WebDriverBy::id('p4bks_tasks_container'));
-		$this->assertEquals("$ttitle",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#p4bks_tasks_container .container h3'))->getText());
-		$this->assertEquals("$tdesc",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#p4bks_tasks_container .container div.col-md-12'))->getText());
-		/**
-		$this->assertEquals('1',$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col:nth-child(1) .step-info-wrap span'))->getText());
-		$this->assertEquals("$title1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information h5'))->getText());
-		$this->assertEquals("$desc1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information p'))->getText());
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('div:nth-child(1) .steps-information .steps-action img'))
-		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
-		$this->assertEquals("2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('span.step-number:nth-child(2)'))->getText());
-		$this->assertEquals("$title2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information h5'))->getText());
-		$this->assertEquals("$desc2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information p'))->getText());
+		$ttitle_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('#p4bks_tasks_container .container h3'))->getText();
+		$tdesc_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('#p4bks_tasks_container .container div.col-md-12'))->getText();
+		$task1 = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col:nth-child(1) .step-number'))->getText();
+		$tmp = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information .steps-action img'))->getAttribute('src'));
+		$srcimg = $tmp[1];
+		$title1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information h5'))->getText();
+		$desc1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(1) .steps-information p'))->getText();
+		$task2 = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col:nth-child(2) .step-number'))->getText();
+		$srcimg2 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information .steps-action img'))->getAttribute('src'));
+		$srcimg2 = $srcimg2[1];
+		$title2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information h5'))->getText();
+		$desc2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.col:nth-child(2) .steps-information p'))->getText();
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	**/
-
+	$this->assertEquals("$ttitle","$ttitle_pg");
+	$this->assertEquals("$tdesc","$tdesc_pg");
+	$this->assertEquals("1","$task1");
+	$this->assertContains("$srcimg","$srcfirstchild");
+	$this->assertEquals("$title1","$title1_pg");
+	$this->assertEquals("$desc1","$desc1_pg");
+	$this->assertEquals("2","$task2");
+	$this->assertContains("$srcimg2","$src2child");
+	$this->assertEquals("$title2","$title2_pg");
+	$this->assertEquals("$desc2","$desc2_pg");
 	// I log out after test
 	$this->wpLogout();
   }
