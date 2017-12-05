@@ -86,8 +86,9 @@ class P4_MediaBlock extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$tmp = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $tmp[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
@@ -134,14 +135,13 @@ class P4_MediaBlock extends P4_login {
 
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('block-media'));
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::className('block-media'))
-		->getCSSValue('background-image')), 5, -6);
-		$this->assertContains("$srcimg","$srcfirstchild");
+		$tmp = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.block-media img'))->getattribute('src'));
+		$srcimg = $tmp[1];
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
 	}
-
+	$this->assertContains("$srcimg","$srcfirstchild");
 	// I log out after test
     $this->wpLogout();
   }
