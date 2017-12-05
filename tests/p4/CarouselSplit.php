@@ -85,8 +85,9 @@ class P4_CarouselSplit extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$srcfirstchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $srcfirstchild[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	
@@ -131,21 +132,18 @@ class P4_CarouselSplit extends P4_login {
 	try{
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
-	
 	try{
 		$this->webDriver->findElement(WebDriverBy::className("split-carousel-wrap"));
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))
-		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
+		$srcimg = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item.active img'))->getAttribute('src'));
+		$srcimg = $srcimg[1];
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
 	}
-
+	$this->assertContains("$srcimg","$srcfirstchild");
 	// I log out after test
 	$this->wpLogout();
   }
-
 
   protected function assertElementNotFound($by)
   {
