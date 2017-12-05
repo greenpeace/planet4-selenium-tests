@@ -110,9 +110,27 @@ class P4_Static4Column extends P4_login {
 		WebDriverBy::cssSelector('ul.attachments')));
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image of media library
-	$srcfirstchild = $this->webDriver->findElement(
-		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
+	$srcfirstchild = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
+	$srcfirstchild = $srcfirstchild[1];
 	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
+	//Get info needed to upload image 2, 3 and 4
+	$img2 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2)"))->getAttribute('data-id');
+	$src2child = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src'));
+	$src2child = $src2child[1];
+	$img3 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3)"))->getAttribute('data-id');
+	$src3child = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src'));
+	$src3child = $src3child[1];
+	$img4 = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(4)"))->getAttribute('data-id');
+	$src4child = explode("-",$this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(4) img"))->getAttribute('src'));
+	$src4child = $src4child[1];
+	//Add image
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_1'))->click();
@@ -126,26 +144,11 @@ class P4_Static4Column extends P4_login {
 	
 
 	//----- FILL IN FIELDS FOR COLUMN 2
-	
 	//Define test content
 	$title2 = "Column 2 Test";
 	$description2 = "This is test content created by an automated test for testing content in column 2 of static 4 column block";
 	$linktext2 = "Detox Italy";
 	$linkurl2 = "http://www.detox-outdoor.org/it-IT";
-	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-	$this->webDriver->findElement(WebDriverBy::id('attachment_2'))->click();
-	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
-	//Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
-		WebDriverBy::cssSelector('ul.attachments')));
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-	//Select first image of media library
-	$ul_id= $this->webDriver->findElement(WebDriverBy::className("attachments"))->getAttribute('id');
-        $xpath = "//*[@id='".$ul_id."']/li[2]";
-        $this->webDriver->findElement(WebDriverBy::xPath("{$xpath}"))->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_2'))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$title2");
@@ -163,18 +166,6 @@ class P4_Static4Column extends P4_login {
 	$description3 = "This is test content created by an automated test for testing content in column 3 of static 4 column block";
 	$linktext3 = "Detox France";
 	$linkurl3 = "http://www.detox-outdoor.org/fr-CH";
-	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-	$this->webDriver->findElement(WebDriverBy::id('attachment_3'))->click();
-	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
-	//Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
-		WebDriverBy::cssSelector('ul.attachments')));
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-	//Select first image of media library
-	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_3'))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$title3");
@@ -192,18 +183,6 @@ class P4_Static4Column extends P4_login {
 	$description4 = "This is test content created by an automated test for testing content in column 4 of static 4 column block";
 	$linktext4 = "Detox Finland";
 	$linkurl4 = "http://www.detox-outdoor.org/fi";
-	/** Uploading pictures in this column will be postponed until we find a solution for the bug
-	$this->webDriver->findElement(WebDriverBy::id('attachment_4'))->click();
-	$this->webDriver->findElement(WebDriverBy::linkText('Media Library'))->click();
-	//Wait for media library to load
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::presenceOfElementLocated(
-		WebDriverBy::cssSelector('ul.attachments')));
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
-	//Select first image of media library
-	$this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"))->click();
-	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
-	**/
 	//Fill in rest of fields
 	$this->webDriver->findElement(WebDriverBy::name('title_4'))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$title4");
@@ -224,6 +203,14 @@ class P4_Static4Column extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to insert element');
 	}
+
+	//Edit WYSIWYG text to add image 2 and 3
+	$this->webDriver->findElement(WebDriverBy::id("content-html"))->click();
+	$this->webDriver->findElement(WebDriverBy::id("content"))->click();
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ARROW_RIGHT);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
+	$this->webDriver->getKeyboard()->sendKeys("attachment_2=$img2 attachment_3=$img3 attachment_4=$img4/]");
 
 	//Publish content
 	$this->webDriver->findElement(
@@ -256,49 +243,82 @@ class P4_Static4Column extends P4_login {
 
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('four-coloum'));
-		//Validate column 1 fields
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-symbol:nth-child(1) img'))
-		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
-		$this->assertEquals("$title1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) h5'))->getText());
-		$this->assertEquals("$description1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) p'))->getText());
-		$this->assertEquals("$linktext1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getText()); 
-		$this->assertEquals("$linkurl1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getAttribute('href'));
-		//Validate column 2 fields
-		$this->assertEquals("$title2",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information h5'))->getText());
-		$this->assertEquals("$description2",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information p'))->getText());
-		$this->assertEquals("$linktext2",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getText()); 
-		$this->assertEquals("$linkurl2",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getAttribute('href'));	
-		//Validate column 3 fields
-		$this->assertEquals("$title3",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information h5'))->getText());
-		$this->assertEquals("$description3",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information p'))->getText());
-		$this->assertEquals("$linktext3",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information a'))->getText()); 
-		$this->assertEquals("$linkurl3",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information a'))->getAttribute('href'));	
-		//Validate column 4 fields
-		$this->assertEquals("$title4",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information h5'))->getText());
-		$this->assertEquals("$description4",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information p'))->getText());
-		$this->assertEquals("$linktext4",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information a'))->getText()); 
-		$this->assertEquals("$linkurl4",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.col-md-3.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information a'))->getAttribute('href'));	
+		//Get info of posted images
+		$srcimg1 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-coloum-symbol:nth-child(1) img'))->getAttribute('src'));
+		$srcimg1 = $srcimg1[1];
+		$title1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(1) h5'))->getText();
+		$description1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(1) p'))->getText();
+		$linktext1_pg = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(1) .four-coloum-information .four-coloum-action a'))
+			->getText()),0,-2);
+		$linkurl1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getAttribute('href');
+		$srcimg2 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-symbol img'))->getAttribute('src'));
+		$srcimg2 = $srcimg2[1];
+		$title2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) h5'))->getText();
+		$description2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) p'))->getText();
+		$linktext2_pg = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))
+			->getText()),0,-2);
+		$linkurl2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
+		$srcimg3 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-symbol img'))->getAttribute('src'));
+		$srcimg3 = $srcimg3[1];
+		$title3_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) h5'))->getText();
+		$description3_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) p'))->getText();
+		$linktext3_pg = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information .four-coloum-action a'))
+			->getText()),0,-2);
+		$linkurl3_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
+		$srcimg4 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-symbol img'))->getAttribute('src'));
+		$srcimg4 = $srcimg4[1];
+		$title4_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) h5'))->getText();
+		$description4_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) p'))->getText();
+		$linktext4_pg = substr(($this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information .four-coloum-action a'))
+			->getText()),0,-2);
+		$linkurl4_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
+	//Validate column 1 fields
+	$this->assertContains("$srcimg1","$srcfirstchild");
+	$this->assertEquals("$title1","$title1_pg");
+	$this->assertEquals("$description1","$description1_pg");
+	$this->assertEquals("$linktext1","$linktext1_pg"); 
+	$this->assertEquals("$linkurl1","$linkurl1_pg");
+	//Validate column 2 fields
+	$this->assertContains("$srcimg2","$src2child");
+	$this->assertEquals("$title2","$title2_pg");
+	$this->assertEquals("$description2","$description2_pg");
+	$this->assertEquals("$linktext2","$linktext2_pg"); 
+	$this->assertEquals("$linkurl2","$linkurl2_pg");	
+	//Validate column 3 fields
+	$this->assertContains("$srcimg3","$src3child");
+	$this->assertEquals("$title3","$title3_pg");
+	$this->assertEquals("$description3","$description3_pg");
+	$this->assertEquals("$linktext3","$linktext3_pg"); 
+	$this->assertEquals("$linkurl3","$linkurl3_pg");	
+	//Validate column 4 fields
+	$this->assertContains("$srcimg4","$src4child");
+	$this->assertEquals("$title4","$title4_pg");
+	$this->assertEquals("$description4","$description4_pg");
+	$this->assertEquals("$linktext4","$linktext4_pg"); 
+	$this->assertEquals("$linkurl4","$linkurl4_pg");	
 	// I log out after test
     $this->wpLogout();
   }
