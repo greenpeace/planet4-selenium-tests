@@ -110,11 +110,15 @@ class P4_ThreeColumn extends P4_login {
 		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src');
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
-	//Get info needed to upload image 1 and 2
+	//Get info needed to upload image 2 and 3
 	$img2 = $this->webDriver->findElement(
 		WebDriverBy::cssSelector("li.attachment:nth-child(2)"))->getAttribute('data-id');
+	$src2child = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(2) img"))->getAttribute('src');
 	$img3 = $this->webDriver->findElement(
 		WebDriverBy::cssSelector("li.attachment:nth-child(3)"))->getAttribute('data-id');
+	$src3child = $this->webDriver->findElement(
+		WebDriverBy::cssSelector("li.attachment:nth-child(3) img"))->getAttribute('src');
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
 
 	//Insert block
@@ -166,19 +170,29 @@ class P4_ThreeColumn extends P4_login {
 	}catch(Exception $e){}
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('split-three-column'));
-		$this->assertEquals("$titl",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.three-column-info h2'))->getText());
-		$this->assertEquals("$desc",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.three-column-info p'))->getText());
-		$srcimg = substr(($this->webDriver->findElement(
-		WebDriverBy::cssSelector('.col:nth-child(1) .first-column img'))
-		->getAttribute('src')), 0, -4);
-		$this->assertContains("$srcimg","$srcfirstchild");
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.col:nth-child(2)'));
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.col:nth-child(3)'));
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.three-column-info h2'))->getText();
+		$desc_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.three-column-info p'))->getText();
+		$srcimg1 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.three-column-images .first-column img'))->getAttribute('src'));
+		$srcimg1 = $srcimg1[1];
+		$srcimg2 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.three-column-images .second-column img'))->getAttribute('src'));
+		$srcimg2 = $srcimg2[1];
+		$srcimg3 = explode("-",$this->webDriver->findElement(
+			WebDriverBy::cssSelector('.three-column-images .third-column img'))->getAttribute('src'));
+		$srcimg3 = $srcimg3[1];
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
+	$this->assertEquals("$titl","$titl_pg");
+	$this->assertEquals("$desc","$desc_pg");
+	$this->assertContains("$srcimg1","$srcfirstchild");
+	$this->assertContains("$srcimg2","$src2child");
+	$this->assertContains("$srcimg3","$src3child");
 	// I log out after test
 	$this->wpLogout();
 	
