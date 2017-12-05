@@ -179,27 +179,34 @@ class P4_TwoColumn_Content extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 	try{
-		$this->webDriver->findElement(WebDriverBy::id('p4bks_two_columns_container'));
-		$this->assertEquals("$titl1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) h2'))->getText());
-		$this->assertEquals("$desc1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) p'))->getText());
-		$this->assertEquals("$btext1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getText());
-		$this->assertContains("$blink1",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getAttribute('href'));
-		$this->assertEquals("$titl2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) h2'))->getText());
-		$this->assertEquals("$desc2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) p'))->getText());
-		$this->assertEquals("$btext2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getText());
-		$this->assertContains("$blink2",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getAttribute('href'));
+		$this->webDriver->findElement(WebDriverBy::className('content-two-column-block'));
+		$titl1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) h2'))->getText();
+		$desc1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) p'))->getText();
+		$btext1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getText();
+		$blink1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getAttribute('href');
+		$titl2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) h2'))->getText();
+		$desc2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) p'))->getText();
+		$btext2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getText();
+		$blink2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-
+	$this->assertEquals("$titl1","$titl1_pg");
+	$this->assertEquals("$desc1","$desc1_pg");
+	$this->assertEquals(strtoupper($btext1),"$btext1_pg");
+	$this->assertContains("$blink1","$blink1_pg");
+	$this->assertEquals("$titl2","$titl2_pg");
+	$this->assertEquals("$desc2","$desc2_pg");
+	$this->assertEquals(strtoupper($btext2),"$btext2_pg");
+	$this->assertContains("$blink2","$blink2_pg");
 	// I log out after test
 	$this->wpLogout();
   }
