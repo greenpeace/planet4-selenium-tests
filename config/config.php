@@ -8,7 +8,7 @@ return array(
 	'url'=> 'http://planet4.greenpeace.org/wp-admin'      
     **/
     //Staging
-    'url'=> 'http://dev.p4.greenpeace.org/wp-admin',
+    'url'=> 'http://dev.p4.greenpeace.org',
     /**
     //P3 sample tests
 	'url' => 'http://www.greenpeace.org/international/en/about/jobs/'

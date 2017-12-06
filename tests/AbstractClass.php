@@ -19,9 +19,9 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 
     public function setUp()
     {
-		$_config = include('./config/config.php');
-	        $this->_url = $_config['url'];
-		$options = new ChromeOptions();
+        $_config = include('./config/config.php');
+        $this->_url = $_config['url'];
+        $options = new ChromeOptions();
 		$options->addArguments(array('--window-size=1366,996',));
 		$capabilities = DesiredCapabilities::chrome();
 	    $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);

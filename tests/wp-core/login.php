@@ -18,12 +18,14 @@ class P4_login extends AbstractClass {
 
   public function setUp()
   {
-	parent::setUp();
+    parent::setUp();
   }
 
 
   public function wpLogin()
   {
+    $u = $this->_url . "/wp-admin";
+    $this->webDriver->get($u);
     $_config = include('./config/config.php');
     $p4_user = $_config['p4_user'];
     $p4_pass = $_config['p4_password'];
