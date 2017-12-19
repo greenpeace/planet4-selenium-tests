@@ -144,11 +144,11 @@ class P4_Covers extends P4_login {
 		$desc_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('p.page-section-description'))->getText();
 		$subtg1 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-lg-4.col-md-6:first-child .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:first-child a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
 		$subtg2 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-lg-4.col-md-6:nth-child(2) .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:nth-child(2) a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
 		$subtg3 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-lg-4.col-md-6:nth-child(2) .cover-card a:first-child'))->getText()), 1, strlen("$tg"));
+			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:nth-child(3) a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
 		$btntxt = $this->webDriver->findElement(WebDriverBy::cssSelector('.cover-card:first-child .cover-card-btn'))->getText();
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
