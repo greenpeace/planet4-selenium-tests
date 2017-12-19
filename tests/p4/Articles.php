@@ -139,14 +139,14 @@ class P4_Articles extends P4_login {
 
 	//Validate elements are present
 	try{
-		$this->webDriver->findElement(WebDriverBy::className("article"));
-		$this->webDriver->findElement(WebDriverBy::className("topicwise-article-section"));
-		$this->assertContains("$block_title", $this->webDriver->findElement(
-			WebDriverBy::cssSelector(".article .container .row .col-md-8.col-lg-9 h3"))->getText()
-		);
+		$this->webDriver->findElement(WebDriverBy::className("article-listing"));
+		$this->webDriver->findElement(WebDriverBy::className("article-list-section"));
+		$block_title_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector(".article-listing h3.page-section-header"))->getText();
 	}catch(Exception $e){
 		$this->fail('->Failed to see some of the created content on front end page');
 	}
+	$this->assertContains("$block_title", "$block_title_pg");
 
 	// I log out after test
 	$this->wpLogout();
