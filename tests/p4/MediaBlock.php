@@ -121,8 +121,7 @@ class P4_MediaBlock extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
-	
+	usleep(2000000);
 	//Go to page to validate page contains Media Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')

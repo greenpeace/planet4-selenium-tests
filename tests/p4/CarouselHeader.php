@@ -194,7 +194,7 @@ class P4_CarouselHeader extends P4_login {
 	}
 
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
+	usleep(2000000);
 	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
@@ -240,7 +240,7 @@ class P4_CarouselHeader extends P4_login {
 	}catch(Exception $e){
 		$this->fail("->Some of the content created is not displayed in front end page");
 	}
-	
+
 	$this->assertEquals("$titl1","$titl1_pg");
 	$this->assertEquals("$subtitl1","$subtitl1_pg");
 	$this->assertEquals("$desc1","$desc1_pg");

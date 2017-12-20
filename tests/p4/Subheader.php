@@ -113,7 +113,7 @@ class P4_Subheader extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10000);
+	usleep(2000000);
 	//Go to page to validate page contains Subheader Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')

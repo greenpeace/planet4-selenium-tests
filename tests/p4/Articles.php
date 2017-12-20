@@ -126,7 +126,7 @@ class P4_Articles extends P4_login {
         }
 
     //Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(100);
+	usleep(2000000);
 	//Go to page to validate page contains Articles Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')

@@ -131,8 +131,8 @@ class P4_FourColumn extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-	//Wait 3 secs for saved changes to load
-	usleep(3000000);
+	//Wait 2 secs for saved changes to load
+	usleep(2000000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page')

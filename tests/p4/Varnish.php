@@ -63,7 +63,7 @@ class P4_Varnish extends P4_login {
 	}
 	
 	//Wait for saved changes to load
-	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
+	usleep(2000000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
 		WebDriverBy::linkText('View page'));	
