@@ -26,6 +26,8 @@ class P4_googlelogin extends AbstractClass {
     $_config = include('./config/config.php');
     $email = $_config['email'];
     $pass = $_config['email_password'];
+    $u = $this->_url . "/wp-admin";
+    $this->webDriver->get($u);
     //find login form
     $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
