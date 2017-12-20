@@ -13,7 +13,7 @@ class P4_Articles extends P4_login {
   public function testArticles()
   {
 
-  	$page_title = 'Test aumtomated - Articles';
+  	$page_title = 'Test automated - Articles';
   	//Verify if user is already logged in
   	$this->webDriver->getTitle();
    	//I log in
