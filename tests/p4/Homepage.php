@@ -24,18 +24,18 @@ class P4_Homepage extends AbstractClass {
 
 	//Validate article block elements are present
 	try{
-		$this->webDriver->findElement(WebDriverBy::className('article'));
+		$this->webDriver->findElement(WebDriverBy::className('article-listing'));
 	}catch(Exception $e){
 		$this->fail('->Failed to see some elements of article block');
 	}
 
 	//Validate 4-column block elements are present
 	try{
-		$this->webDriver->findElement(WebDriverBy::className('four-coloum'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(1)'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(2)'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(3)'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(4)'));		
+		$this->webDriver->findElement(WebDriverBy::className('four-column'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(1)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(2)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(3)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(4)'));		
 	}catch(Exception $e){
 		$this->fail('->Failed to see some elements of 4-column block');
 	}
@@ -51,34 +51,36 @@ class P4_Homepage extends AbstractClass {
 
 	//Validate footer block elements are present
 	try{
-		$this->webDriver->findElement(WebDriverBy::id('footer'));
+		$this->webDriver->findElement(WebDriverBy::className('site-footer'));
 		$fb = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-social-media li:nth-child(1) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-social-media li:nth-child(1) a'))->getAttribute('href');
 		$twt = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-social-media li:nth-child(2) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-social-media li:nth-child(2) a'))->getAttribute('href');
 		$yt = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-social-media li:nth-child(3) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-social-media li:nth-child(3) a'))->getAttribute('href');
 		$inst = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-social-media li:nth-child(4) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-social-media li:nth-child(4) a'))->getAttribute('href');
 		$news = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(1) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(1) a'))->getAttribute('href');
 		$about = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(2) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(2) a'))->getAttribute('href');
 		$jobs = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(3) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(3) a'))->getAttribute('href');
 		$faq = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(4) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(4) a'))->getAttribute('href');
 		$press = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(5) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(5) a'))->getAttribute('href');
 		$terms = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(6) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(6) a'))->getAttribute('href');
 		$privacy = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(7) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(1) a'))->getAttribute('href');
 		$community = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(8) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(2) a'))->getAttribute('href');
 		$search = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#footer .footer-links li:nth-child(9) a'))->getAttribute('href');
-		$this->webDriver->findElement(WebDriverBy::cssSelector('#footer .copyright-text'));
+			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(3) a'))->getAttribute('href');
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.site-footer .copyright-text'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.site-footer .gp-year'));
+		
 	}catch(Exception $e){
 		$this->fail('->Failed to see some elements of footer block');
 	}
