@@ -242,56 +242,56 @@ class P4_Static4Column extends P4_login {
 	}catch(Exception $e){}
 
 	try{
-		$this->webDriver->findElement(WebDriverBy::className('four-coloum'));
+		$this->webDriver->findElement(WebDriverBy::className('four-column'));
 		//Get info of posted images
 		$srcimg1 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-coloum-symbol:nth-child(1) img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) img'))->getAttribute('src'));
 		$srcimg1 = $srcimg1[1];
 		$title1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(1) h5'))->getText();
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information h5'))->getText();
 		$description1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(1) p'))->getText();
-		$linktext1_pg = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(1) .four-coloum-information .four-coloum-action a'))
-			->getText()),0,-2);
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information p'))->getText();
+		$linktext1_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information a'))
+			->getText();
 		$linkurl1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) .four-coloum-action a'))->getAttribute('href');
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information a'))->getAttribute('href');
 		$srcimg2 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.four-coloum .col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-symbol img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) img'))->getAttribute('src'));
 		$srcimg2 = $srcimg2[1];
 		$title2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) h5'))->getText();
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information h5'))->getText();
 		$description2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) p'))->getText();
-		$linktext2_pg = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))
-			->getText()),0,-2);
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information p'))->getText();
+		$linktext2_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information a'))
+			->getText();
 		$linkurl2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(2) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information a'))->getAttribute('href');
 		$srcimg3 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-symbol img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) img'))->getAttribute('src'));
 		$srcimg3 = $srcimg3[1];
 		$title3_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) h5'))->getText();
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information h5'))->getText();
 		$description3_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) p'))->getText();
-		$linktext3_pg = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information .four-coloum-action a'))
-			->getText()),0,-2);
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information p'))->getText();
+		$linktext3_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information a'))
+			->getText();
 		$linkurl3_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(3) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information a'))->getAttribute('href');
 		$srcimg4 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-symbol img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) img'))->getAttribute('src'));
 		$srcimg4 = $srcimg4[1];
 		$title4_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) h5'))->getText();
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information h5'))->getText();
 		$description4_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) p'))->getText();
-		$linktext4_pg = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information .four-coloum-action a'))
-			->getText()),0,-2);
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information p'))->getText();
+		$linktext4_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information a'))
+			->getText();
 		$linkurl4_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-6.col-lg-3.col-xl-3:nth-child(4) .four-coloum-information .four-coloum-action a'))->getAttribute('href');
+			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information a'))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
