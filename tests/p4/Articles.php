@@ -142,7 +142,7 @@ class P4_Articles extends P4_login {
 		$this->webDriver->findElement(WebDriverBy::className("article-listing"));
 		$this->webDriver->findElement(WebDriverBy::className("article-list-section"));
 		$block_title_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector(".article-listing h3.page-section-header"))->getText();
+			WebDriverBy::cssSelector(".article-listing .article-listing-intro h3.page-section-header"))->getText();
 	}catch(Exception $e){
 		$this->fail('->Failed to see some of the created content on front end page');
 	}
