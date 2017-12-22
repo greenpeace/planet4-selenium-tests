@@ -73,8 +73,10 @@ class P4_FourColumn extends P4_login {
 	//Validate corresponding fields are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::name("title"));
-		$this->webDriver->findElement(WebDriverBy::name("p4_post_types"));
 		$this->webDriver->findElement(WebDriverBy::name("select_tag"));
+		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_press_release"));
+		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_publication"));
+		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_story"));
 	}catch(Exception $e){
 		$this->fail("->Fields corresponding to 'Content Four Column' block not found");
 	}
@@ -82,25 +84,19 @@ class P4_FourColumn extends P4_login {
 	//----- FILL IN FIELDS
 	//Define test content
 	$titl = "Content 4 column Test title";
-	$posttype = "Publication";
 	$tg = "ArcticSunrise";
 	//Fill in fields
 	$this->webDriver->findElement(WebDriverBy::name('title'))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$titl");
-	//Fill in post type
-	$this->webDriver->findElement(WebDriverBy::className('select2-container'))->click();
-	$this->webDriver->getKeyboard()->sendKeys("$posttype");
-	//Sleep for 3 seconds
-	usleep(3000000); 
-	//Select suggestion
-	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
 	//Fill in tag
-	$this->webDriver->findElement(WebDriverBy::xPath("//*[@id='__wp-uploader-id-0']/div[4]/div/div/form/div/div[3]/div/span/span[1]/span/ul/li"))->click();
+	$this->webDriver->findElement(WebDriverBy::className("select2-container"))->click();
 	$this->webDriver->getKeyboard()->sendKeys("$tg");
 	//Sleep for 3 seconds
 	usleep(3000000); 
 	//Select suggestion
 	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+	//Select post type
+	$this->webDriver->findElement(WebDriverBy::name('p4_page_type_press_release'))->click();
 	
 	//Insert block
 	try{
@@ -143,17 +139,17 @@ class P4_FourColumn extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 
-	/**
+	
 	try{
-		$this->webDriver->findElement(WebDriverBy::className('four-coloum'));
-		$this->assertEquals("$title1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) h5'))->getText());
-		$this->assertEquals("$description1",$this->webDriver->findElement(
-		WebDriverBy::cssSelector('div.four-coloum-information:nth-child(1) p'))->getText());
+		$this->webDriver->findElement(WebDriverBy::className('four-column-content'));
+		$titl_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.four-column-content h2.page-section-header'))->getText();
+		$this->webDriver->findElement(WebDriverBy::className('publications-slider'));		
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
-	**/
+	$this->assertEquals("$titl","$titl_pg");
+	
 
 	// I log out after test
     $this->wpLogout();
