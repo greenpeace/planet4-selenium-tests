@@ -215,7 +215,7 @@ class P4_CarouselHeader extends P4_login {
 			WebDriverBy::cssSelector('#carousel-wrapper-header .carousel-item:nth-child(2) img'))->getAttribute('src'));
 		$srcimg2 = $tmp[1];
 		$titl1_pg = $this->webDriver->findElement(
-				WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header h1"))->getText();
+				WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header h2"))->getText();
 		$subtitl1_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector(".carousel-item:nth-child(1) .carousel-caption .main-header h3"))->getText();
 		$desc1_pg = $this->webDriver->findElement(
@@ -228,7 +228,7 @@ class P4_CarouselHeader extends P4_login {
 		$this->webDriver->findElement(
 			WebDriverBy::className("carousel-control-next-icon"))->click();
 		$titl2_pg = $this->webDriver->findElement(
-				WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header h1"))->getText();
+				WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header h2"))->getText();
 		$subtitl2_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector(".carousel-item:nth-child(2) .carousel-caption .main-header h3"))->getText();
 		$desc2_pg = $this->webDriver->findElement(
