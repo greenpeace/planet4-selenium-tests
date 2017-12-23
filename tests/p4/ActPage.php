@@ -22,8 +22,6 @@ class P4_Actpage extends AbstractClass {
 		$this->webDriver->findElement(WebDriverBy::className('page-header-title'));
 		$this->webDriver->findElement(WebDriverBy::className('page-header-subtitle'));
 		$this->webDriver->findElement(WebDriverBy::className('page-header-content'));
-		$this->webDriver->findElement(WebDriverBy::className('covers-block'));
-		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
 	}catch(Exception $e){
 		$this->fail('->Failed to see header block in act page');
 	}
