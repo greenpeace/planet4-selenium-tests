@@ -66,12 +66,8 @@ class P4_Homepage extends AbstractClass {
 			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(2) a'))->getAttribute('href');
 		$jobs = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(3) a'))->getAttribute('href');
-		$faq = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(4) a'))->getAttribute('href');
 		$press = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(5) a'))->getAttribute('href');
-		$terms = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(6) a'))->getAttribute('href');
+			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(4) a'))->getAttribute('href');
 		$privacy = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(1) a'))->getAttribute('href');
 		$community = $this->webDriver->findElement(
@@ -88,16 +84,13 @@ class P4_Homepage extends AbstractClass {
 	$this->assertEquals("$twt","https://www.twitter.com/greenpeace");
 	$this->assertEquals("$yt","https://www.youtube.com/greenpeace");
 	$this->assertEquals("$inst","https://www.instagram.com/greenpeace/");
-	//$this->assertEquals("$news",);
-	//$this->assertEquals("$about",);
+	$this->assertEquals("$news","https://dev.p4.greenpeace.org/international/?s=&orderby=relevant&f%5Bctype%5D%5BPost%5D=3");
+	$this->assertEquals("$about","https://dev.p4.greenpeace.org/international/explore/about/");
 	$this->assertEquals("$jobs","https://www.linkedin.com/jobs/greenpeace-jobs/");
-	/**$this->assertEquals("$faq",);
-	$this->assertEquals("$press",);
-	$this->assertEquals("$terms",);
-	$this->assertEquals("$privacy",);
-	$this->assertEquals("$community",);
-	$this->assertEquals("$search",);
-  	**/
+	$this->assertEquals("$press","https://dev.p4.greenpeace.org/international/press-centre/");
+	$this->assertEquals("$privacy","https://dev.p4.greenpeace.org/international/privacy/");
+	$this->assertEquals("$community","https://dev.p4.greenpeace.org/international/community-policy/");
+	$this->assertEquals("$search","http://www.greenpeace.org/international/en/System-templates/Search-results/?adv=true");
   }
 
 
