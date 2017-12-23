@@ -3,14 +3,14 @@
 //This class is needed to start the session and open/close the browser
 require_once __DIR__ . '/../wp-core/login.php';
 
-class P4_Jetpack extends P4_login {
+class P4_Cartomap extends P4_login {
 
   /**
    * @var \RemoteWebDriver
    */
 
 
-  public function testJetpack()
+  public function testCartomap()
   {
 
   	//Define variables
@@ -83,8 +83,9 @@ class P4_Jetpack extends P4_login {
 	//Wait for map to load
 	usleep(2000000);
 	try{
-		$cartomap = explode("/",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.page-template-default iframe'))->getAttribute('src'));
+		$maplink = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.page-template-default p iframe'))->getAttribute('src');
+		$cartomap = explode("/",$maplink);
 		$baseurl_pg = $cartomap[2];
 		$urlid_pg = $cartomap[4];
 	}catch(Exception $e){
