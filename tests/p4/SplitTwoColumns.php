@@ -87,8 +87,8 @@ class P4_Split_TwoColumns extends P4_login {
 	WebDriverBy::name("select_issue")
 	);
 	$field->click();
-	$issue = $this->webDriver->findElement(WebDriverBy::xPath("//*[@name='select_issue']/option[2]"))->getText();
-	$this->webDriver->findElement(WebDriverBy::xPath("//*[@name='select_issue']/option[2]"))->click();
+	$issue = $this->webDriver->findElement(WebDriverBy::xPath("//*[@name='select_issue']/option[1]"))->getText();
+	$this->webDriver->findElement(WebDriverBy::xPath("//*[@name='select_issue']/option[1]"))->click();
 	$field = $this->webDriver->findElement(
 		WebDriverBy::className("select2-selection__rendered"));
 	$field->click();
