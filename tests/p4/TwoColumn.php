@@ -181,21 +181,21 @@ class P4_TwoColumn_Content extends P4_login {
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('content-two-column-block'));
 		$titl1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) h2'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1) .heading h2'))->getText();
 		$desc1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) p'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1) p'))->getText();
 		$btext1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1) a.btn'))->getText();
 		$blink1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(1) a.btn'))->getAttribute('href');
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1) a.btn'))->getAttribute('href');
 		$titl2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) h2'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2) .heading h2'))->getText();
 		$desc2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) p'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2) p'))->getText();
 		$btext2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getText();
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2) a.btn'))->getText();
 		$blink2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('.col-md-12.col-lg-6.col-sm-12:nth-child(2) a.btn'))->getAttribute('href');
+			WebDriverBy::cssSelector('.col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2) a.btn'))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
