@@ -13,6 +13,7 @@ class P4_Covers extends P4_login {
   public function testCovers()
   {
 
+  	$covercards=[];
    	//I log in
 	try{
    		$this->wpLogin();
@@ -47,7 +48,7 @@ class P4_Covers extends P4_login {
 		WebDriverBy::id('titlewrap')
 	);
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys('Test automated - Take Action Covers test');
+	$this->webDriver->getKeyboard()->sendKeys('Test automated - Covers');
 
 	//Click on button to add blocks
 	$add = $this->webDriver->findElement(
@@ -74,7 +75,7 @@ class P4_Covers extends P4_login {
 	//Fill in Block fields
 	$titl = 'Take Action Block Test';
 	$desc = 'This is content created by an automated test for testing take action covers block';
-	$tg = 'FixFood';
+	$tg = 'ZeroWaste';
 	
 	$field = $this->webDriver->findElement(
 		WebDriverBy::name('title'));
@@ -143,21 +144,36 @@ class P4_Covers extends P4_login {
 			WebDriverBy::cssSelector('h2.page-section-header'))->getText();
 		$desc_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('p.page-section-description'))->getText();
-		$subtg1 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:first-child a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
-		$subtg2 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:nth-child(2) a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
-		$subtg3 = substr(($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.covers-block .container .row .cover-card:nth-child(3) a.cover-card-tag:first-child'))->getText()), 1, strlen("$tg"));
-		$btntxt = $this->webDriver->findElement(WebDriverBy::cssSelector('.cover-card:first-child .cover-card-btn'))->getText();
+		//Count how many cover cards were shown
+		$covercardsnum = count($this->webDriver->findElements(
+		    	WebDriverBy::cssSelector('.covers-block .container .row .cover-card')));
+		//Get all the tags for each cover card and saves them in array
+		for ($i=1; $i <= $covercardsnum; $i++) { 
+			$path = ".covers-block .container .row .cover-card:nth-child($i) a.cover-card-tag";
+			array_push($covercards,$this->webDriver->findElements(
+			    WebDriverBy::cssSelector("$path")));
+		}	 	
+ 		$btntxt = $this->webDriver->findElement(WebDriverBy::cssSelector('.cover-card:first-child .cover-card-btn'))->getText();
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
 	$this->assertEquals("$titl", "$titl_pg");
 	$this->assertEquals("$desc", "$desc_pg");
-	$this->assertEquals("$tg", "$subtg1");
-	$this->assertEquals("$tg", "$subtg2");
-	$this->assertEquals("$tg", "$subtg3");
+	//Check if tags of each card contains specific tag
+	foreach($covercards as $covercard){
+		$ispresent = false;
+		foreach ($covercard as $tag) {
+			$tag = $tag->getText();
+			//Remove hashtag
+			$tag = explode("#",$tag);
+			if ($tag[1] == "$tg"){
+				$ispresent = true;
+			}
+		}
+		if(!$ispresent){
+			$this->fail('->Specified tags are nos shown in one or more of the cover cards');
+		}
+	}
 	$this->assertEquals("TAKE ACTION", "$btntxt");
 
 	// I log out after test
