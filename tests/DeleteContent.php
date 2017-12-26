@@ -56,10 +56,14 @@ class P4_DeleteContent extends P4_login {
             $title = explode(" – ", $title_);
             $title = $title[0];
             //If title matches then select checkbox
-            if ($title == "Test automated"){
+            try{
+                if ($title == "Test automated"){
                 $items_to_delete = true;
                 $this->webDriver->findElement(
                     WebDriverBy::cssSelector("#the-list tr:nth-child($x) th.check-column input[type='checkbox']"))->click();
+                }
+            }catch(Exception $e){
+                $this->fail("->Not able to select element in row $x, make sure it is not currently being edited");
             }
         }
         //If there are items to delete then apply 'move to trash' bulk action
