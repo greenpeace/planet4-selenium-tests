@@ -241,7 +241,7 @@ class P4_Static4Column extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 
-	try{
+	//try{
 		$this->webDriver->findElement(WebDriverBy::className('four-column'));
 		//Get info of posted images
 		$srcimg1 = explode("-",$this->webDriver->findElement(
@@ -252,8 +252,7 @@ class P4_Static4Column extends P4_login {
 		$description1_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information p'))->getText();
 		$linktext1_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information a'))
-			->getText();
+			WebDriverBy::xPath("/html/body/section/div/div/div[1]/div[2]/a"))->getText();
 		$linkurl1_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information a'))->getAttribute('href');
 		$srcimg2 = explode("-",$this->webDriver->findElement(
@@ -264,8 +263,7 @@ class P4_Static4Column extends P4_login {
 		$description2_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information p'))->getText();
 		$linktext2_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information a'))
-			->getText();
+			WebDriverBy::xPath("/html/body/section/div/div/div[2]/div[2]/a"))->getText();
 		$linkurl2_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information a'))->getAttribute('href');
 		$srcimg3 = explode("-",$this->webDriver->findElement(
@@ -276,8 +274,7 @@ class P4_Static4Column extends P4_login {
 		$description3_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information p'))->getText();
 		$linktext3_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information a'))
-			->getText();
+			WebDriverBy::xPath("/html/body/section/div/div/div[3]/div[2]/a"))->getText();
 		$linkurl3_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information a'))->getAttribute('href');
 		$srcimg4 = explode("-",$this->webDriver->findElement(
@@ -288,13 +285,12 @@ class P4_Static4Column extends P4_login {
 		$description4_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information p'))->getText();
 		$linktext4_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information a'))
-			->getText();
+			WebDriverBy::xPath("/html/body/section/div/div/div[4]/div[2]/a"))->getText();
 		$linkurl4_pg = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information a'))->getAttribute('href');
-	}catch(Exception $e){
+	/**}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
-	}
+	}**/
 	//Validate column 1 fields
 	$this->assertContains("$srcimg1","$srcfirstchild");
 	$this->assertEquals("$title1","$title1_pg");
