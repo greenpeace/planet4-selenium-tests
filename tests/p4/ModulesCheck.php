@@ -45,7 +45,7 @@ class P4_ModulesCheck extends P4_login {
 	usleep(3000000);
 	try{
 		$msg = $this->webDriver->findElement(
-			WebDriverBy::xPath("//*[@id='planet4_control_panel']/div/div[1]/div/div/span"))->getText();	
+			WebDriverBy::xPath("//*[@id='planet4_control_panel']/div/div[1]/div/div[2]/span"))->getText();	
 		$this->assertEquals("Planet 4 is connected to Redis.", "$msg");
 	}catch(Exception $e){
 		$this->fail("->Failed to validate cache module");
