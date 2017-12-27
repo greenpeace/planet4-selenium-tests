@@ -15,8 +15,8 @@ class P4_Homepage extends AbstractClass {
 	//Validate 2-column block elements are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('content-two-column-block'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-6.col-sm-12:nth-child(1)'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-6.col-sm-12:nth-child(2)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1)'));
+		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2)'));
 	}catch(Exception $e){
 		$this->fail('->Failed to see some elements of 2-column block');
 		
@@ -80,17 +80,17 @@ class P4_Homepage extends AbstractClass {
 	}catch(Exception $e){
 		$this->fail('->Failed to see some elements of footer block');
 	}
-	$this->assertEquals("$fb","https://www.facebook.com/greenpeace.international");
-	$this->assertEquals("$twt","https://www.twitter.com/greenpeace");
-	$this->assertEquals("$yt","https://www.youtube.com/greenpeace");
-	$this->assertEquals("$inst","https://www.instagram.com/greenpeace/");
-	$this->assertEquals("$news","https://dev.p4.greenpeace.org/international/?s=&orderby=relevant&f%5Bctype%5D%5BPost%5D=3");
-	$this->assertEquals("$about","https://dev.p4.greenpeace.org/international/explore/about/");
-	$this->assertEquals("$jobs","https://www.linkedin.com/jobs/greenpeace-jobs/");
-	$this->assertEquals("$press","https://dev.p4.greenpeace.org/international/press-centre/");
-	$this->assertEquals("$privacy","https://dev.p4.greenpeace.org/international/privacy/");
-	$this->assertEquals("$community","https://dev.p4.greenpeace.org/international/community-policy/");
-	$this->assertEquals("$search","http://www.greenpeace.org/international/en/System-templates/Search-results/?adv=true");
+	$this->assertEquals("https://www.facebook.com/greenpeace.international","$fb");
+	$this->assertEquals("https://www.twitter.com/greenpeace","$twt");
+	$this->assertEquals("https://www.youtube.com/greenpeace","$yt");
+	$this->assertEquals("https://www.instagram.com/greenpeace/","$inst");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/?s=&orderby=relevant&f%5Bctype%5D%5BPost%5D=3","$news");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/explore/about/","$about");
+	$this->assertEquals("https://www.linkedin.com/jobs/greenpeace-jobs/","$jobs");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/press-centre/","$press");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/explore/about/privacy/","$privacy");
+	$this->assertEquals("https://dev.p4.greenpeace.org/explore/about/community-policy/","$community");
+	$this->assertEquals("http://www.greenpeace.org/international/en/System-templates/Search-results/?adv=true","$search");
   }
 
 
