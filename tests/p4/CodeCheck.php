@@ -83,7 +83,6 @@ class P4_DeleteContent extends P4_login {
     }
     // I log out after test
     $this->wpLogout();
-    echo "\n-> Delete content script PASSED";
   }
 
   protected function assertElementNotFound($by)

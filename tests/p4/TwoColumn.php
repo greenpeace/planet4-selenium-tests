@@ -209,6 +209,7 @@ class P4_TwoColumn_Content extends P4_login {
 	$this->assertContains("$blink2","$blink2_pg");
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Two column block test PASSED";
   }
 
 

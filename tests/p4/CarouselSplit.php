@@ -143,6 +143,7 @@ class P4_CarouselSplit extends P4_login {
 	$this->assertContains("$srcimg","$srcfirstchild");
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Carousel split block test PASSED";
   }
 
   protected function assertElementNotFound($by)

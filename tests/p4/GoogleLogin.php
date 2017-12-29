@@ -64,7 +64,7 @@ class P4_googlelogin extends AbstractClass {
     usleep(3000000);
 
     $this->assertContains('Dashboard', $this->webDriver->getTitle());
-
+    echo "\n-> Google Login test PASSED";
   }
 
 

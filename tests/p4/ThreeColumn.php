@@ -196,6 +196,7 @@ class P4_ThreeColumn extends P4_login {
 	// I log out after test
 	$this->wpLogout();
 	
+	echo "\n-> Three column block test PASSED";
   }
 
 

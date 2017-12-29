@@ -151,6 +151,7 @@ class P4_Header extends P4_login {
 	$this->assertContains("$srcimg","$srcfirstchild");
 	// I log out after test
     $this->wpLogout();
+    echo "\n-> Header block test PASSED";
   }
 
   protected function assertElementNotFound($by)

@@ -153,6 +153,7 @@ class P4_FourColumn extends P4_login {
 
 	// I log out after test
     $this->wpLogout();
+    echo "\n-> Four column block test PASSED";
   }
 
   protected function assertElementNotFound($by)

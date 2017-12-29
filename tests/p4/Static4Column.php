@@ -317,6 +317,8 @@ class P4_Static4Column extends P4_login {
 	$this->assertEquals("$linkurl4","$linkurl4_pg");	
 	// I log out after test
     $this->wpLogout();
+
+    echo "\n-> Static four column block test PASSED";
   }
 
 

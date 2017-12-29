@@ -66,6 +66,7 @@ class P4_ExplorePage extends AbstractClass {
 	}catch(Exception $e){
 		$this->fail('->Failed to see footer block in act page');
   	}
+  	echo "\n-> Explore page test PASSED";
  }
 
   protected function assertElementNotFound($by)

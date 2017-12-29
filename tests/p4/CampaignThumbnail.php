@@ -145,6 +145,7 @@ class P4_CampaignThumbnail extends P4_login {
 
 	// I log out after test
     $this->wpLogout();
+    echo "\n-> Campaign thumbnail block test PASSED";
   }
 
   protected function assertElementNotFound($by)

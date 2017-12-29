@@ -88,9 +88,11 @@ class P4_Homepage extends AbstractClass {
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/explore/about/","$about");
 	$this->assertEquals("https://www.linkedin.com/jobs/greenpeace-jobs/","$jobs");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/press-centre/","$press");
-	$this->assertEquals("https://dev.p4.greenpeace.org/international/explore/about/privacy/","$privacy");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/privacy/","$privacy");
 	$this->assertEquals("https://dev.p4.greenpeace.org/explore/about/community-policy/","$community");
 	$this->assertEquals("http://www.greenpeace.org/international/en/System-templates/Search-results/?adv=true","$search");
+
+	echo "\n-> Homepage test PASSED";
   }
 
 

@@ -163,6 +163,7 @@ class P4_HappyPoint extends P4_login {
 
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Happy point block test PASSED";
   }
 
 

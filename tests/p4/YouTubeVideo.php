@@ -138,6 +138,7 @@ class P4_YouTubeVideo extends P4_login {
 
 	// I log out after test
     $this->wpLogout();
+    echo "\n-> YouTube video block test PASSED";
   }
 
 

@@ -256,6 +256,7 @@ class P4_CarouselHeader extends P4_login {
 
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Carousel header block test PASSED";
   }
 
 

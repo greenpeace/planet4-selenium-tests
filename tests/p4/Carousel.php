@@ -173,6 +173,7 @@ class P4_Carousel extends P4_login {
 	$this->assertContains("$srcimg3","$srcthirdchild");
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Carousel block test PASSED";
   }
 
 

@@ -163,6 +163,8 @@ class P4_Split_TwoColumns extends P4_login {
 	
 	// I log out after test
 	$this->wpLogout();
+
+	echo "\n-> Split two column block test PASSED";
   }
 
   protected function assertElementNotFound($by)

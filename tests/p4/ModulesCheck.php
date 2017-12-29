@@ -61,6 +61,8 @@ class P4_ModulesCheck extends P4_login {
 	}catch(Exception $e){
 		$this->fail("->Failed to validate engaging networks module");
 	}
+
+	echo "\n-> Modules check test PASSED";
 	
   }
 

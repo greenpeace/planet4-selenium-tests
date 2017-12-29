@@ -178,6 +178,7 @@ class P4_Covers extends P4_login {
 
 	// I log out after test
 	$this->wpLogout();
+	echo "\n-> Covers block test PASSED";
   }
 
 

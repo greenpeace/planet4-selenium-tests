@@ -143,6 +143,7 @@ class P4_MediaBlock extends P4_login {
 	$this->assertContains("$srcimg","$srcfirstchild");
 	// I log out after test
     $this->wpLogout();
+    echo "\n-> Media block test PASSED";
   }
 
 

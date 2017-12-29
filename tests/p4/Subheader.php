@@ -134,6 +134,8 @@ class P4_Subheader extends P4_login {
 	}
 	// I log out after test
 	$this->wpLogout();
+
+	echo "\n-> Subheader block test PASSED";
   }
 
 

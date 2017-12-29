@@ -250,6 +250,8 @@ class P4_Tasks extends P4_login {
 	$this->assertEquals("$desc2","$desc2_pg");
 	// I log out after test
 	$this->wpLogout();
+
+	echo "\n-> Tasks block test PASSED";
   }
 
 
