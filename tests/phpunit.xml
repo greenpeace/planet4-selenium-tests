@@ -2,12 +2,16 @@
 
 <phpunit>
   <testsuites>
+    <testsuite name="Planet 4 - clean up">
+        <file>DeleteContent.php</file>
+    </testsuite>
 	<testsuite name="Planet 4">
-    <file>./DeleteContent.php</file>
-    <directory suffix=".php">p4</directory>
-    <exclude>./p4/EN_forms.php</exclude>
-    <exclude>./p4/CodeCheck.php</exclude>
-    <exclude>./p4/Varnish.php</exclude>
+        <directory suffix=".php">p4</directory>
+        <exclude>./p4/EN_forms.php</exclude>
+        <exclude>./p4/CodeCheck.php</exclude>
+        <exclude>./p4/Varnish.php</exclude>
+    
+    
 
 <!-- order of tests to be executed can also be specified as following:   
         <file>./p4/Articles.php</file>
