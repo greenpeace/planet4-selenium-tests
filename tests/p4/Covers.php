@@ -75,7 +75,8 @@ class P4_Covers extends P4_login {
 	//Fill in Block fields
 	$titl = 'Take Action Block Test';
 	$desc = 'This is content created by an automated test for testing take action covers block';
-	$tg = 'ZeroWaste';
+	$tg1 = 'ZeroWaste';
+	$tg2 = 'ArcticSunrise';
 	
 	$field = $this->webDriver->findElement(
 		WebDriverBy::name('title'));
@@ -90,7 +91,15 @@ class P4_Covers extends P4_login {
 	$field = $this->webDriver->findElement(
 		WebDriverBy::className('select2-selection__rendered'));
 	$field->click();
-	$this->webDriver->getKeyboard()->sendKeys("$tg");
+	$this->webDriver->getKeyboard()->sendKeys("$tg1");
+	//Sleep for 3 seconds
+	usleep(5000000); 
+	//Select suggestion
+	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
+	$field = $this->webDriver->findElement(
+		WebDriverBy::className('select2-selection__rendered'));
+	$field->click();
+	$this->webDriver->getKeyboard()->sendKeys("$tg2");
 	//Sleep for 3 seconds
 	usleep(5000000); 
 	//Select suggestion
@@ -160,18 +169,21 @@ class P4_Covers extends P4_login {
 	$this->assertEquals("$titl", "$titl_pg");
 	$this->assertEquals("$desc", "$desc_pg");
 	//Check if tags of each card contains specific tag
+	$ispresent = false;
 	foreach($covercards as $covercard){
-		$ispresent = false;
 		foreach ($covercard as $tag) {
 			$tag = $tag->getText();
 			//Remove hashtag
 			$tag = explode("#",$tag);
-			if ($tag[1] == "$tg"){
+			if ($tag[1] == "$tg1"){
+				$ispresent = true;
+			}
+			if ($tag[1] == "$tg2"){
 				$ispresent = true;
 			}
 		}
 		if(!$ispresent){
-			$this->fail('->Specified tags are nos shown in one or more of the cover cards');
+			$this->fail('->Specified tags are not shown in one or more of the cover cards');
 		}
 	}
 	$this->assertEquals("TAKE ACTION", "$btntxt");
