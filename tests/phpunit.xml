@@ -8,7 +8,6 @@
 	<testsuite name="Planet 4">
         <directory suffix=".php">p4</directory>
         <exclude>./p4/EN_forms.php</exclude>
-        <exclude>./p4/CodeCheck.php</exclude>
         <exclude>./p4/Varnish.php</exclude>
     
     
