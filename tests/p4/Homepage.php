@@ -85,7 +85,7 @@ class P4_Homepage extends AbstractClass {
 	$this->assertEquals("https://www.youtube.com/greenpeace","$yt");
 	$this->assertEquals("https://www.instagram.com/greenpeace/","$inst");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/?s=&orderby=relevant&f%5Bctype%5D%5BPost%5D=3","$news");
-	$this->assertEquals("https://dev.p4.greenpeace.org/international/explore/about/","$about");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/about/","$about");
 	$this->assertEquals("https://www.linkedin.com/jobs/greenpeace-jobs/","$jobs");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/press-centre/","$press");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/privacy/","$privacy");
