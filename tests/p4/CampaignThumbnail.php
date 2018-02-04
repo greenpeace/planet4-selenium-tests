@@ -43,7 +43,7 @@ class P4_CampaignThumbnail extends P4_login {
 
 
 	//Enter needed page fields
-	$tg = 'ZeroWaste';
+	$tg = 'Oceans';
 	$field	= $this->webDriver->findElement(
 		WebDriverBy::id('title-prompt-text'));
 	$field->click();
