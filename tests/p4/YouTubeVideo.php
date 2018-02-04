@@ -103,7 +103,7 @@ class P4_YouTubeVideo extends P4_login {
 	$this->webDriver->wait(10, 1000)->until(
 		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
-	usleep(2000000);
+	usleep(3000000);
 	//Validate I see successful message
 	try{
 		$this->assertContains(
@@ -114,11 +114,10 @@ class P4_YouTubeVideo extends P4_login {
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
 	//Wait for saved changes to load
-	usleep(2000000);
+	usleep(3000000);
 	//Go to page to validate page contains added block
 	$link = $this->webDriver->findElement(
-		WebDriverBy::linkText('View page')
-	);	
+		WebDriverBy::linkText('View page'));	
 	$link->click();	
 	//If alert shows up asking to confirm leaving the page, confirm
 	try{
