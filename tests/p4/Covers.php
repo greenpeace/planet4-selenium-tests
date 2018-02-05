@@ -75,8 +75,8 @@ class P4_Covers extends P4_login {
 	//Fill in Block fields
 	$titl = 'Take Action Block Test';
 	$desc = 'This is content created by an automated test for testing take action covers block';
-	$tg1 = 'ZeroWaste';
-	$tg2 = 'ArcticSunrise';
+	$tg1 = 'ArcticSunrise';
+	$tg2 = 'Oceans';
 	
 	$field = $this->webDriver->findElement(
 		WebDriverBy::name('title'));
