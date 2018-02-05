@@ -60,6 +60,7 @@ class P4_Cartomap extends P4_login {
 	$this->webDriver->wait(10, 1000)->until(
 		WebDriverExpectedCondition::visibilityOfElementLocated(
 		WebDriverBy::id('message')));
+	usleep(2000000);
 	//Validate I see successful message
 	try{
 		$this->assertContains(
@@ -69,8 +70,6 @@ class P4_Cartomap extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-	//Wait for saved changes to load
-	usleep(2000000);
 	//Go to page to validate page contains map
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
