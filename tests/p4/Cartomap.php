@@ -50,13 +50,16 @@ class P4_Cartomap extends P4_login {
 		WebDriverBy::id('content'));
 	$field->click();
 	$this->webDriver->getKeyboard()->sendKeys("$cartomaplink");
+	usleep(1000000);
 	
 	//Publish content
 	$this->webDriver->findElement(
-                WebDriverBy::id('publish')
-	)->click();
-	
+                WebDriverBy::id('publish'))->click();
+	usleep(1000000);
 	//Wait to see successful message
+	$this->webDriver->wait(10, 1000)->until(
+		WebDriverExpectedCondition::visibilityOfElementLocated(
+		WebDriverBy::id('message')));
 	usleep(2000000);
 	//Validate I see successful message
 	try{
