@@ -57,9 +57,6 @@ class P4_Cartomap extends P4_login {
 	)->click();
 	
 	//Wait to see successful message
-	$this->webDriver->wait(10, 1000)->until(
-		WebDriverExpectedCondition::visibilityOfElementLocated(
-		WebDriverBy::id('message')));
 	usleep(2000000);
 	//Validate I see successful message
 	try{
