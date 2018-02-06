@@ -14,7 +14,7 @@ return array(
 	'url' => 'http://www.greenpeace.org/international/en/about/jobs/'
     **/
     'chromeOptions' => "{args: ['window-size=1366, 996']}",
-    'p4_user' => 'test_user',
+    'p4_user' => 'test_automated',
     'p4_password' => 'u3vsREsvjwo',
     'email' => 'tester.greenwire@gmail.com',
     'email_password' => 'u3vsREsvjwo'
