@@ -58,7 +58,7 @@ class P4_Covers extends P4_login {
 
 	//Validate blocks modal window is shown
 	$this->assertContains(
-	'Insert Post Element',$this->webDriver->findElement(
+	'Insert Page Element',$this->webDriver->findElement(
 	WebDriverBy::className('media-frame-title'))->getText()
 	);
 

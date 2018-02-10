@@ -40,7 +40,7 @@ class P4_Posts extends P4_login {
 
 	//Validate button to add Blocks to page is present
 	$this->assertContains(
-		'Add Post Element',$this->webDriver->findElement(
+		'Add Page Element',$this->webDriver->findElement(
 		WebDriverBy::className('shortcake-add-post-element'))->getText());
 
 	//Enter title

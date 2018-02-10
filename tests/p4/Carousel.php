@@ -35,7 +35,7 @@ class P4_Carousel extends P4_login {
 	$link->click();
 	//Validate button to add blocks to page is present
 	$this->assertContains(
-	'Add Post Element',$this->webDriver->findElement(
+	'Add Page Element',$this->webDriver->findElement(
 	WebDriverBy::className('shortcake-add-post-element'))->getText()
 	);
 
