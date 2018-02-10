@@ -88,9 +88,9 @@ class P4_HappyPoint extends P4_login {
 	);
 	$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 	//Select first image
-	$srcfirstchild = explode("-",$this->webDriver->findElement(
+	$srcfirstchild = explode("-300x200",$this->webDriver->findElement(
 		WebDriverBy::cssSelector("li.attachment:first-child img"))->getAttribute('src'));
-	$srcfirstchild = $srcfirstchild[1];
+	$srcfirstchild = $srcfirstchild[0];
 	$img = $this->webDriver->findElement(WebDriverBy::cssSelector("li.attachment:first-child"));
 	$img->click();
 	$this->webDriver->findElement(WebDriverBy::className("media-button-select"))->click();
@@ -142,9 +142,9 @@ class P4_HappyPoint extends P4_login {
 		$this->webDriver->switchTo()->alert()->accept();
 	}catch(Exception $e){}
 	try{
-		$srcimg = explode("-",$this->webDriver->findElement(
-			WebDriverBy::className('happy-point-block-wrap'))->getCssValue('background-image'));
-		$srcimg = $srcimg[1];
+		$srcimg = substr($this->webDriver->findElement(
+			WebDriverBy::className('happy-point-block-wrap'))->getCssValue('background-image'),0,-4);
+		$srcimg = $srcimg[9];
 		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
 			WebDriverBy::cssSelector('.container iframe')));
 		$this->webDriver->findElement(
