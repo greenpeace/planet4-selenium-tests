@@ -58,7 +58,7 @@ class P4_Covers extends P4_login {
 
 	//Validate blocks modal window is shown
 	$this->assertContains(
-	'Insert Page Element',$this->webDriver->findElement(
+	'Insert Post Element',$this->webDriver->findElement(
 	WebDriverBy::className('media-frame-title'))->getText()
 	);
 
@@ -186,7 +186,7 @@ class P4_Covers extends P4_login {
 			$this->fail('->Specified tags are not shown in one or more of the cover cards');
 		}
 	}
-	$this->assertEquals("TAKE ACTION", "$btntxt");
+	$this->assertEquals("GET INVOLVED", "$btntxt");
 
 	// I log out after test
 	$this->wpLogout();
