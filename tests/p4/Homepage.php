@@ -70,10 +70,14 @@ class P4_Homepage extends AbstractClass {
 			WebDriverBy::cssSelector('.site-footer .footer-links li:nth-child(4) a'))->getAttribute('href');
 		$privacy = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(1) a'))->getAttribute('href');
-		$community = $this->webDriver->findElement(
+		$copyright = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(2) a'))->getAttribute('href');
-		$search = $this->webDriver->findElement(
+		$terms = $this->webDriver->findElement(
 			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(3) a'))->getAttribute('href');
+		$community = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(4) a'))->getAttribute('href');
+		$search = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('.site-footer .footer-links-secondary li:nth-child(5) a'))->getAttribute('href');
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.site-footer .copyright-text'));
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.site-footer .gp-year'));
 		
@@ -89,6 +93,8 @@ class P4_Homepage extends AbstractClass {
 	$this->assertEquals("https://www.linkedin.com/jobs/greenpeace-jobs/","$jobs");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/press-centre/","$press");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/privacy/","$privacy");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/copyright/","$copyright");
+	$this->assertEquals("https://dev.p4.greenpeace.org/international/terms/","$terms");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/community-policy/","$community");
 	$this->assertEquals("http://www.greenpeace.org/international/en/System-templates/Search-results/?adv=true","$search");
 
