@@ -51,6 +51,7 @@ class P4_ModulesCheck extends P4_login {
 		$this->fail("->Failed to validate cache module");
 	}
 	
+	/**    MODULE DISABLED FROM STAGING TEMPORARILY
 	//Click on link to check engaging networks module
 	$en->click();
 	usleep(3000000);
@@ -61,7 +62,7 @@ class P4_ModulesCheck extends P4_login {
 	}catch(Exception $e){
 		$this->fail("->Failed to validate engaging networks module");
 	}
-
+	**/
 	echo "\n-> Modules check test PASSED";
 	
   }
