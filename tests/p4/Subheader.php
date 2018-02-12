@@ -99,6 +99,9 @@ class P4_Subheader extends P4_login {
 	WebDriverBy::id('publish')
 	)->click();
 	
+	//Wait for saved changes to load
+	usleep(2000000);
+	
 	//Wait to see successful message
 	$this->webDriver->wait(10, 1000)->until(
 		WebDriverExpectedCondition::visibilityOfElementLocated(
@@ -112,8 +115,6 @@ class P4_Subheader extends P4_login {
 	}catch(Exception $e){
 		$this->fail('->Failed to publish content - no sucessful message after saving content');
 	}
-	//Wait for saved changes to load
-	usleep(2000000);
 	//Go to page to validate page contains Subheader Block
 	$link = $this->webDriver->findElement(
 	WebDriverBy::linkText('View page')
