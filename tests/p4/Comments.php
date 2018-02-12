@@ -31,13 +31,14 @@ class P4_Comments extends P4_login {
 		WebDriverBy::cssSelector('.home.page-template-default.page'));
 	//Scroll down to news section
 	$element = $this->webDriver->findElement(
-		WebDriverBy::cssSelector('.article-listing.page-section'));
+		WebDriverBy::cssSelector('.article-listing.page-section .article-list-section .article-list-item-body'));
 	$element->getLocationOnScreenOnceScrolledIntoView(); 
 	//Look for post
 	$post = $this->webDriver->findElement(
 		WebDriverBy::cssSelector('.article-listing.page-section .article-list-section .article-list-item-body .article-list-item-headline a'));
 	$post->click();
-	
+	//Wait for page to load
+	usleep(2000000);
 	//Verify user lands in post
 	$this->webDriver->findElement(
 		WebDriverBy::cssSelector('.post-template-default.single.single-post'));
