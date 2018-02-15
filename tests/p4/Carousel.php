@@ -154,15 +154,15 @@ class P4_Carousel extends P4_login {
 		$this->webDriver->findElement(WebDriverBy::className('carousel-wrap'));
 		$this->webDriver->findElement(WebDriverBy::className('slide'));
 		$titl_pg = $this->webDriver->findElement(
-			WebDriverBy::cssSelector('#carousel-wrapper h1'))->getText();
+			WebDriverBy::cssSelector('.carousel.slide h1'))->getText();
 		$srcimg1 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:first-child img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('.carousel-inner .carousel-item:first-child img'))->getAttribute('src'));
 		$srcimg1 = $srcimg1[1];
 		$srcimg2 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(2) img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('.carousel-inner .carousel-item:nth-child(2) img'))->getAttribute('src'));
 		$srcimg2 = $srcimg2[1];
 		$srcimg3 = explode("-",$this->webDriver->findElement(
-			WebDriverBy::cssSelector('#carousel-wrapper .carousel-item:nth-child(3) img'))->getAttribute('src'));
+			WebDriverBy::cssSelector('.carousel-inner .carousel-item:nth-child(3) img'))->getAttribute('src'));
 		$srcimg3 = $srcimg3[1];
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
