@@ -74,7 +74,7 @@ class P4_FourColumn extends P4_login {
 	try{
 		$this->webDriver->findElement(WebDriverBy::name("title"));
 		$this->webDriver->findElement(WebDriverBy::name("select_tag"));
-		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_press_release"));
+		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_press"));
 		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_publication"));
 		$this->webDriver->findElement(WebDriverBy::name("p4_page_type_story"));
 	}catch(Exception $e){
@@ -96,7 +96,7 @@ class P4_FourColumn extends P4_login {
 	//Select suggestion
 	$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::ENTER);
 	//Select post type
-	$this->webDriver->findElement(WebDriverBy::name('p4_page_type_press_release'))->click();
+	$this->webDriver->findElement(WebDriverBy::name('p4_page_type_press'))->click();
 	
 	//Insert block
 	try{
