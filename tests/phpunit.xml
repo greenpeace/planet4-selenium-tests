@@ -10,6 +10,7 @@
         <exclude>./p4/EN_forms.php</exclude>
         <exclude>./p4/Varnish.php</exclude>
         <exclude>./p4/GoogleLogin.php</exclude>
+        <exclude>./p4/CarouselSplit.php</exclude>
     
     
 
