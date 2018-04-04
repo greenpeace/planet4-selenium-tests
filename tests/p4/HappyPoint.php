@@ -143,18 +143,19 @@ class P4_HappyPoint extends P4_login {
 	}catch(Exception $e){}
 	try{
 		$srcimg = substr($this->webDriver->findElement(
-			WebDriverBy::className('happy-point-block-wrap'))->getCssValue('background-image'),0,-4);
-		$srcimg = $srcimg[9];
-		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
-			WebDriverBy::cssSelector('.container iframe')));
-		$this->webDriver->findElement(
-			WebDriverBy::name('supporter.emailAddress'));
-		$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.en__component.en__component--formblock.row.justify-content-md-center'));
-		$this->webDriver->findElement(
-			WebDriverBy::id('en__field_supporter_country'));
-		$this->webDriver->findElement(
-			WebDriverBy::cssSelector('.btn.btn-primary.btn-medium.subscriber-btn'));
+			WebDriverBy::cssSelector('.happy-point-block-wrap picture img'))->getAttribute('src'),0,-4);
+		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
+		$element = $this->webDriver->findElement(
+     		WebDriverBy::id('happy-point'));
+		//Scroll down and wait to happy point to load
+   		$element->getLocationOnScreenOnceScrolledIntoView(); 
+   		usleep(2000000);
+   		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
+			WebDriverBy::cssSelector('#happy-point iframe')));
+   		//Validate input fields are present
+   		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_emailAddress"));
+		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_country"));
+		$this->webDriver->findElement(WebDriverBy::className("subscriber-btn"));
 	}catch(Exception $e){
 		$this->fail('->Some of the content created is not displayed in front end page');
 	}
