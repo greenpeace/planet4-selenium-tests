@@ -18,7 +18,7 @@ class P4_Homepage extends AbstractClass {
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(1)'));
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.content-two-column-block .col-md-12.col-lg-5.col-sm-12.col-xl-5:nth-child(2)'));
 	}catch(Exception $e){
-		$this->fail('->Failed to see some elements of 2-column block');
+		$this->fail('->Failed to see some elements of 2-column block in homepage');
 		
 	}
 
@@ -26,7 +26,7 @@ class P4_Homepage extends AbstractClass {
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('article-listing'));
 	}catch(Exception $e){
-		$this->fail('->Failed to see some elements of article block');
+		$this->fail('->Failed to see some elements of article block in homepage');
 	}
 
 	//Validate 4-column block elements are present
@@ -37,17 +37,27 @@ class P4_Homepage extends AbstractClass {
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(3)'));
 		$this->webDriver->findElement(WebDriverBy::cssSelector('.four-column .four-column-wrap:nth-child(4)'));		
 	}catch(Exception $e){
-		$this->fail('->Failed to see some elements of 4-column block');
+		$this->fail('->Failed to see some elements of 4-column block in homepage');
 	}
 
 	//Validate happy point block elements are present
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.happy-point-block-wrap .col-md-10.pt-20 iframe'));		
-		
+		$element = $this->webDriver->findElement(
+     		WebDriverBy::id('happy-point'));
+		//Scroll down and wait to happy point to load
+   		$element->getLocationOnScreenOnceScrolledIntoView(); 
+   		usleep(2000000);
+   		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
+			WebDriverBy::cssSelector('#happy-point iframe')));
+   		//Validate input fields are present
+   		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_emailAddress"));
+		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_country"));
+		$this->webDriver->findElement(WebDriverBy::className("subscriber-btn"));
 	}catch(Exception $e){
-		$this->fail('->Failed to see some elements of happy point block');
+		$this->fail('->Failed to see happy point block in homepage');
 	}
+	$this->webDriver->switchTo()->defaultContent();
 
 	//Validate footer block elements are present
 	try{
@@ -85,7 +95,7 @@ class P4_Homepage extends AbstractClass {
 		$this->fail('->Failed to see some elements of footer block');
 	}
 	$this->assertEquals("https://www.facebook.com/greenpeace.international","$fb");
-	$this->assertEquals("https://www.twitter.com/greenpeace","$twt");
+	$this->assertEquals("https://twitter.com/greenpeace","$twt");
 	$this->assertEquals("https://www.youtube.com/greenpeace","$yt");
 	$this->assertEquals("https://www.instagram.com/greenpeace/","$inst");
 	$this->assertEquals("https://dev.p4.greenpeace.org/international/?s=&orderby=relevant&f%5Bctype%5D%5BPost%5D=3","$news");
