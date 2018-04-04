@@ -11,7 +11,7 @@ class P4_Cookies extends AbstractClass {
 
   public function testCookies()
   {
-  	$link = "http://dev.p4.greenpeace.org/international/privacy";
+  	$link = "greenpeace.org/international/privacy";
   	//Validate banner is visible and contains link to more info
 	try{
 		$this->webDriver->findElement(WebDriverBy::id('set-cookie'));
@@ -19,7 +19,8 @@ class P4_Cookies extends AbstractClass {
 		if($val!="block"){
 			$this->fail('->Failed due to cookie banner not visible');
 		}
-		$link_pg = $this->webDriver->findElement(WebDriverBy::cssSelector('#set-cookie .row p a'))->getAttribute('href');
+		$link_pg = $this->webDriver->findElement(
+			WebDriverBy::cssSelector('#set-cookie .row p a'))->getAttribute('href');
 	}catch(Exception $e){
 		$this->fail('->Failed due to cookie banner not visible');		
 	}
