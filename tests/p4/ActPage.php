@@ -36,10 +36,21 @@ class P4_Actpage extends AbstractClass {
 	//Validate happy point block is present in page
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
-		$this->webDriver->findElement(WebDriverBy::cssSelector('.happy-point-block-wrap .col-md-10 iframe'));
+		$element = $this->webDriver->findElement(
+     		WebDriverBy::id('happy-point'));
+		//Scroll down and wait to happy point to load
+   		$element->getLocationOnScreenOnceScrolledIntoView(); 
+   		usleep(2000000);
+   		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
+			WebDriverBy::cssSelector('#happy-point iframe')));
+   		//Validate input fields are present
+   		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_emailAddress"));
+		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_country"));
+		$this->webDriver->findElement(WebDriverBy::className("subscriber-btn"));
 	}catch(Exception $e){
 		$this->fail('->Failed to see happy point block in act page');
 	}
+	$this->webDriver->switchTo()->defaultContent();
 	//Validate footer block is present in page
 	try{
 		$this->webDriver->findElement(WebDriverBy::className('site-footer'));
