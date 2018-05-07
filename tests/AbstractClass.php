@@ -1,6 +1,8 @@
 <?php
 
 
+include 'P4_Functions.php';
+
 abstract class AbstractClass extends PHPUnit\Framework\TestCase {
     
     /** @var array */
@@ -20,6 +22,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
     public function setUp()
     {
         $_config = include('./config/config.php');
+	    self::$_config = $_config;
         $this->_url = $_config['url'];
         $options = new ChromeOptions();
 		$options->addArguments(array('--window-size=1366,996',));
@@ -43,6 +46,10 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		$this->webDriver->quit();
     } catch ( Exception $e ) {}
     
+   }
+
+   public function getBaseUrl() {
+    	return self::$_config['url'];
    }
     
 }
