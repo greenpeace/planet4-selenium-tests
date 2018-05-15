@@ -27,7 +27,9 @@ trait P4_Functions {
 	 *
 	 * @return mixed Value of a tinymce textarea field.
 	 */
-	public function getTextareaOption( $field ) {
-		return $this->_driver->executeScript( 'return tinymce.get("'.$field.'").getContent({format: \'text\'});' );
-	}
+    public function getTextareaOption($field) {
+        //Click on 'Visual' tab of the textarea to force instantiation of tinymce.
+        $this->_driver->findElement(WebDriverBy::id($field . '-tmce'))->click();
+        return $this->_driver->executeScript('return tinymce.get("' . $field . '").getContent({format: \'text\'});');
+    }
 }
