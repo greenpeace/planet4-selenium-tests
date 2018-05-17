@@ -1,6 +1,5 @@
 <?php
 
-
 include 'P4_Functions.php';
 
 abstract class AbstractClass extends PHPUnit\Framework\TestCase {
@@ -19,8 +18,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
     protected $webDriver;
 
 
-    public function setUp()
-    {
+    public function setUp() {
         $_config = include('./config/config.php');
 	    self::$_config = $_config;
         $this->_url = $_config['url'];
@@ -51,7 +49,14 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
    public function getBaseUrl() {
     	return self::$_config['url'];
    }
-    
-}
 
-?>
+	protected function assertElementNotFound($by) {
+		$this->webDriver->takeScreenshot('reports/screenshots/' . get_class() . '.png');
+		$els = $this->webDriver->findElements($by);
+		if (count($els)) {
+			$this->fail("Unexpectedly element was found");
+		}
+		// increment assertion counter
+		$this->assertTrue(true);
+	}
+}

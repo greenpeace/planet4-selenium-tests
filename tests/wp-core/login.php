@@ -1,47 +1,44 @@
 <?php
 
-
 //This class is needed to start the session and open/close the browser
 require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_login extends AbstractClass {
 
-  
   /** @var array */
-    private static $_config = array();
+    protected static $_config = array();
   /**
    * @var \RemoteWebDriver
    */
 
-
   protected $webDriver;
 
-  public function setUp()
-  {
-    parent::setUp();
+  public function __construct( $name = null, array $data = [], $dataName = '' ) {
+	  self::$_config  = include('./config/config.php');
+	  parent::__construct( $name, $data, $dataName );
+  }
+
+	public function setUp() {
+	  parent::setUp();
   }
 
 
-  public function wpLogin()
-  {
+  public function wpLogin() {
     $u = $this->_url . "/wp-admin";
     $this->webDriver->get($u);
-    $_config = include('./config/config.php');
-    $p4_user = $_config['p4_user'];
-    $p4_pass = $_config['p4_password'];
+    $p4_user  = self::$_config['p4_user'];
+    $p4_pass  = self::$_config['p4_password'];
     // find login form
     $form = $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
 
-    //Enter username
-    $usernamefield = $this->webDriver->findElement(WebDriverBy::id('user_login'));
-    $usernamefield->click();
-    $this->webDriver->getKeyboard()->sendKeys("$p4_user");
+    // Enter username by setting the value via javascript. Works for running tests on localhost,
+	// while sendKeys() does not work on localhost because the characters are being sent faster than the browser can recieve.
+	$this->webDriver->executeScript("document.getElementById('user_login').setAttribute('value', '$p4_user')");
 
-    //Enter password
-    $passfield = $this->webDriver->findElement(WebDriverBy::id('user_pass'));
-    $passfield->click();
-    $this->webDriver->getKeyboard()->sendKeys("$p4_pass");
+	// Enter password by setting the value via javascript. Works for running tests on localhost,
+	// while sendKeys() does not work on localhost because the characters are being sent faster than the browser can recieve.
+	$this->webDriver->executeScript("document.getElementById('user_pass').setAttribute('value', '$p4_pass')");
 
     try{
       //Fill in prove you are human field
@@ -63,8 +60,7 @@ class P4_login extends AbstractClass {
     $this->assertContains('Dashboard', $this->webDriver->getTitle());
   }
 
-  public function wpLogout()
-  {
+  public function wpLogout() {
     $usermenu = $this->webDriver->findElement(WebDriverBy::id('wp-admin-bar-my-account'));
 //    $usermenu = $this->webDriver->findElement(WebDriverBy::id('wp-admin-bar-top-secondary'));
     $this->webDriver->getMouse()->mouseMove( $usermenu->getCoordinates() );    
@@ -80,20 +76,4 @@ class P4_login extends AbstractClass {
     // Validates user is logged out by locating login form
     $form = $this->webDriver->findElement(WebDriverBy::id('loginform'));
   }
-
-
-
-  protected function assertElementNotFound($by)
-  {
-	$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
-	$els = $this->webDriver->findElements($by);
-	if (count($els)) {
-		$this->fail("Unexpectedly element was found");
-	}
-	// increment assertion counter
-	$this->assertTrue(true);
-
-  }
-
 }
-?>
