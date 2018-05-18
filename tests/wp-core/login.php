@@ -5,23 +5,10 @@ require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_login extends AbstractClass {
 
-  /** @var array */
-    protected static $_config = array();
   /**
    * @var \RemoteWebDriver
    */
-
   protected $webDriver;
-
-  public function __construct( $name = null, array $data = [], $dataName = '' ) {
-	  self::$_config  = include('./config/config.php');
-	  parent::__construct( $name, $data, $dataName );
-  }
-
-	public function setUp() {
-	  parent::setUp();
-  }
-
 
   public function wpLogin() {
     $u = $this->_url . "/wp-admin";
@@ -29,7 +16,7 @@ class P4_login extends AbstractClass {
     $p4_user  = self::$_config['p4_user'];
     $p4_pass  = self::$_config['p4_password'];
     // find login form
-    $form = $this->webDriver->findElement(WebDriverBy::id('loginform'));
+    $this->webDriver->findElement(WebDriverBy::id('loginform'));
     $this->webDriver->wait(3);
 
     // Enter username by setting the value via javascript. Works for running tests on localhost,
@@ -74,6 +61,6 @@ class P4_login extends AbstractClass {
     $logout->click();
 
     // Validates user is logged out by locating login form
-    $form = $this->webDriver->findElement(WebDriverBy::id('loginform'));
+    $this->webDriver->findElement(WebDriverBy::id('loginform'));
   }
 }

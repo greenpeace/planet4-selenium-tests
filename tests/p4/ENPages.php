@@ -53,16 +53,9 @@ class P4_ENPages extends P4_login {
 
 		// Click on Save Changes to filter results
 		$this->webDriver->findElement( WebDriverBy::id( 'p4en_pages_datatable_settings_save_button' ) )->click();
-		sleep( 3 );
 
-		// Fail if test error is shown
-		try {
-			if( $this->webDriver->findElement( WebDriverBy::cssSelector( '.p4en_error_message' ) ) ) {
-				$this->fail( '->Error message shown in EN Pages Data Table page, check API settings are correct' );
-			}
-		} catch( Exception $e ) {
-			unset( $e );
-		}
+		// Check if an error message is displayed after saving the filters.
+		$this->assertElementNotFound( '.p4en_error_message' );
 
 		// Search for specific page.
 		$search = $this->webDriver->findElement( WebDriverBy::xpath( "//*[@id='en_pages_table_filter']/label/input" ) );
@@ -70,7 +63,6 @@ class P4_ENPages extends P4_login {
 		$this->webDriver->getKeyboard()->sendKeys( 'testing' );
 
 		// Validate results
-		sleep( 1 );
 		try {
 			$results = $this->webDriver->findElement( WebDriverBy::xpath( "//*[@id='en_pages_table']/tbody/tr" ) )->getText();
 			$this->assertContains( $selected_subtype, $results );
@@ -93,10 +85,9 @@ class P4_ENPages extends P4_login {
 			$this->fail( '->Could not find the Edit Action link' );
 		}
 
-		$args = [
+		$this->checkNavigationToEN( [
 			'p4en_page_title' => $p4en_page_title
-		];
-		$this->checkNavigationToEN( $args );
+		] );
 
 		// I log out after test
 		$this->wpLogout();
@@ -111,21 +102,17 @@ class P4_ENPages extends P4_login {
 		// Switch to the newly opened EN platform tab.
 		$this->_driver->switchTo()->window( end( $tabs ) );
 
-		sleep( 5 );
+		$this->waitUntilVisible( '#enLoginUsername' );
 		$this->webDriver->executeScript("document.getElementById('enLoginUsername').setAttribute('value', '" . self::$_config['en_email'] . "')");
 		$this->webDriver->executeScript("document.getElementById('enLoginPassword').setAttribute('value', '" . self::$_config['en_password'] . "')");
 
 		$en_login = $this->webDriver->findElement(WebDriverBy::cssSelector( '.button--login' ) );
 		$en_login->click();
-		sleep( 10 );
+		$this->waitUntilVisible( '.enOverlay__popup__title', 10 );
 
 		// Check if we navigated to the corresponding page within the EN platform.
-		try {
-			$en_page_title = $this->webDriver->findElement( WebDriverBy::cssSelector( '.enOverlay__popup__title' ) )->getText();
-			$this->assertContains( $args['p4en_page_title'], $en_page_title );
-		} catch( NoSuchElementException $e ) {
-			$this->fail( '->Could not navigate to the Edit page screen within the EN platform' );
-		}
+		$en_page_title = $this->webDriver->findElement( WebDriverBy::cssSelector( '.enOverlay__popup__title' ) )->getText();
+		$this->assertContains( $args['p4en_page_title'], $en_page_title );
 
 		// Switch back to the P4 tab.
 		$this->_driver->switchTo()->window( reset( $tabs ) );
