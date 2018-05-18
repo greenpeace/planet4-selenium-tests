@@ -8,18 +8,18 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	const TIMEOUT_IN_SECOND       = 5;
 	const INTERVAL_IN_MILLISECOND = 250;
 
-    /** @var array */
-    protected static $_config = array();
-    /** @var WebDriver[]*/
-    private static $_driverInstances = array();
-    /** @var string */
-    private static $_handle = '';
-    /** @var WebDriver */
-    protected $_driver = null;
-    /** @var string */
-    protected $_url = '';
-   /** @var \RemoteWebDriver */
-    protected $webDriver;
+	/** @var array */
+	protected static $_config = array();
+	/** @var WebDriver[]*/
+	private static $_driverInstances = array();
+	/** @var string */
+	private static $_handle = '';
+	/** @var WebDriver */
+	protected $_driver = null;
+	/** @var string */
+	protected $_url = '';
+	/** @var \RemoteWebDriver */
+	protected $webDriver;
 
 	/**
 	 * AbstractClass constructor.
@@ -28,46 +28,49 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * @param array  $data
 	 * @param string $dataName
 	 */
-    public function __construct( $name = null, array $data = [], $dataName = '' ) {
-	    self::$_config = include( self::CONFIG_FILE );
-	    parent::__construct( $name, $data, $dataName );
-    }
+	public function __construct( $name = null, array $data = [], $dataName = '' ) {
+		self::$_config = include( self::CONFIG_FILE );
+		parent::__construct( $name, $data, $dataName );
+	}
 
 	/**
-	 *
+	 * Sets up the fixture, for example, open a network connection.
+	 * This method is called before a test is executed.
 	 */
 	public function setUp() {
-        $this->_url = self::$_config['url'];
+		$this->_url = self::$_config['url'];
 
-        /** @var DesiredCapabilities $capabilities */
-	    $capabilities = DesiredCapabilities::{self::$_config['browser']}();
-	    if ( 'chrome' === self::$_config['browser'] ) {
-		    $options = new ChromeOptions();
-		    $options->addArguments( array( '--window-size=1366,996', ) );
-		    $capabilities->setCapability( ChromeOptions::CAPABILITY, $options );
-	    }
-	    $driver = $this->webDriver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
+		/** @var DesiredCapabilities $capabilities */
+		$capabilities = DesiredCapabilities::{self::$_config['browser']}();
+		if ( 'chrome' === self::$_config['browser'] ) {
+			$options = new ChromeOptions();
+			$options->addArguments( array( '--window-size=1366,996', ) );
+			$capabilities->setCapability( ChromeOptions::CAPABILITY, $options );
+		}
+		$driver = $this->webDriver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
 
 		self::$_driverInstances[] = $driver;
-        $this->_driver = $driver;
-        $this->_driver->get( $this->_url );
-        self::$_handle = $this->_driver->getWindowHandle();
-    }
+		$this->_driver = $driver;
+		$this->_driver->get( $this->_url );
+		self::$_handle = $this->_driver->getWindowHandle();
+	}
 
 	/**
-	 *
+	 * Tears down the fixture, for example, close a network connection.
+	 * This method is called after a test is executed.
 	 */
-    public function tearDown() {
+	public function tearDown() {
 		if ( parent::hasFailed() ) {
 			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
 		}
-
 		try {
 			$this->webDriver->quit();
-	    } catch ( Exception $e ) {}
-    }
+		} catch ( Exception $e ) {}
+	}
 
 	/**
+	 * Gets the url that the test will run.
+	 *
 	 * @return mixed
 	 */
 	public function getBaseUrl() {
