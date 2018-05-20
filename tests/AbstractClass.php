@@ -81,16 +81,12 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * Asserts that the given element is not inside the DOM.
 	 *
 	 * @param string $selector Selector for locating the element.
-	 * @param string $message Custom message to display upon failure.
 	 */
-	protected function assertElementNotFound( $selector, $message = '' ) {
+	protected function assertElementNotFound( $selector ) {
 		$elements = $this->webDriver->findElements( WebDriverBy::cssSelector( $selector ) );
 		if ( count( $elements ) > 0 ) {
 			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
-			if ( ! $message ) {
-				$message = 'Unexpectedly element with selector "' . $selector . '" exists';
-			}
-			$this->fail( $message );
+			$this->fail( 'Unexpectedly element with selector "' . $selector . '" exists' );
 		} else {
 			$this->assertTrue( true );                  // Increment assertion counter.
 		}
