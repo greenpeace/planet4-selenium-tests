@@ -203,7 +203,7 @@ class P4_Static4Column extends P4_login {
 		$this->webDriver->action()->keyUp(null,WebDriverKeys::CONTROL)->perform();
 		$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
 		$this->webDriver->getKeyboard()->pressKey(WebDriverKeys::BACKSPACE);
-		$this->webDriver->getKeyboard()->sendKeys('attachment_2=' . $img2 . 'attachment_3=' . $img3 . 'attachment_4=' . $img4 .'/]');
+		$this->webDriver->getKeyboard()->sendKeys('attachment_2=' . $img2 . ' attachment_3=' . $img3 . ' attachment_4=' . $img4 .'/]');
 
 		// Publish content
 		$this->webDriver->findElement(
@@ -244,7 +244,7 @@ class P4_Static4Column extends P4_login {
 		$description1_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information p'))->getText();
 		$linktext1_pg = $this->webDriver->findElement(
-			By::xPath('/html/body/div[5]/section/div/div/div[1]/div[2]/a'))->getText();
+			By::xPath('//section["four-column"]/div/div/div[1]/div[2]/a'))->getText();
 		$linkurl1_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(1) .four-column-information a'))->getAttribute('href');
 		$srcimg2 = explode('-', $this->webDriver->findElement(
@@ -255,7 +255,7 @@ class P4_Static4Column extends P4_login {
 		$description2_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information p'))->getText();
 		$linktext2_pg = $this->webDriver->findElement(
-			By::xPath('/html/body/div[5]/section/div/div/div[2]/div[2]/a'))->getText();
+			By::xPath('//section["four-column"]/div/div/div[2]/div[2]/a'))->getText();
 		$linkurl2_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(2) .four-column-information a'))->getAttribute('href');
 		$srcimg3 = explode('-', $this->webDriver->findElement(
@@ -266,7 +266,7 @@ class P4_Static4Column extends P4_login {
 		$description3_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information p'))->getText();
 		$linktext3_pg = $this->webDriver->findElement(
-			By::xPath('/html/body/div[5]/section/div/div/div[3]/div[2]/a'))->getText();
+			By::xPath('//section["four-column"]/div/div/div[3]/div[2]/a'))->getText();
 		$linkurl3_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(3) .four-column-information a'))->getAttribute('href');
 		$srcimg4 = explode('-', $this->webDriver->findElement(
@@ -277,7 +277,7 @@ class P4_Static4Column extends P4_login {
 		$description4_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information p'))->getText();
 		$linktext4_pg = $this->webDriver->findElement(
-			By::xPath('/html/body/div[5]/section/div/div/div[4]/div[2]/a'))->getText();
+			By::xPath('//section["four-column"]/div/div/div[4]/div[2]/a'))->getText();
 		$linkurl4_pg = $this->webDriver->findElement(
 			By::cssSelector('div.four-column-wrap:nth-child(4) .four-column-information a'))->getAttribute('href');
 
