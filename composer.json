@@ -1,6 +1,8 @@
 {
   "require": {
     "phpunit/phpunit": "~6.5",
+    "phpunit/phpunit-selenium": ">=2",
+    "phpunit/dbunit": ">=2",
     "doctrine/instantiator": "1.0.x",
     "facebook/webdriver": "dev-master"
   }

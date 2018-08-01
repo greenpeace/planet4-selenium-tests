@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="bootstrap.php">
+
+    <php>
+        <var name="DB_HOST" value="dbhost"/>
+        <var name="DB_USER" value="dbuser"/>
+        <var name="DB_PASSWD" value="dbpass"/>
+        <var name="DB_DBNAME" value="dbname"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="Planet 4 - clean up">
+            <file>DeleteContent.php</file>
+        </testsuite>
+        <testsuite name="Planet4">
+            <directory suffix=".php">p4</directory>
+            <exclude>./p4/EN_forms.php</exclude>
+            <exclude>./p4/Varnish.php</exclude>
+            <exclude>./p4/GoogleLogin.php</exclude>
+            <exclude>./p4/CarouselSplit.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

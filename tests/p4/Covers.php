@@ -21,11 +21,11 @@ class P4_Covers extends P4_login {
 		}
 
 		//Go to pages and create content
-		$this->webDriver->wait( 10, 500 )->until( WebDriverExpectedCondition::visibilityOfElementLocated( By::id( 'menu-pages' ) ) );
-		$pages = $this->webDriver->findElement( By::id( 'menu-pages' ) );
+		$this->driver->wait( 10, 500 )->until( WebDriverExpectedCondition::visibilityOfElementLocated( By::id( 'menu-pages' ) ) );
+		$pages = $this->driver->findElement( By::id( 'menu-pages' ) );
 		$pages->click();
 		try {
-			$link = $this->webDriver->findElement( By::linkText( 'Add New' ) );
+			$link = $this->driver->findElement( By::linkText( 'Add New' ) );
 		} catch ( Exception $e ) {
 			$this->fail( '->Could not find \'Add New\' button in Pages overview' );
 		}
@@ -33,30 +33,30 @@ class P4_Covers extends P4_login {
 
 		//Validate button to add blocks to page is present
 		$this->assertContains(
-			'Add Page Element', $this->webDriver->findElement(
+			'Add Page Element', $this->driver->findElement(
 			By::className( 'shortcake-add-post-element' ) )->getText()
 		);
 
 		//Enter title of page
-		$field = $this->webDriver->findElement( By::id( 'titlewrap' ) );
+		$field = $this->driver->findElement( By::id( 'titlewrap' ) );
 		$field->click();
-		$this->webDriver->getKeyboard()->sendKeys( 'Test automated - Covers' );
+		$this->driver->getKeyboard()->sendKeys( 'Test automated - Covers' );
 
 		//Click on button to add blocks
-		$add = $this->webDriver->findElement(
+		$add = $this->driver->findElement(
 			By::className( 'shortcake-add-post-element' )
 		);
 		$add->click();
 
 		//Validate blocks modal window is shown
 		$this->assertContains(
-			'Insert Post Element', $this->webDriver->findElement(
+			'Insert Post Element', $this->driver->findElement(
 			By::className( 'media-frame-title' ) )->getText()
 		);
 
 		//Select TakeAction block
 		try {
-			$ta = $this->webDriver->findElement(
+			$ta = $this->driver->findElement(
 				By::cssSelector( 'li[data-shortcode=\'shortcake_covers\']' )
 			);
 			$ta->click();
@@ -70,35 +70,35 @@ class P4_Covers extends P4_login {
 		$tg1  = 'ArcticSunrise';
 		$tg2  = 'Oceans';
 
-		$field = $this->webDriver->findElement( By::name( 'title' ) );
+		$field = $this->driver->findElement( By::name( 'title' ) );
 		$field->click();
-		$this->webDriver->getKeyboard()->sendKeys( $title );
+		$this->driver->getKeyboard()->sendKeys( $title );
 
-		$field = $this->webDriver->findElement( By::name( 'description' ) );
+		$field = $this->driver->findElement( By::name( 'description' ) );
 		$field->click();
-		$this->webDriver->getKeyboard()->sendKeys( $desc );
+		$this->driver->getKeyboard()->sendKeys( $desc );
 
-		$field = $this->webDriver->findElement( By::className( 'select2-selection__rendered' ) );
+		$field = $this->driver->findElement( By::className( 'select2-selection__rendered' ) );
 		$field->click();
-		$this->webDriver->getKeyboard()->sendKeys( $tg1 );
+		$this->driver->getKeyboard()->sendKeys( $tg1 );
 
 		// Wait until select options are visible.
-		$this->webDriver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(By::className('select2-result-selectable')));
+		$this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(By::className('select2-result-selectable')));
 
 		// Select suggestion.
-		$this->webDriver->getKeyboard()->pressKey( WebDriverKeys::ENTER );
-		$field = $this->webDriver->findElement( By::className( 'select2-selection__rendered' ) );
+		$this->driver->getKeyboard()->pressKey( WebDriverKeys::ENTER );
+		$field = $this->driver->findElement( By::className( 'select2-selection__rendered' ) );
 		$field->click();
-		$this->webDriver->getKeyboard()->sendKeys( $tg2 );
+		$this->driver->getKeyboard()->sendKeys( $tg2 );
 		//Sleep for 3 seconds
-		$this->webDriver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(By::className('select2-result-selectable')));
+		$this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(By::className('select2-result-selectable')));
 		//Select suggestion
-		$this->webDriver->getKeyboard()->pressKey( WebDriverKeys::ENTER );
+		$this->driver->getKeyboard()->pressKey( WebDriverKeys::ENTER );
 
 
 		//Insert block
 		try {
-			$insert = $this->webDriver->findElement( By::className( 'media-button-insert' ) );
+			$insert = $this->driver->findElement( By::className( 'media-button-insert' ) );
 			$insert->click();
 		} catch ( Exception $e ) {
 			$this->fail( '->Failed to insert element' );
@@ -107,15 +107,15 @@ class P4_Covers extends P4_login {
 
 		usleep( 3000000 );
 		//Publish content
-		$this->webDriver->findElement( By::id( 'publish' ) )->click();
+		$this->driver->findElement( By::id( 'publish' ) )->click();
 
 		//Wait to see successful message
-		$this->webDriver->wait( 10, 1000 )->until(
+		$this->driver->wait( 10, 1000 )->until(
 			WebDriverExpectedCondition::visibilityOfElementLocated(
 				By::id( 'message' ) ) );
 		//Validate I see successful message
 		try {
-			$this->assertContains( 'Page published', $this->webDriver->findElement( By::id( 'message' ) )->getText() );
+			$this->assertContains( 'Page published', $this->driver->findElement( By::id( 'message' ) )->getText() );
 		} catch ( Exception $e ) {
 			$this->fail( '->Failed to publish content - no sucessful message after saving content' );
 		}
@@ -123,32 +123,32 @@ class P4_Covers extends P4_login {
 		//Wait for saved changes to load
 		usleep( 2000000 );
 		//Go to page to validate page contains Articles Block
-		$link = $this->webDriver->findElement(
+		$link = $this->driver->findElement(
 			By::linkText( 'View page' )
 		);
 		$link->click();
 		//If alert shows up asking to confirm leaving the page, confirm
 		try {
-			$this->webDriver->switchTo()->alert()->accept();
+			$this->driver->switchTo()->alert()->accept();
 		} catch ( Exception $e ) {
 		}
 		try {
-			$this->webDriver->findElement( By::className( 'covers-block' ) );
-			$titl_pg = $this->webDriver->findElement(
+			$this->driver->findElement( By::className( 'covers-block' ) );
+			$titl_pg = $this->driver->findElement(
 				By::cssSelector( 'h2.page-section-header' ) )->getText();
-			$desc_pg = $this->webDriver->findElement(
+			$desc_pg = $this->driver->findElement(
 				By::cssSelector( 'p.page-section-description' ) )->getText();
 
 			//Count how many cover cards were shown.
-			$covercardsnum = count( $this->webDriver->findElements(
+			$covercardsnum = count( $this->driver->findElements(
 				By::cssSelector( '.covers-block .container .row .cover-card' ) ) );
 
 			//Get all the tags for each cover card and saves them in array.
 			for ( $i = 1; $i <= $covercardsnum; $i++ ) {
 				$path = ".covers-block .container .row .cover-card:nth-child($i) a.cover-card-tag";
-				$covercards[] = $this->webDriver->findElements( By::cssSelector( $path ) ) ;
+				$covercards[] = $this->driver->findElements( By::cssSelector( $path ) ) ;
 			}
-			$btntxt = $this->webDriver->findElement( By::cssSelector( '.cover-card:first-child .cover-card-btn' ) )->getText();
+			$btntxt = $this->driver->findElement( By::cssSelector( '.cover-card:first-child .cover-card-btn' ) )->getText();
 		} catch ( Exception $e ) {
 			$this->fail( $e->getMessage() );
 			$this->fail( '->Some of the content created is not displayed in front end page' );
@@ -178,8 +178,6 @@ class P4_Covers extends P4_login {
 
 		// I log out after test
 		$this->wpLogout();
-		echo '\n-> Covers block test PASSED';
+		echo "\n-> Covers block test PASSED";
 	}
-
 }
-

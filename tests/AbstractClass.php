@@ -1,11 +1,15 @@
 <?php
 
+use PHPUnit\DbUnit\TestCase as PHPUnit_Extensions_Database_TestCase;
+use PHPUnit\DbUnit\Operation\Factory as PHPUnit_Extensions_Database_Operation_Factory;
+use PHPUnit\DbUnit\DataSet\CompositeDataSet as PHPUnit_Extensions_Database_DataSet_CompositeDataSet;
+
 include 'P4_Functions.php';
 
-abstract class AbstractClass extends PHPUnit\Framework\TestCase {
+abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 
 	const CONFIG_FILE             = './config/config.php';
-	const TIMEOUT_IN_SECOND       = 5;
+	const TIMEOUT_IN_SECOND       = 20;
 	const INTERVAL_IN_MILLISECOND = 250;
 
 	/** @var array */
@@ -19,7 +23,22 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	/** @var string */
 	protected $_url = '';
 	/** @var \RemoteWebDriver */
-	protected $webDriver;
+	protected $driver;
+
+	protected $dataset_update;
+	protected $dataset_insert;
+
+	/**
+	 * only instantiate pdo once for test clean-up/fixture load
+	 * @var PDO
+	 */
+	static private $pdo = null;
+
+	/**
+	 * only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
+	 * @var type
+	 */
+	private $conn = null;
 
 	/**
 	 * AbstractClass constructor.
@@ -47,12 +66,19 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 			$options->addArguments( array( '--window-size=1366,996', ) );
 			$capabilities->setCapability( ChromeOptions::CAPABILITY, $options );
 		}
-		$driver = $this->webDriver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
+		$driver = $this->driver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
 
 		self::$_driverInstances[] = $driver;
-		$this->_driver = $driver;
+		$this->_driver            = $driver;
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
+
+		PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+		                                             ->execute( $this->getConnection(), $this->getDataSetInsert() );
+		PHPUnit_Extensions_Database_Operation_Factory::UPDATE()
+		                                             ->execute( $this->getConnection(), $this->getDataSetUpdate() );
+
+		$this->getConnection()->createDataSet();
 	}
 
 	/**
@@ -61,11 +87,14 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 */
 	public function tearDown() {
 		if ( parent::hasFailed() ) {
-			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
+			$this->driver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
 		}
 		try {
-			$this->webDriver->quit();
+			$this->driver->quit();
 		} catch ( Exception $e ) {}
+
+		PHPUnit_Extensions_Database_Operation_Factory::DELETE()
+		                                             ->execute($this->getConnection(), $this->dataset_insert);
 	}
 
 	/**
@@ -74,7 +103,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * @return mixed
 	 */
 	public function getBaseUrl() {
-    	return self::$_config['url'];
+		return self::$_config['url'];
 	}
 
 	/**
@@ -83,9 +112,9 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * @param string $selector Selector for locating the element.
 	 */
 	protected function assertElementNotFound( $selector ) {
-		$elements = $this->webDriver->findElements( WebDriverBy::cssSelector( $selector ) );
+		$elements = $this->driver->findElements( WebDriverBy::cssSelector( $selector ) );
 		if ( count( $elements ) > 0 ) {
-			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
+			$this->driver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
 			$this->fail( 'Unexpectedly element with selector "' . $selector . '" exists' );
 		} else {
 			$this->assertTrue( true );                  // Increment assertion counter.
@@ -111,5 +140,42 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		} catch ( Exception $e ) {
 			$this->fail( $message );
 		}
+	}
+
+	protected function getConnection() {
+		if ( $this->conn === null ) {
+			if ( self::$pdo == null ) {
+				self::$pdo = new PDO( 'mysql:dbname=' . $GLOBALS['DB_DBNAME'] . ';host=' . $GLOBALS['DB_HOST'] . '	', $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+			}
+			$this->conn = $this->createDefaultDBConnection( self::$pdo, 'p4testing' );
+		}
+
+		return $this->conn;
+	}
+
+	protected function getDataSet() {
+		$ds1                  = $this->createXMLDataSet( __DIR__ . '/../data/dump_options.xml' );
+		$this->dataset_update = $ds1;
+		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump.xml' );
+		$this->dataset_insert = $ds2;
+		$composite_data_set   = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
+		$composite_data_set->addDataSet( $ds1 );
+		$composite_data_set->addDataSet( $ds2 );
+
+		return $composite_data_set;
+	}
+
+	protected function getDataSetInsert() {
+		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump.xml' );
+		$this->dataset_insert = $ds2;
+
+		return $ds2;
+	}
+
+	protected function getDataSetUpdate() {
+		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump_options.xml' );
+		$this->dataset_update = $ds2;
+
+		return $ds2;
 	}
 }

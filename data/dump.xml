@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+
+<dataset>
+    <table name="wp_terms">
+        <column>term_id</column>
+        <column>name</column>
+        <column>slug</column>
+        <column>term_group</column>
+        <row>
+            <value>100</value>
+            <value>ArcticSunrise</value>
+            <value>arcticsunrise</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>101</value>
+            <value>Oceans</value>
+            <value>oceans</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>200</value>
+            <value>Issues</value>
+            <value>issues</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>201</value>
+            <value>Energy</value>
+            <value>energy</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>202</value>
+            <value>Nature</value>
+            <value>nature</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>203</value>
+            <value>People</value>
+            <value>people</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>301</value>
+            <value>Press Release</value>
+            <value>press-release</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>302</value>
+            <value>Publication</value>
+            <value>publication</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>303</value>
+            <value>Story</value>
+            <value>story</value>
+            <value>0</value>
+        </row>
+    </table>
+
+
+    <table name="wp_term_taxonomy">
+        <column>term_taxonomy_id</column>
+        <column>term_id</column>
+        <column>taxonomy</column>
+        <column>description</column>
+        <column>parent</column>
+        <column>count</column>
+        <row>
+            <value>100</value>
+            <value>100</value>
+            <value>post_tag</value>
+            <value></value>
+            <value>0</value>
+            <value>4</value>
+        </row>
+        <row>
+            <value>101</value>
+            <value>101</value>
+            <value>post_tag</value>
+            <value></value>
+            <value>0</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>200</value>
+            <value>200</value>
+            <value>category</value>
+            <value>Issues category</value>
+            <value>0</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>201</value>
+            <value>201</value>
+            <value>category</value>
+            <value>Energy category</value>
+            <value>200</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>202</value>
+            <value>202</value>
+            <value>category</value>
+            <value>Nature category</value>
+            <value>200</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>203</value>
+            <value>203</value>
+            <value>category</value>
+            <value>People category</value>
+            <value>200</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>301</value>
+            <value>301</value>
+            <value>p4-page-type</value>
+            <value>A term for press release post type</value>
+            <value>0</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>302</value>
+            <value>302</value>
+            <value>p4-page-type</value>
+            <value>A term for publication post type</value>
+            <value>0</value>
+            <value>0</value>
+        </row>
+        <row>
+            <value>303</value>
+            <value>303</value>
+            <value>p4-page-type</value>
+            <value>A term for story post type</value>
+            <value>0</value>
+            <value>0</value>
+        </row>
+    </table>
+
+    <table name="wp_posts">
+        <column>ID</column>
+        <column>post_author</column>
+        <column>post_date</column>
+        <column>post_date_gmt</column>
+        <column>post_content</column>
+        <column>post_title</column>
+        <column>post_excerpt</column>
+        <column>post_status</column>
+        <column>comment_status</column>
+        <column>ping_status</column>
+        <column>post_password</column>
+        <column>post_name</column>
+        <column>to_ping</column>
+        <column>pinged</column>
+        <column>post_modified</column>
+        <column>post_modified_gmt</column>
+        <column>post_content_filtered</column>
+        <column>post_parent</column>
+        <column>guid</column>
+        <column>menu_order</column>
+        <column>post_type</column>
+        <column>post_mime_type</column>
+        <column>comment_count</column>
+        <row>
+            <value name="ID">20</value>
+            <value name="post_author">2</value>
+            <value name="post_date">2018-07-30 22:16:53</value>
+            <value name="post_date_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content"></value>
+            <value name="post_title">ACT</value>
+            <value name="post_excerpt"></value>
+            <value name="post_status">publish</value>
+            <value name="comment_status">closed</value>
+            <value name="ping_status">closed</value>
+            <value name="post_password"></value>
+            <value name="post_name">act</value>
+            <value name="to_ping"></value>
+            <value name="pinged"></value>
+            <value name="post_modified">2018-07-30 22:16:53</value>
+            <value name="post_modified_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content_filtered"></value>
+            <value name="post_parent">0</value>
+            <value name="guid">http://one.planet4.test/act/</value>
+            <value name="menu_order">0</value>
+            <value name="post_type">page</value>
+            <value name="post_mime_type"></value>
+            <value name="comment_count">0</value>
+        </row>
+        <row>
+            <value name="ID">21</value>
+            <value name="post_author">2</value>
+            <value name="post_date">2018-07-30 22:16:53</value>
+            <value name="post_date_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content"></value>
+            <value name="post_title">EXPLORE</value>
+            <value name="post_excerpt"></value>
+            <value name="post_status">publish</value>
+            <value name="comment_status">closed</value>
+            <value name="ping_status">closed</value>
+            <value name="post_password"></value>
+            <value name="post_name">explore</value>
+            <value name="to_ping"></value>
+            <value name="pinged"></value>
+            <value name="post_modified">2018-07-30 22:16:53</value>
+            <value name="post_modified_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content_filtered"></value>
+            <value name="post_parent">0</value>
+            <value name="guid">http://one.planet4.test/explore/</value>
+            <value name="menu_order">0</value>
+            <value name="post_type">page</value>
+            <value name="post_mime_type"></value>
+            <value name="comment_count">0</value>
+        </row>
+        <row>
+            <value name="ID">1002</value>
+            <value name="post_author">2</value>
+            <value name="post_date">2018-07-30 22:16:53</value>
+            <value name="post_date_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content">[shortcake_content_three_column title="Our vision" description="Fossil fuel companies will fight tooth and nail to keep us locked to the path that gives them a few more years of profit - the path that sends us careening off a cliff. We must fight equally hard - harder - to grab the opportunity to take control of our own destiny. It may be our last chance.
+                We are the ones we have been waiting for. We are the generation that goes beyond coal and oil." image_1="14068" image_2="14066" image_3="1168" /]
+                [shortcake_campaign_thumbnail title="Our campaigns" /]
+
+                [shortcake_covers title="What you can do" select_tag="65,88,87" covers_view="0" /]
+
+                [shortcake_content_four_column title="Publications" select_tag="65,88,87" p4_page_type_press_release="false" p4_page_type_publication="true" p4_page_type_story="false" posts_view="0" p4_post_types="62" /]
+
+                [shortcake_articles article_heading="Latest updates" article_count="3" read_more_link="https://www.greenpeace.org/international/?s=&amp;orderby=post_date&amp;f%5Bcat%5D%5BEnergy%5D=69" /]
+
+                [shortcake_happy_point background="11275" focus_image="center center" mailing_list_iframe="true" /]</value>
+            <value name="post_title">Energy</value>
+            <value name="post_excerpt"></value>
+            <value name="post_status">publish</value>
+            <value name="comment_status">closed</value>
+            <value name="ping_status">closed</value>
+            <value name="post_password"></value>
+            <value name="post_name">energy</value>
+            <value name="to_ping"></value>
+            <value name="pinged"></value>
+            <value name="post_modified">2018-07-30 22:16:53</value>
+            <value name="post_modified_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content_filtered"></value>
+            <value name="post_parent">21</value>
+            <value name="guid">http://one.planet4.test/explore/energy</value>
+            <value name="menu_order">0</value>
+            <value name="post_type">page</value>
+            <value name="post_mime_type"></value>
+            <value name="comment_count">0</value>
+        </row>
+        <row>
+            <value name="ID">1001</value>
+            <value name="post_author">2</value>
+            <value name="post_date">2018-07-30 22:16:53</value>
+            <value name="post_date_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content"></value>
+            <value name="post_title">story post</value>
+            <value name="post_excerpt"></value>
+            <value name="post_status">publish</value>
+            <value name="comment_status">open</value>
+            <value name="ping_status">closed</value>
+            <value name="post_password"></value>
+            <value name="post_name">story-post</value>
+            <value name="to_ping"></value>
+            <value name="pinged"></value>
+            <value name="post_modified">2018-07-30 22:16:53</value>
+            <value name="post_modified_gmt">2018-07-30 22:16:53</value>
+            <value name="post_content_filtered"></value>
+            <value name="post_parent">0</value>
+            <value name="guid">http://one.planet4.test/wp-content/</value>
+            <value name="menu_order">0</value>
+            <value name="post_type">post</value>
+            <value name="post_mime_type"></value>
+            <value name="comment_count">0</value>
+        </row>
+    </table>
+
+
+    <table name="wp_term_relationships">
+        <column>object_id</column>
+        <column>term_taxonomy_id</column>
+        <column>term_order</column>
+        <row>
+            <value>1001</value>
+            <value>303</value>
+            <value>0</value>
+        </row>
+    </table>
+
+    <table name="wp_termmeta">
+        <column>meta_id</column>
+        <column>term_id</column>
+        <column>meta_key</column>
+        <column>meta_value</column>
+        <row>
+            <value>3000</value>
+            <value>101</value>
+            <value>tag_attachment_id</value>
+            <value>105</value>
+        </row>
+        <row>
+            <value>3001</value>
+            <value>101</value>
+            <value>tag_attachment</value>
+            <value>http://one.planet4.test/wp-content/uploads/2018/07/a1fc1512-f7fb64f4-gp0str6il_pressmedia.jpg</value>
+        </row>
+    </table>
+</dataset>
+

@@ -13,7 +13,7 @@ class P4_Cookies extends P4_login {
 	use P4_Functions;
 
 	public function testCookies() {
-		$driver       = $this->webDriver;
+		$driver       = $this->driver;
 		$cookies_text = $this->getP4Option( 'cookies_field' );
 		// Validate banner is visible and contains link to more info.
 		$driver->get( $this->getBaseUrl() );
@@ -22,7 +22,7 @@ class P4_Cookies extends P4_login {
 			$driver->findElement( By::id( 'set-cookie' ) );
 			$val = $driver->findElement( By::id( 'set-cookie' ) )
 			              ->getCSSValue( 'display' );
-			if ( 'block' !== $val) {
+			if ( 'block' !== $val ) {
 				$this->fail( '->Failed due to cookie banner not visible' );
 			}
 			$site_text = $driver->findElement( By::cssSelector( '#set-cookie .row p' ) )
@@ -49,21 +49,5 @@ class P4_Cookies extends P4_login {
 		}
 		echo "\n-> Cookies banner test PASSED";
 	}
-
-
-	/**
-	 * @param $by
-	 */
-	protected function assertElementNotFound( $by ) {
-		$this->webDriver->takeScreenshot( 'reports/screenshots/' . __CLASS__ . '.png' );
-		$els = $this->webDriver->findElements( $by );
-		if ( count( $els ) ) {
-			$this->fail( 'Unexpectedly element was found' );
-		}
-		// increment assertion counter.
-		$this->assertTrue( true );
-
-	}
-
 }
 

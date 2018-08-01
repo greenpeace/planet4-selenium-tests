@@ -36,4 +36,30 @@ trait P4_Functions {
 
 		return $this->_driver->executeScript( 'return tinymce.get("' . $field . '").getContent({format: \'text\'});' );
 	}
+
+	/**
+	 * Create a new wordpress page.
+	 *
+	 * @return mixed Value of a tinymce textarea field.
+	 */
+	public function create_new_page(  ) {
+
+		//I log in
+		try {
+			$this->wpLogin();
+		} catch ( Exception $e ) {
+			$this->fail( '->Failed to log in, verify credentials and URL' );
+		}
+
+		//Go to pages and create content.
+		$this->driver->wait( 10, 500 )->until( WebDriverExpectedCondition::visibilityOfElementLocated( WebDriverBy::id( 'menu-pages' ) ) );
+		$pages = $this->driver->findElement( WebDriverBy::id( 'menu-pages' ) );
+		$pages->click();
+		try {
+			$link = $this->driver->findElement( WebDriverBy::linkText( "Add New" ) );
+		} catch ( Exception $e ) {
+			$this->fail( "->Could not find 'Add New' button in Pages overview" );
+		}
+		$link->click();
+	}
 }
