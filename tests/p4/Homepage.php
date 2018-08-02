@@ -10,6 +10,16 @@ class P4_Homepage extends AbstractClass {
 	public function testHomepage() {
 		$this->webDriver->get($this->_url);
 
+		// Validate Header and footer colors
+		try {
+			$color = $this->webDriver->findElement(By::className('site-footer'))->getCssValue('background-color');
+			$this->assertEquals('rgba(7, 67, 101, 1)', $color);
+			$color = $this->webDriver->findElement(By::id('header'))->getCssValue('background-color');
+			$this->assertEquals('rgba(7, 67, 101, 0.8)', $color);
+		} catch(Exception $e) {
+			$this->fail('->Failed: Header or Footer colors are wrong');
+		}
+
 		// Validate 2-column block elements are present
 		try {
 			$this->webDriver->findElement(By::className('content-two-column-block'));
