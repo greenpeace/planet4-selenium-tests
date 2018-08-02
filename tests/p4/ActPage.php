@@ -1,79 +1,76 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
+use WebDriverBy as By;
+
+// This class is needed to start the session and open/close the browser
 require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_Actpage extends AbstractClass {
 
-  /**
-   * @var \RemoteWebDriver
-   */
+  	public function testActpage() {
+		$this->webDriver->get($this->_url);
 
-  public function testActpage()
-  {
-  	$this->webDriver->get($this->_url);
-  	$this->webDriver->findElement(WebDriverBy::className('act-nav-link'))->click();
-  	//$url_act = $this->webDriver->getCurrentURL();
-  	$this->assertEquals($this->webDriver->getCurrentURL(),"https://dev.p4.greenpeace.org/international/act/");
+		$this->webDriver->findElement(By::className('act-nav-link'))->click();
 
-	//Validate header block is present in page
-	try{
-		$this->webDriver->findElement(WebDriverBy::className('page-header'));
-		$this->webDriver->findElement(WebDriverBy::className('page-header-title'));
-		$this->webDriver->findElement(WebDriverBy::className('page-header-subtitle'));
-		$this->webDriver->findElement(WebDriverBy::className('page-header-content'));
-	}catch(Exception $e){
-		$this->fail('->Failed to see header block in act page');
+		$this->assertEquals($this->webDriver->getCurrentURL(), $this->_url . 'act/');
+
+		// Validate header block is present in page
+		try {
+			$this->webDriver->findElement(By::className('page-header'));
+			$this->webDriver->findElement(By::className('page-header-title'));
+			$this->webDriver->findElement(By::className('page-header-subtitle'));
+			$this->webDriver->findElement(By::className('page-header-content'));
+		} catch(Exception $e){
+			$this->fail('->Failed to see header block in act page');
+		}
+
+		// Validate covers block is present in page
+		try {
+			$this->webDriver->findElement(By::className('covers-block'));
+			$this->webDriver->findElement(By::className('cover-card'));
+		} catch(Exception $e){
+			$this->fail('->Failed to see covers block in act page');
+		}
+
+		// Validate happy point block is present in page
+		try {
+			$this->webDriver->findElement(By::className('happy-point-block-wrap'));
+			$element = $this->webDriver->findElement(
+				By::id('happy-point'));
+			// Scroll down and wait to happy point to load
+			$element->getLocationOnScreenOnceScrolledIntoView();
+			usleep(2000000);
+			$this->webDriver->switchTo()->frame($this->webDriver->findElement(By::cssSelector('#happy-point iframe')));
+			// Validate input fields are present
+			$this->webDriver->findElement(By::id('en__field_supporter_emailAddress'));
+			$this->webDriver->findElement(By::id('en__field_supporter_country'));
+			$this->webDriver->findElement(By::className('subscriber-btn'));
+		} catch(Exception $e) {
+			$this->fail('->Failed to see happy point block in act page');
+		}
+
+		$this->webDriver->switchTo()->defaultContent();
+
+		// Validate footer block is present in page
+		try {
+			$this->webDriver->findElement(By::className('site-footer'));
+			$this->webDriver->findElement(By::className('footer-social-media'));
+			$this->webDriver->findElement(By::className('footer-links'));
+			$this->webDriver->findElement(By::className('footer-links-secondary'));
+		} catch(Exception $e) {
+			$this->fail('->Failed to see footer block in act page');
+		}
+		echo "\n-> Act Page test PASSED";
 	}
 
-	//Validate covers block is present in page
-	try{
-		$this->webDriver->findElement(WebDriverBy::className('covers-block'));
-		$this->webDriver->findElement(WebDriverBy::className('cover-card'));
-	}catch(Exception $e){
-		$this->fail('->Failed to see covers block in act page');
+	protected function assertElementNotFound($by) {
+		$this->webDriver->takeScreenshot('reports/screenshots/' . __CLASS__ . '.png');
+		$els = $this->webDriver->findElements($by);
+		if (count($els)) {
+			$this->fail('Unexpectedly element was found');
+		}
+		// Increment assertion counter
+		$this->assertTrue(true);
 	}
-	//Validate happy point block is present in page
-	try{
-		$this->webDriver->findElement(WebDriverBy::className('happy-point-block-wrap'));
-		$element = $this->webDriver->findElement(
-     		WebDriverBy::id('happy-point'));
-		//Scroll down and wait to happy point to load
-   		$element->getLocationOnScreenOnceScrolledIntoView(); 
-   		usleep(2000000);
-   		$this->webDriver->switchTo()->frame($this->webDriver->findElement(
-			WebDriverBy::cssSelector('#happy-point iframe')));
-   		//Validate input fields are present
-   		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_emailAddress"));
-		$this->webDriver->findElement(WebDriverBy::id("en__field_supporter_country"));
-		$this->webDriver->findElement(WebDriverBy::className("subscriber-btn"));
-	}catch(Exception $e){
-		$this->fail('->Failed to see happy point block in act page');
-	}
-	$this->webDriver->switchTo()->defaultContent();
-	//Validate footer block is present in page
-	try{
-		$this->webDriver->findElement(WebDriverBy::className('site-footer'));
-		$this->webDriver->findElement(WebDriverBy::className('footer-social-media'));
-		$this->webDriver->findElement(WebDriverBy::className('footer-links'));
-		$this->webDriver->findElement(WebDriverBy::className('footer-links-secondary'));
-	}catch(Exception $e){
-		$this->fail('->Failed to see footer block in act page');
-  	}
-  	echo "\n-> Act Page test PASSED";
- }
-
-  protected function assertElementNotFound($by)
-  {
-	$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
-	$els = $this->webDriver->findElements($by);
-	if (count($els)) {
-		$this->fail("Unexpectedly element was found");
-	}
-	// increment assertion counter
-	$this->assertTrue(true);
-
-  }
-
 }
 ?>
