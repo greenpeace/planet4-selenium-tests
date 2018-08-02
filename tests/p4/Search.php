@@ -30,6 +30,22 @@ class P4_Search extends AbstractClass {
 		} catch(Exception $e) {
 			$this->fail('->Search results do not match string entered');
 		}
+
+		// Validate checkboxes and buttons borders and colors
+		try {
+			$border = $this->webDriver->findElement(
+				By::className('custom-control-description'))->getCssValue('border-color');
+			$this->assertEquals('rgb(51, 51, 51)', $border);
+			$border = $this->webDriver->findElement(
+				By::className('search-btn'))->getCssValue('border-radius');
+			$this->assertEquals('0px', $border);
+			$border = $this->webDriver->findElement(
+				By::className('btn-secondary'))->getCssValue('border-color');
+			$this->assertEquals('rgb(7, 67, 101)', $border);
+		} catch(Exception $e){
+			$this->fail('->Failed: Checkboxes have wrong border');
+		}
+
 		echo "\n-> Search test PASSED";
 	}
 
