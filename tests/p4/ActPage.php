@@ -24,6 +24,16 @@ class P4_Actpage extends AbstractClass {
 			$this->fail('->Failed to see header block in act page');
 		}
 
+		// Validate header title font
+		try {
+			$font = $this->webDriver->findElement(By::className('page-header-title'))->getCssValue('font-family');
+			$this->assertEquals('Roboto, sans-serif', $font);
+			$padding = $this->webDriver->findElement(By::className('page-header'))->getCssValue('padding');
+			$this->assertEquals('144px 0px 60px', $padding);
+		} catch(Exception $e){
+			$this->fail('->Failed: Page header title has wrong font');
+		}
+
 		// Validate covers block is present in page
 		try {
 			$this->webDriver->findElement(By::className('covers-block'));
