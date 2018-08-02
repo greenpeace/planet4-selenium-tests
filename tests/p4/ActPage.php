@@ -34,6 +34,16 @@ class P4_Actpage extends AbstractClass {
 			$this->fail('->Failed: Page header title has wrong font');
 		}
 
+		// Validate proper text color on various page elements
+		try {
+			$body_color = $this->webDriver->findElement(By::cssSelector('body'))->getCssValue('color');
+			$section_color = $this->webDriver->findElement(By::className('page-section-description'))->getCssValue('color');
+			$this->assertEquals('rgba(26, 26, 26, 1)', $body_color);
+			$this->assertEquals('rgba(26, 26, 26, 1)', $section_color);
+		} catch(Exception $e){
+			$this->fail('->Failed: Text color is wrong');
+		}
+
 		// Validate covers block is present in page
 		try {
 			$this->webDriver->findElement(By::className('covers-block'));
