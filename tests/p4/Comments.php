@@ -64,7 +64,7 @@ class P4_Comments extends P4_login {
 
 		// Write comment.
 		$this->driver->findElement( By::cssSelector( '#commentform .form-group #comment' ) )->click();
-		$this->driver->getKeyboard()->sendKeys( '$comment' );
+		$this->driver->getKeyboard()->sendKeys( $comment );
 
 		// Scroll down.
 		$ttl = $this->driver->findElement( By::className( 'comments-section-title' ) );

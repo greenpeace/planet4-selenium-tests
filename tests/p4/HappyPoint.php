@@ -10,26 +10,7 @@ class P4_HappyPoint extends P4_login {
 	 */
 	public function testHappyPoint() {
 
-		//I log in
-		try {
-			$this->wpLogin();
-		} catch ( Exception $e ) {
-			$this->fail( '->Failed to log in, verify credentials and URL' );
-		}
-
-		//Go to pages and create content
-		$this->driver->wait( 3 );
-		$pages = $this->driver->findElement(
-			WebDriverBy::id( "menu-pages" ) );
-		$pages->click();
-		try {
-			$link = $this->driver->findElement(
-				WebDriverBy::linkText( "Add New" )
-			);
-		} catch ( Exception $e ) {
-			$this->fail( "->Could not find 'Add New' button in Pages overview" );
-		}
-		$link->click();
+		$this->create_new_page();
 
 		//Validate button to add blocks to page is present
 		$this->assertContains(
@@ -68,8 +49,8 @@ class P4_HappyPoint extends P4_login {
 
 		//Validate corresponding fields are visible
 		try {
-			$this->driver->findElement( WebDriverBy::id( "background" ) );
-			$this->driver->findElement( WebDriverBy::name( "mailing_list_iframe" ) );
+			$this->driver->findElement( WebDriverBy::id( 'background' ) );
+			$this->driver->findElement( WebDriverBy::name( 'mailing_list_iframe' ) );
 		} catch ( Exception $e ) {
 			$this->fail( "->Could not find tasks fields for 'Happy Point' block post element" );
 		}
@@ -143,21 +124,21 @@ class P4_HappyPoint extends P4_login {
 			$srcimg = substr( $this->driver->findElement(
 				WebDriverBy::cssSelector( '.happy-point-block-wrap picture img' ) )->getAttribute( 'src' ), 0, - 4 );
 			$this->driver->findElement( WebDriverBy::className( 'happy-point-block-wrap' ) );
-			$element = $this->driver->findElement(
-				WebDriverBy::id( 'happy-point' ) );
-			//Scroll down and wait to happy point to load
+			$element = $this->driver->findElement( WebDriverBy::id( 'happy-point' ) );
+
+			// Scroll down and wait to happy point to load.
 			$element->getLocationOnScreenOnceScrolledIntoView();
 			usleep( 2000000 );
 			$this->driver->switchTo()->frame( $this->driver->findElement(
 				WebDriverBy::cssSelector( '#happy-point iframe' ) ) );
 			//Validate input fields are present
-			$this->driver->findElement( WebDriverBy::id( "en__field_supporter_emailAddress" ) );
-			$this->driver->findElement( WebDriverBy::id( "en__field_supporter_country" ) );
-			$this->driver->findElement( WebDriverBy::className( "subscriber-btn" ) );
+			$this->driver->findElement( WebDriverBy::id( 'en__field_supporter_emailAddress' ) );
+			$this->driver->findElement( WebDriverBy::id( 'en__field_supporter_country' ) );
+			$this->driver->findElement( WebDriverBy::className( 'subscriber-btn' ) );
 		} catch ( Exception $e ) {
 			$this->fail( '->Some of the content created is not displayed in front end page' );
 		}
-		$this->assertContains( $srcimg, $srcfirstchild );
+		$this->assertContains( $srcfirstchild, $srcimg );
 		$this->driver->switchTo()->defaultContent();
 
 		// I log out after test

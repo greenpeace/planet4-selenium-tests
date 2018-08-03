@@ -10,3 +10,4 @@ vendor
 #temporary 
 /tmp
 /reports
+/data/dump-generated.xml

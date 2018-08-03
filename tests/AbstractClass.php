@@ -8,6 +8,8 @@ include 'P4_Functions.php';
 
 abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 
+	use P4_Functions;
+
 	const CONFIG_FILE             = './config/config.php';
 	const TIMEOUT_IN_SECOND       = 20;
 	const INTERVAL_IN_MILLISECOND = 250;
@@ -73,6 +75,14 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
 
+
+		if (!file_exists('data/dump-generated.xml')) {
+			copy('data/dump.xml', 'data/dump-generated.xml');
+			$data = $this->uploadMedia();
+			$this->prepareDumpData( $data );
+		}
+		$this->_driver->get( $this->_url );
+
 		PHPUnit_Extensions_Database_Operation_Factory::INSERT()
 		                                             ->execute( $this->getConnection(), $this->getDataSetInsert() );
 		PHPUnit_Extensions_Database_Operation_Factory::UPDATE()
@@ -82,8 +92,7 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 	}
 
 	/**
-	 * Tears down the fixture, for example, close a network connection.
-	 * This method is called after a test is executed.
+	 * Cleanup after test execution.
 	 */
 	public function tearDown() {
 		if ( parent::hasFailed() ) {
@@ -91,10 +100,12 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		}
 		try {
 			$this->driver->quit();
-		} catch ( Exception $e ) {}
+		} catch ( Exception $e ) {
+		}
 
 		PHPUnit_Extensions_Database_Operation_Factory::DELETE()
-		                                             ->execute($this->getConnection(), $this->dataset_insert);
+		                                             ->execute( $this->getConnection(), $this->dataset_insert );
+
 	}
 
 	/**
@@ -156,7 +167,7 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 	protected function getDataSet() {
 		$ds1                  = $this->createXMLDataSet( __DIR__ . '/../data/dump_options.xml' );
 		$this->dataset_update = $ds1;
-		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump.xml' );
+		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump-generated.xml' );
 		$this->dataset_insert = $ds2;
 		$composite_data_set   = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
 		$composite_data_set->addDataSet( $ds1 );
@@ -166,7 +177,7 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 	}
 
 	protected function getDataSetInsert() {
-		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump.xml' );
+		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump-generated.xml' );
 		$this->dataset_insert = $ds2;
 
 		return $ds2;
@@ -178,4 +189,60 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 
 		return $ds2;
 	}
+
+	protected function uploadMedia() {
+		$driver = $this->driver;
+		$this->wpLogin();
+
+		$pages = $this->driver->findElement( WebDriverBy::id( 'menu-media' ) );
+		$pages->click();
+		try {
+			$link = $this->driver->findElement( WebDriverBy::linkText( 'Add New' )
+			);
+		} catch ( Exception $e ) {
+			$this->fail( '->Could not find \'Add New\' button in Pages overview' );
+		}
+		$link->click();
+
+
+		$input = $this->driver->findElement( WebDriverBy::xpath( "//input[starts-with(@id,'html5_')]" ) );
+
+		// Set the file detector.
+		$input->setFileDetector( new LocalFileDetector() );
+
+		// Scan data images directory and upload each one to media library.
+		$images = array_diff( scandir( 'data/images' ), array( '..', '.' ) );
+		foreach ( $images as $image ) {
+			$input->sendKeys( 'data/images/' . $image );
+		}
+
+		// Wait for images upload.
+		$count_images = count( $images );
+		$driver->wait( 90, 2000 )->until(
+			function () use ( $driver, $count_images ) {
+				return count( $driver->findElements(
+						WebDriverBy::xpath( "//div[@id='media-items']//a[@class='edit-attachment']" ) ) ) == $count_images;
+			}
+		);
+
+		$anchors = $this->driver->findElements( WebDriverBy::xpath( "//div[@id='media-items']//a[@class='edit-attachment']" ) );
+
+
+		$ids = [];
+		foreach ( $anchors as $anchor ) {
+			$link   = $anchor->getAttribute( 'href' );
+			$params = parse_url( $link, PHP_URL_QUERY );
+			parse_str( $params, $output );
+			$ids[] = $output['post'];
+		}
+
+		$this->wpLogout();
+		return $ids;
+	}
+
+	protected function prepareDumpData($ids) {
+		$this->find_replace( 'oceans_tag_attachment_id', $ids[0], 'data/dump-generated.xml' );
+		$this->find_replace( 'arctic_sunrise_tag_attachment_id', $ids[1], 'data/dump-generated.xml' );
+	}
+
 }

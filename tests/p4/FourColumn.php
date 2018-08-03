@@ -5,31 +5,14 @@ require_once __DIR__ . '/../wp-core/login.php';
 
 class P4_FourColumn extends P4_login {
 
+	use P4_Functions;
+
 	/**
 	 * @var \RemoteWebDriver
 	 */
 	public function testFourColumn() {
 
-		//I log in
-		try {
-			$this->wpLogin();
-		} catch ( Exception $e ) {
-			$this->fail( '->Failed to log in, verify credentials and URL' );
-		}
-
-		// Go to pages and create content.
-		$this->driver->wait( 3 );
-		$pages = $this->driver->findElement(
-			WebDriverBy::id( "menu-pages" ) );
-		$pages->click();
-		try {
-			$link = $this->driver->findElement(
-				WebDriverBy::linkText( "Add New" )
-			);
-		} catch ( Exception $e ) {
-			$this->fail( "->Could not find 'Add New' button in Pages overview" );
-		}
-		$link->click();
+		$this->create_new_page();
 
 		// Validate button to add blocks to page is present.
 		$this->assertContains(
@@ -46,9 +29,7 @@ class P4_FourColumn extends P4_login {
 		$this->driver->getKeyboard()->sendKeys( 'Test automated - Content 4 Column' );
 
 		// Click on button to add blocks.
-		$add = $this->driver->findElement(
-			WebDriverBy::className( "shortcake-add-post-element" )
-		);
+		$add = $this->driver->findElement( WebDriverBy::className( "shortcake-add-post-element" ) );
 		$add->click();
 
 		// Validate blocks modal window is shown.
@@ -79,8 +60,8 @@ class P4_FourColumn extends P4_login {
 			$this->fail( "->Fields corresponding to 'Content Four Column' block not found" );
 		}
 
-		//----- FILL IN FIELDS
-		//Define test content
+		//----- FILL IN FIELDS.
+		//Define test content.
 		$titl = "Content 4 column Test title";
 		$tg   = "ArcticSunrise";
 		//Fill in fields
@@ -89,8 +70,10 @@ class P4_FourColumn extends P4_login {
 		//Fill in tag
 		$this->driver->findElement( WebDriverBy::className( "select2-container" ) )->click();
 		$this->driver->getKeyboard()->sendKeys( "$tg" );
-		//Sleep for 3 seconds
-		usleep( 3000000 );
+
+		// Wait until select options are visible.
+		$this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::className('select2-result-selectable')));
+
 		//Select suggestion
 		$this->driver->getKeyboard()->pressKey( WebDriverKeys::ENTER );
 		//Select post type

@@ -174,10 +174,6 @@ class P4_Covers extends P4_login {
 			}
 		}
 
-		usleep( 2000000 );
-
-		// I log out after test
-		$this->wpLogout();
 		echo "\n-> Covers block test PASSED";
 	}
 }
