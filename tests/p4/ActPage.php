@@ -82,15 +82,4 @@ class P4_Actpage extends AbstractClass {
 		}
 		echo "\n-> Act Page test PASSED";
 	}
-
-	protected function assertElementNotFound($by) {
-		$this->webDriver->takeScreenshot('reports/screenshots/' . __CLASS__ . '.png');
-		$els = $this->webDriver->findElements($by);
-		if (count($els)) {
-			$this->fail('Unexpectedly element was found');
-		}
-		// Increment assertion counter
-		$this->assertTrue(true);
-	}
 }
-?>

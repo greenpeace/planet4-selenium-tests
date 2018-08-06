@@ -116,16 +116,4 @@ class P4_Homepage extends AbstractClass {
 
 		echo "\n-> Homepage test PASSED";
   	}
-
-
-	protected function assertElementNotFound($by) {
-		$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
-		$els = $this->webDriver->findElements($by);
-		if (count($els)) {
-			$this->fail('Unexpectedly element was found');
-		}
-		// increment assertion counter
-		$this->assertTrue(true);
-	}
 }
-?>
