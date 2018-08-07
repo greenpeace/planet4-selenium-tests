@@ -140,4 +140,31 @@ trait P4_Functions {
 			}
 		}
 	}
+
+    public function clearRedisCache() {
+
+        //I log in
+        try {
+            $this->wpLogin();
+        } catch (Exception $e) {
+            $this->fail('->Failed to log in, verify credentials and URL');
+        }
+
+        $this->driver->wait(3);
+
+        //Validate module elements are present in block.
+        try {
+            $cache = $this->driver->findElement(
+                WebDriverBy::className("btn-flush_cache-async"));
+            // Click on link to flush cache.
+            $cache->click();
+
+            // Accept the alert.
+            $this->driver->switchTo()->alert()->accept();
+        } catch (Exception $e) {
+            $this->fail("->Could not find elements in Control Panel block");
+        }
+
+        $this->wpLogout();
+    }
 }

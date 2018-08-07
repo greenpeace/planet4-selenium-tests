@@ -75,20 +75,22 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
 
+        if (!file_exists('data/dump-generated.xml')) {
+            copy('data/dump.xml', 'data/dump-generated.xml');
+            $data = $this->uploadMedia();
+            $this->prepareDumpData($data);
+            $this->getConnection();
+            $this->initializeState();
 
-		if (!file_exists('data/dump-generated.xml')) {
-			copy('data/dump.xml', 'data/dump-generated.xml');
-			$data = $this->uploadMedia();
-			$this->prepareDumpData( $data );
-		}
-		$this->_driver->get( $this->_url );
+            PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+                ->execute($this->getConnection(), $this->getDataSetInsert());
+            PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+                ->execute($this->getConnection(), $this->getDataSetUpdate());
 
-		PHPUnit_Extensions_Database_Operation_Factory::INSERT()
-		                                             ->execute( $this->getConnection(), $this->getDataSetInsert() );
-		PHPUnit_Extensions_Database_Operation_Factory::UPDATE()
-		                                             ->execute( $this->getConnection(), $this->getDataSetUpdate() );
-
-		$this->getConnection()->createDataSet();
+            $this->getConnection()->createDataSet();
+            $this->clearRedisCache();
+        }
+        $this->_driver->get($this->_url);
 	}
 
 	/**
@@ -103,9 +105,8 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		} catch ( Exception $e ) {
 		}
 
-		PHPUnit_Extensions_Database_Operation_Factory::DELETE()
-		                                             ->execute( $this->getConnection(), $this->dataset_insert );
-
+//        PHPUnit_Extensions_Database_Operation_Factory::DELETE()
+//		                                             ->execute( $this->getConnection(), $this->dataset_insert );
 	}
 
 	/**
@@ -156,7 +157,7 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 	protected function getConnection() {
 		if ( $this->conn === null ) {
 			if ( self::$pdo == null ) {
-				self::$pdo = new PDO( 'mysql:dbname=' . $GLOBALS['DB_DBNAME'] . ';host=' . $GLOBALS['DB_HOST'] . '	', $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+				self::$pdo = new PDO( 'mysql:dbname=' . $GLOBALS['DB_DBNAME'] . ';host=' . $GLOBALS['DB_HOST'] . '', $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
 			}
 			$this->conn = $this->createDefaultDBConnection( self::$pdo, 'p4testing' );
 		}
@@ -245,4 +246,13 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		$this->find_replace( 'arctic_sunrise_tag_attachment_id', $ids[1], 'data/dump-generated.xml' );
 	}
 
+    private function initializeState() {
+        // wp_options to delete.
+        $options = ['permalink_structure', 'rewrite_rules', 'planet4_options', 'page_on_front'];
+
+        foreach ($options as $option) {
+            $sql = "DELETE FROM wp_options WHERE option_name='$option'";
+            self::$pdo->query($sql);
+        }
+    }
 }

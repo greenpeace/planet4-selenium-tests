@@ -25,5 +25,12 @@
             <value>10</value>
             <value>yes</value>
         </row>
+
+        <row>
+            <value>150</value>
+            <value>planet4_options</value>
+            <value>a:15:{i:0;b:0;s:24:"website_navigation_title";s:17:"Planet4 Test Site";s:8:"act_page";s:2:"20";s:12:"explore_page";s:2:"21";s:22:"issues_parent_category";s:3:"200";s:15:"copyright_line1";s:11:"Copyright 1";s:15:"copyright_line2";s:11:"Copyright 2";s:24:"engaging_network_form_id";s:49:"https://act.greenpeace.org/page/16381/subscribe/1";s:13:"cookies_field";s:13:"Cookies textt";s:20:"articles_block_title";s:16:"Related articles";s:27:"articles_block_button_title";s:9:"read more";s:14:"articles_count";s:1:"3";s:30:"take_action_covers_button_text";s:11:"take action";s:13:"404_page_text";s:10:"404 option";s:19:"default_p4_pagetype";s:3:"303";}</value>
+            <value>yes</value>
+        </row>
     </table>
 </dataset>

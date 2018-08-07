@@ -516,24 +516,5 @@
         </row>
     </table>
 
-    <table name="wp_options">
-        <column>option_id</column>
-        <column>option_name</column>
-        <column>option_value</column>
-        <column>autoload</column>
-        <row>
-            <value>150</value>
-            <value>planet4_options</value>
-            <value>
-                a:9:{s:8:"act_page";s:2:"20";s:12:"explore_page";s:2:"21";s:22:"issues_parent_category";s:2:"-1";s:19:"default_p4_pagetype";s:2:"-1";s:24:"website_navigation_title";s:17:"Planet4
-                Test Site";s:15:"copyright_line1";s:21:"Copyright Text line 1";s:15:"copyright_line2";s:21:"Copyright
-                Text line
-                2";s:24:"engaging_network_form_id";s:49:"https://act.greenpeace.org/page/16381/subscribe/1";s:13:"cookies_field";s:12:"Cookies
-                Text";}
-            </value>
-            <value>yes</value>
-        </row>
-
-    </table>
 </dataset>
 
