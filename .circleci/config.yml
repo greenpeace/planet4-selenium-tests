@@ -18,7 +18,7 @@ jobs:
   trigger:
     <<: *defaults
     steps:
-      - deploy: trigger-build.sh git@github.com:greenpeace/planet4-docker-selenium-tests.git master
+      - run: trigger-build.sh git@github.com:greenpeace/planet4-docker-selenium-tests.git master
       - run:
           name: Notify failure
           when: on_fail
@@ -29,6 +29,7 @@ workflows:
   all:
     jobs:
       - validate:
+          context: org-global
           filters:
             tags:
               only: /.*/
