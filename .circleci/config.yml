@@ -37,4 +37,4 @@ workflows:
           context: org-global
           filters:
             tags:
-              only: /.*/
+              only: /v.*/
