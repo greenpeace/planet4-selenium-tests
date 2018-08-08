@@ -37,5 +37,7 @@ workflows:
       - trigger:
           context: org-global
           filters:
+            branches:
+              ignore: /.*/
             tags:
-              only: /v.*/
+              only: /^v\p{Digit}+\.\p{Digit}+\.\p{Digit}+.*/
