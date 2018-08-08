@@ -1,6 +1,7 @@
 {
   "name": "greenpeace/planet4-selenium-tests",
   "description": "Contains Selenium tests for use on Greenpeace Planet4 Wordpress sites",
+  "license": "MIT",
   "require": {
     "phpunit/phpunit": "~6.5",
     "doctrine/instantiator": "1.0.x",
