@@ -73,12 +73,6 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		$this->webDriver->findElement(By::id('attachment'))->click();
 		$this->webDriver->findElement(By::linkText('Upload Files'))->click();
 
-		// Validate Media modal window is shown.
-		/*$this->assertContains(
-			'Select Image',
-			$this->webDriver->findElement( By::className('media-frame-title' ) )->getText()
-		);*/
-
 		// Click on 'Upload From GPI Media Library' button.
 		try {
 			$add = $this->webDriver->findElement( By::className('switchtoml') );
@@ -88,7 +82,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		$add->click();
 
 		// Wait for media content to load.
-		usleep(15000000);
+		usleep( 10000000 );
 
 		// Wait for media library to load.
 		$this->webDriver->wait( 10, 1000 )->until(
@@ -97,25 +91,25 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 
 		$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 
-		// Select first image of media library.
-		$ml_image_name = $this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child img' ) )->getAttribute( 'src' );
+		$select_img = $this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child img' ) );
+		$action     = new WebDriverActions( $this->webDriver );
+		$action->moveToElement( $select_img )->click()->perform();
+
+		// Fetch media library image name.
+		$ml_image_name = $this->webDriver->findElement( By::className( 'ml-url' ) )->getAttribute( 'value' );
 		$ml_image_name = explode( '.', basename( $ml_image_name ) );
 		$ml_image_name = $ml_image_name[0];
 
-		//fwrite(STDERR, "Image name = ".$ml_image_name);
+		$this->webDriver->executeScript( 'document.getElementById( "ml-button-insert" ).click();' );
 
-		$this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child' ) )->click();
-
-		$this->webDriver->findElement( By::className( 'ml-button-insert' ) )->click();
-
-		usleep(10000000);
+		usleep( 5000000 );
 
 		$this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child' ) )->click();
 
 		try {
 			$this->webDriver->findElement( By::className( 'media-button-select' ) )->click();
 		} catch( Exception $e ) {
-			$this->fail('->Failed to select Media blocks image');
+			$this->fail( '->Failed to select Media blocks image' );
 		}
 
 		// Insert block.
@@ -131,8 +125,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 
 		// Wait to see successful message.
 		$this->webDriver->wait( 10,  1000 )->until(
-			WebDriverExpectedCondition::visibilityOfElementLocated(
-			By::id( 'message' ) )
+			WebDriverExpectedCondition::visibilityOfElementLocated( By::id( 'message' ) )
 		);
 
 		// Validate I see successful message.
@@ -146,7 +139,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		}
 
 		// Wait for saved changes to load.
-		usleep(2000000);
+		usleep( 1000000 );
 
 		// Go to page to validate page contains Media Block.
 		$link = $this->webDriver->findElement( By::linkText( 'View page' ) );
