@@ -17,7 +17,7 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 		}
 
 		// Go to pages and create content.
-		$this->webDriver->wait(3);
+		$this->webDriver->wait( 3 );
 		$pages = $this->webDriver->findElement( By::id( 'menu-pages' ) );
 		$pages->click();
 		try {
@@ -54,17 +54,21 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 
 		// Click on 'Upload From GPI Media Library' button.
 		try {
-			$add = $this->webDriver->findElement( By::className('switchtoml') );
+			$add = $this->webDriver->findElement( By::className( 'switchtoml' ) );
 		} catch( Exception $e ) {
 			$this->fail( '->Could not find \'Upload From GPI Media Library\' button in media upload model' );
 		}
 		$add->click();
 
 		// Wait for media content to load.
-		usleep(10000000);
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Wait for media library to load.
-		$this->webDriver->wait(10, 1000)->until(
+		$this->webDriver->wait( 10, 1000 )->until(
 			WebDriverExpectedCondition::presenceOfElementLocated( By::cssSelector( '.ml-media-panel' ) )
 		);
 
@@ -78,7 +82,11 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 
 		$this->webDriver->findElement( By::className( 'ml-button-insert' ) )->click();
 
-		usleep(10000000);
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		$img = $this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child' ) );
 		$img->click();
@@ -86,16 +94,20 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 		try {
 			$this->webDriver->findElement( By::className( 'media-button-select' ) )->click();
 		} catch( Exception $e ) {
-			$this->fail('->Failed to select featured image');
+			$this->fail( '->Failed to select featured image' );
 		}
 
-		usleep(2000000);
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Scroll up the page.
-		$this->webDriver->executeScript('window.scrollTo(0, -250);');
+		$this->webDriver->executeScript( 'window.scrollTo(0, -250);' );
 
 		// Publish content.
-		$this->webDriver->findElement( By::id('publish') )->click();
+		$this->webDriver->findElement( By::id( 'publish' ) )->click();
 
 		// Wait to see successful message.
 		$this->webDriver->wait( 10, 1000 )->until(

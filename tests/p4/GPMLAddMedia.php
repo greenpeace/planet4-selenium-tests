@@ -17,11 +17,11 @@ class P4_GPMLAddMedia extends P4_login {
 		}
 
 		// Go to pages and create content.
-		$this->webDriver->wait(3);
+		$this->webDriver->wait( 3 );
 		$pages = $this->webDriver->findElement( By::id( 'menu-pages' ) );
 		$pages->click();
 		try {
-			$link = $this->webDriver->findElement( By::linkText('Add New') );
+			$link = $this->webDriver->findElement( By::linkText( 'Add New' ) );
 		} catch( Exception $e ) {
 			$this->fail( '->Could not find \'Add New\' button in Pages overview' );
 		}
@@ -39,11 +39,11 @@ class P4_GPMLAddMedia extends P4_login {
 		$this->webDriver->getKeyboard()->sendKeys( 'Test automated - GP media library - Add media' );
 
 		// Click on button to add media.
-		$add = $this->webDriver->findElement( By::className('add_media') );
+		$add = $this->webDriver->findElement( By::className( 'add_media' ) );
 		$add->click();
 
 		// Click on 'GPI Media Library' link in media popup.
-		$add = $this->webDriver->findElement( By::linkText('GPI Media Library') );
+		$add = $this->webDriver->findElement( By::linkText( 'GPI Media Library' ) );
 		$add->click();
 
 		// Validate Media modal window is shown.
@@ -53,7 +53,11 @@ class P4_GPMLAddMedia extends P4_login {
 		);
 
 		// Wait for media content to load.
-		usleep(10000000);
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Switch to Iframe elements.
 		$this->webDriver->switchTo()->frame(
@@ -77,7 +81,7 @@ class P4_GPMLAddMedia extends P4_login {
 		// Switch back to default content.
 		$this->webDriver->switchTo()->defaultContent();
 
-		usleep(10000000);
+		usleep( 5000000 );
 
 		// Publish content.
 		$this->webDriver->findElement( By::id('publish') )->click();
@@ -97,7 +101,11 @@ class P4_GPMLAddMedia extends P4_login {
 		}
 
 		// Wait for saved changes to load.
-		usleep(1000000);
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Go to page to validate page contains added block.
 		$link = $this->webDriver->findElement( By::linkText( 'View page' ) );

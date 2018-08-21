@@ -22,10 +22,10 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 
 		try {
 			$link = $this->webDriver->findElement(
-				By::linkText('Add New')
+				By::linkText( 'Add New' )
 			);
 		} catch( Exception $e ) {
-			$this->fail('->Could not find \'Add New\' button in Pages overview');
+			$this->fail( '->Could not find \'Add New\' button in Pages overview' );
 		}
 		$link->click();
 
@@ -41,9 +41,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		$this->webDriver->getKeyboard()->sendKeys( 'Test automated - GPML image & Media block' );
 
 		// Click on button to add blocks.
-		$add = $this->webDriver->findElement(
-			By::className('shortcake-add-post-element')
-		);
+		$add = $this->webDriver->findElement( By::className( 'shortcake-add-post-element' ) );
 		$add->click();
 
 		// Validate blocks modal window is shown.
@@ -59,7 +57,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 			);
 			$media_block->click();
 		} catch( Exception $e ) {
-			$this->fail('->Failed to select \'Media Block\' post element');
+			$this->fail( '->Failed to select \'Media Block\' post element' );
 		}
 
 		// Validate corresponding fields are present.
@@ -70,8 +68,8 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		}
 
 		// Upload image.
-		$this->webDriver->findElement(By::id('attachment'))->click();
-		$this->webDriver->findElement(By::linkText('Upload Files'))->click();
+		$this->webDriver->findElement( By::id( 'attachment' ) )->click();
+		$this->webDriver->findElement( By::linkText( 'Upload Files' ) )->click();
 
 		// Click on 'Upload From GPI Media Library' button.
 		try {
@@ -82,7 +80,11 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		$add->click();
 
 		// Wait for media content to load.
-		usleep( 10000000 );
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Wait for media library to load.
 		$this->webDriver->wait( 10, 1000 )->until(
@@ -102,7 +104,11 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 
 		$this->webDriver->executeScript( 'document.getElementById( "ml-button-insert" ).click();' );
 
-		usleep( 5000000 );
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		$this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child' ) )->click();
 
@@ -139,7 +145,11 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		}
 
 		// Wait for saved changes to load.
-		usleep( 1000000 );
+		$this->webDriver->wait( 30, 2000 )->until(
+			function () {
+				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+			}
+		);
 
 		// Go to page to validate page contains Media Block.
 		$link = $this->webDriver->findElement( By::linkText( 'View page' ) );
