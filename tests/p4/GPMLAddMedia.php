@@ -27,13 +27,13 @@ class P4_GPMLAddMedia extends P4_login {
 		}
 		$link->click();
 
-		//Validate button to add blocks to page is present.
+		// Validate button to add blocks to page is present.
 		$this->assertContains(
 			'Add Media',
 			$this->webDriver->findElement( By::className( 'add_media' ) )->getText()
 		);
 
-		//Enter title of page
+		// Enter title of page.
 		$field	= $this->webDriver->findElement( By::id('title-prompt-text') );
 		$field->click();
 		$this->webDriver->getKeyboard()->sendKeys( 'Test automated - GP media library - Add media' );
@@ -53,21 +53,27 @@ class P4_GPMLAddMedia extends P4_login {
 		);
 
 		// Wait for media content to load.
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		try {
+			$this->webDriver->wait( 30, 2000 )->until(
+				function () {
+					return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+				}
+			);
+		} catch ( TimeOutException $e ) {
+			$this->fail( '->Could not load GP media library before timeout expires' );
+		} catch ( Exception $e ) {
+			$this->fail( '->General Exception' );
+		}
 
 		// Switch to Iframe elements.
 		$this->webDriver->switchTo()->frame(
 			$this->webDriver->findElement( By::cssSelector( '.media-iframe iframe' ) )
 		);
 
+		usleep( 1000000 );
+
 		// Wait for media library to load.
-		$this->webDriver->wait(10, 1000)->until(
-			WebDriverExpectedCondition::presenceOfElementLocated( By::cssSelector( '.ml-media-list' ) )
-		);
+		$this->waitUntilVisible( '.ml-media-list', 40 , 1000 );
 
 		// Select first media image.
 		$ml_image_name = $this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child img' ) )->getAttribute( 'src' );
@@ -84,13 +90,16 @@ class P4_GPMLAddMedia extends P4_login {
 		usleep( 5000000 );
 
 		// Publish content.
-		$this->webDriver->findElement( By::id('publish') )->click();
+		try {
+			$this->webDriver->findElement( By::id('publish') )->click();
+		} catch( Exception $e ) {
+			$this->fail( '->Failed to click publish button' );
+		}
 
 		// Wait to see successful message.
-		$this->webDriver->wait( 10, 1000 )->until(
-			WebDriverExpectedCondition::visibilityOfElementLocated( By::id( 'message' ) )
-		);
-		//Validate I see successful message
+		$this->waitUntilVisible( '#message', 30 , 2000 , '->Failed to save changes' );
+
+		// Validate I see successful message.
 		try {
 			$this->assertContains(
 				'Page published',
@@ -99,13 +108,6 @@ class P4_GPMLAddMedia extends P4_login {
 		} catch( Exception $e ) {
 			$this->fail( '->Failed to publish content - no sucessful message after saving content' );
 		}
-
-		// Wait for saved changes to load.
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
 
 		// Go to page to validate page contains added block.
 		$link = $this->webDriver->findElement( By::linkText( 'View page' ) );

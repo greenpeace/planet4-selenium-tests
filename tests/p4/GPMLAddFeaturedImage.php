@@ -61,16 +61,20 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 		$add->click();
 
 		// Wait for media content to load.
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		try {
+			$this->webDriver->wait( 30, 2000 )->until(
+				function () {
+					return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+				}
+			);
+		} catch ( TimeOutException $e ) {
+			$this->fail( '->Could not load GP media library before timeout expires' );
+		} catch ( Exception $e ) {
+			$this->fail( '->General Exception' );
+		}
 
-		// Wait for media library to load.
-		$this->webDriver->wait( 10, 1000 )->until(
-			WebDriverExpectedCondition::presenceOfElementLocated( By::cssSelector( '.ml-media-panel' ) )
-		);
+		// Wait for media library panel to load.
+		$this->waitUntilVisible( '.ml-media-panel', 20 , 500 );
 
 		// Select first media image.
 		$ml_image_name = $this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child img' ) )->getAttribute( 'src' );
@@ -97,11 +101,7 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 			$this->fail( '->Failed to select featured image' );
 		}
 
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		usleep(1500000 );
 
 		// Scroll up the page.
 		$this->webDriver->executeScript( 'window.scrollTo(0, -250);' );
@@ -110,9 +110,7 @@ class P4_GPMLAddFeaturedImage extends P4_login {
 		$this->webDriver->findElement( By::id( 'publish' ) )->click();
 
 		// Wait to see successful message.
-		$this->webDriver->wait( 10, 1000 )->until(
-			WebDriverExpectedCondition::visibilityOfElementLocated( By::id( 'message' ) )
-		);
+		$this->waitUntilVisible( '#message', 30 , 2000 , '->Failed to save changes' );
 
 		//Validate I see successful message
 		try {

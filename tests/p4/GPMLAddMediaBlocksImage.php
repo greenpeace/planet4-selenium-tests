@@ -80,16 +80,20 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		$add->click();
 
 		// Wait for media content to load.
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		try {
+			$this->webDriver->wait( 30, 2000 )->until(
+				function () {
+					return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
+				}
+			);
+		} catch ( TimeOutException $e ) {
+			$this->fail( '->Could not load GP media library before timeout expires' );
+		} catch ( Exception $e ) {
+			$this->fail( '->General Exception' );
+		}
 
 		// Wait for media library to load.
-		$this->webDriver->wait( 10, 1000 )->until(
-			WebDriverExpectedCondition::presenceOfElementLocated( By::cssSelector( '.ml-media-panel' ) )
-		);
+		$this->waitUntilVisible( '.ml-media-panel', 10 , 500 );
 
 		$this->webDriver->manage()->timeouts()->implicitlyWait(10);
 
@@ -104,11 +108,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 
 		$this->webDriver->executeScript( 'document.getElementById( "ml-button-insert" ).click();' );
 
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		$this->waitUntilVisible( '.attachment-filters', 30 , 2000 );
 
 		$this->webDriver->findElement( By::cssSelector( 'li.attachment:first-child' ) )->click();
 
@@ -145,11 +145,7 @@ class P4_GPMLAddMediaBlocksImage extends P4_login {
 		}
 
 		// Wait for saved changes to load.
-		$this->webDriver->wait( 30, 2000 )->until(
-			function () {
-				return $this->webDriver->executeScript( 'return jQuery.active == 0;' );
-			}
-		);
+		$this->waitUntilVisible( '#message', 30 , 2000 , '->Failed to save changes' );
 
 		// Go to page to validate page contains Media Block.
 		$link = $this->webDriver->findElement( By::linkText( 'View page' ) );
