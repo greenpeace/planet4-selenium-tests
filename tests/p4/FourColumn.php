@@ -1,7 +1,8 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\WebDriverKeys;
 
 class P4_FourColumn extends P4_login {
 
@@ -63,7 +64,7 @@ class P4_FourColumn extends P4_login {
 		//----- FILL IN FIELDS.
 		//Define test content.
 		$titl = "Content 4 column Test title";
-		$tg   = "ArcticSunrise";
+		$tg   = "Oceans";
 		//Fill in fields
 		$this->driver->findElement( WebDriverBy::name( 'title' ) )->click();
 		$this->driver->getKeyboard()->sendKeys( "$titl" );
@@ -72,7 +73,7 @@ class P4_FourColumn extends P4_login {
 		$this->driver->getKeyboard()->sendKeys( "$tg" );
 
 		// Wait until select options are visible.
-		$this->driver->wait(10, 500)->until(WebDriverExpectedCondition::visibilityOfElementLocated(WebDriverBy::className('select2-result-selectable')));
+		$this->driver->wait( 10, 500 )->until( WebDriverExpectedCondition::visibilityOfElementLocated( WebDriverBy::className( 'select2-result-selectable' ) ) );
 
 		//Select suggestion
 		$this->driver->getKeyboard()->pressKey( WebDriverKeys::ENTER );

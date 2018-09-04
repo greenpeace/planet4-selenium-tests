@@ -8,3 +8,4 @@ if( !file_exists( dirname( __DIR__ ) . '/composer.lock' ) )
 }
 // Include the composer autoloader
 $autoloader = require dirname( __DIR__ ) . '/vendor/autoload.php';
+require_once __DIR__ . '/wp-core/login.php';

@@ -1,9 +1,8 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
-
-use WebDriverBy as By;
+use Facebook\WebDriver\WebDriverBy as By;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\WebDriverKeys;
 
 class P4_Tasks extends P4_login {
 

@@ -1,7 +1,7 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
 
 class P4_YouTubeVideo extends P4_login {
 
@@ -130,8 +130,8 @@ class P4_YouTubeVideo extends P4_login {
 		} catch ( Exception $e ) {
 			$this->fail( '->Some of the content created is not displayed in front end page' );
 		}
-		$this->assertEquals( "$titl", "$titl_pg" );
-		$this->assertContains( "$ytid", "$ytid_pg" );
+		$this->assertEquals( $titl, $titl_pg );
+		$this->assertContains( $ytid, $ytid_pg );
 
 		// I log out after test
 		$this->wpLogout();

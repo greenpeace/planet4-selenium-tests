@@ -1,12 +1,16 @@
 <?php
 
-use PHPUnit\DbUnit\TestCase as PHPUnit_Extensions_Database_TestCase;
-use PHPUnit\DbUnit\Operation\Factory as PHPUnit_Extensions_Database_Operation_Factory;
-use PHPUnit\DbUnit\DataSet\CompositeDataSet as PHPUnit_Extensions_Database_DataSet_CompositeDataSet;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeOutException;
 
 include 'P4_Functions.php';
 
-abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
+abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 
 	use P4_Functions;
 
@@ -26,21 +30,6 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 	protected $_url = '';
 	/** @var \RemoteWebDriver */
 	protected $driver;
-
-	protected $dataset_update;
-	protected $dataset_insert;
-
-	/**
-	 * only instantiate pdo once for test clean-up/fixture load
-	 * @var PDO
-	 */
-	static private $pdo = null;
-
-	/**
-	 * only instantiate PHPUnit_Extensions_Database_DB_IDatabaseConnection once per test
-	 * @var type
-	 */
-	private $conn = null;
 
 	/**
 	 * AbstractClass constructor.
@@ -65,7 +54,7 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		$capabilities = DesiredCapabilities::{self::$_config['browser']}();
 		if ( 'chrome' === self::$_config['browser'] ) {
 			$options = new ChromeOptions();
-			$options->addArguments( array( '--window-size=1366,996', ) );
+			$options->addArguments( array( '--window-size=1366,1200', ) );
 			$capabilities->setCapability( ChromeOptions::CAPABILITY, $options );
 		}
 		$driver = $this->driver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
@@ -75,22 +64,19 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
 
-        if (!file_exists('data/dump-generated.xml')) {
-            copy('data/dump.xml', 'data/dump-generated.xml');
-            $data = $this->uploadMedia();
-            $this->prepareDumpData($data);
-            $this->getConnection();
-            $this->initializeState();
+		if ( isset($GLOBALS['CREATE_TEST_DATA']) && $GLOBALS['CREATE_TEST_DATA'] ) {
 
-            PHPUnit_Extensions_Database_Operation_Factory::INSERT()
-                ->execute($this->getConnection(), $this->getDataSetInsert());
-            PHPUnit_Extensions_Database_Operation_Factory::INSERT()
-                ->execute($this->getConnection(), $this->getDataSetUpdate());
-
-            $this->getConnection()->createDataSet();
-            $this->clearRedisCache();
-        }
-        $this->_driver->get($this->_url);
+			$this->wpLogin();
+			$data = $this->uploadMedia();
+			$this->createCategories();
+			$this->createTags();
+			$this->createCustomTaxonomyTerms();
+			$this->setPermalinks();
+			$this->setPlanet4Options();
+			$this->createPosts();
+			$this->wpLogout();
+		}
+		$this->_driver->get( $this->_url );
 	}
 
 	/**
@@ -104,9 +90,6 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 			$this->driver->quit();
 		} catch ( Exception $e ) {
 		}
-
-//        PHPUnit_Extensions_Database_Operation_Factory::DELETE()
-//		                                             ->execute( $this->getConnection(), $this->dataset_insert );
 	}
 
 	/**
@@ -153,106 +136,4 @@ abstract class AbstractClass extends PHPUnit_Extensions_Database_TestCase {
 			$this->fail( $message );
 		}
 	}
-
-	protected function getConnection() {
-		if ( $this->conn === null ) {
-			if ( self::$pdo == null ) {
-				self::$pdo = new PDO( 'mysql:dbname=' . $GLOBALS['DB_DBNAME'] . ';host=' . $GLOBALS['DB_HOST'] . '', $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
-			}
-			$this->conn = $this->createDefaultDBConnection( self::$pdo, 'p4testing' );
-		}
-
-		return $this->conn;
-	}
-
-	protected function getDataSet() {
-		$ds1                  = $this->createXMLDataSet( __DIR__ . '/../data/dump_options.xml' );
-		$this->dataset_update = $ds1;
-		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump-generated.xml' );
-		$this->dataset_insert = $ds2;
-		$composite_data_set   = new PHPUnit_Extensions_Database_DataSet_CompositeDataSet();
-		$composite_data_set->addDataSet( $ds1 );
-		$composite_data_set->addDataSet( $ds2 );
-
-		return $composite_data_set;
-	}
-
-	protected function getDataSetInsert() {
-		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump-generated.xml' );
-		$this->dataset_insert = $ds2;
-
-		return $ds2;
-	}
-
-	protected function getDataSetUpdate() {
-		$ds2                  = $this->createXMLDataSet( __DIR__ . '/../data/dump_options.xml' );
-		$this->dataset_update = $ds2;
-
-		return $ds2;
-	}
-
-	protected function uploadMedia() {
-		$driver = $this->driver;
-		$this->wpLogin();
-
-		$pages = $this->driver->findElement( WebDriverBy::id( 'menu-media' ) );
-		$pages->click();
-		try {
-			$link = $this->driver->findElement( WebDriverBy::linkText( 'Add New' )
-			);
-		} catch ( Exception $e ) {
-			$this->fail( '->Could not find \'Add New\' button in Pages overview' );
-		}
-		$link->click();
-
-
-		$input = $this->driver->findElement( WebDriverBy::xpath( "//input[starts-with(@id,'html5_')]" ) );
-
-		// Set the file detector.
-		$input->setFileDetector( new LocalFileDetector() );
-
-		// Scan data images directory and upload each one to media library.
-		$images = array_diff( scandir( 'data/images' ), array( '..', '.' ) );
-		foreach ( $images as $image ) {
-			$input->sendKeys( 'data/images/' . $image );
-		}
-
-		// Wait for images upload.
-		$count_images = count( $images );
-		$driver->wait( 90, 2000 )->until(
-			function () use ( $driver, $count_images ) {
-				return count( $driver->findElements(
-						WebDriverBy::xpath( "//div[@id='media-items']//a[@class='edit-attachment']" ) ) ) == $count_images;
-			}
-		);
-
-		$anchors = $this->driver->findElements( WebDriverBy::xpath( "//div[@id='media-items']//a[@class='edit-attachment']" ) );
-
-
-		$ids = [];
-		foreach ( $anchors as $anchor ) {
-			$link   = $anchor->getAttribute( 'href' );
-			$params = parse_url( $link, PHP_URL_QUERY );
-			parse_str( $params, $output );
-			$ids[] = $output['post'];
-		}
-
-		$this->wpLogout();
-		return $ids;
-	}
-
-	protected function prepareDumpData($ids) {
-		$this->find_replace( 'oceans_tag_attachment_id', $ids[0], 'data/dump-generated.xml' );
-		$this->find_replace( 'arctic_sunrise_tag_attachment_id', $ids[1], 'data/dump-generated.xml' );
-	}
-
-    private function initializeState() {
-        // wp_options to delete.
-        $options = ['permalink_structure', 'rewrite_rules', 'planet4_options', 'page_on_front'];
-
-        foreach ($options as $option) {
-            $sql = "DELETE FROM wp_options WHERE option_name='$option'";
-            self::$pdo->query($sql);
-        }
-    }
 }

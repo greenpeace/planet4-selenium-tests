@@ -1,8 +1,8 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
-
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\WebDriverKeys;
 
 class P4_CampaignThumbnail extends P4_login {
 

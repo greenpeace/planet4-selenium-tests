@@ -1,9 +1,8 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
-
-use WebDriverBy as By;
+use Facebook\WebDriver\WebDriverBy as By;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\WebDriverKeys;
 
 class P4_Split_TwoColumns extends P4_login {
 
@@ -87,8 +86,8 @@ class P4_Split_TwoColumns extends P4_login {
 		$field = $this->driver->findElement(
 			By::name( 'select_tag' ) );
 		$field->click();
-		$tg = $this->driver->findElement( By::xpath( "//select[@name='select_tag']/option[normalize-space(text())='ArcticSunrise']" ) )->getText();
-		$this->driver->findElement( By::xpath( "//select[@name='select_tag']/option[text()='ArcticSunrise']" ) )->click();
+		$tg = $this->driver->findElement( By::xpath( "//select[@name='select_tag']/option[normalize-space(text())='Coal']" ) )->getText();
+		$this->driver->findElement( By::xpath( "//select[@name='select_tag']/option[text()='Coal']" ) )->click();
 
 		//Insert block
 		try {

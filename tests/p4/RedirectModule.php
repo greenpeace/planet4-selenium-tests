@@ -1,7 +1,5 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../AbstractClass.php';
 
 class P4_Redirect extends AbstractClass {
 

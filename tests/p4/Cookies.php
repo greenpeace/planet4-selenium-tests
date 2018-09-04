@@ -1,9 +1,6 @@
 <?php
 
-use WebDriverBy as By;
-
-// This class is needed to start the session and open/close the browser.
-require_once __DIR__ . '/../wp-core/login.php';
+use Facebook\WebDriver\WebDriverBy as By;
 
 /**
  * Class P4_Cookies
@@ -20,13 +17,11 @@ class P4_Cookies extends P4_login {
 
 		try {
 			$driver->findElement( By::id( 'set-cookie' ) );
-			$val = $driver->findElement( By::id( 'set-cookie' ) )
-			              ->getCSSValue( 'display' );
+			$val = $driver->findElement( By::id( 'set-cookie' ) )->getCSSValue( 'display' );
 			if ( 'block' !== $val ) {
 				$this->fail( '->Failed due to cookie banner not visible' );
 			}
-			$site_text = $driver->findElement( By::cssSelector( '#set-cookie .row p' ) )
-			                    ->getText();
+			$site_text = $driver->findElement( By::cssSelector( '#set-cookie .row p' ) )->getText();
 			$this->assertContains( $cookies_text, $site_text );
 		} catch ( Exception $e ) {
 			$this->fail( '->Failed due to cookie banner not visible' );
@@ -34,16 +29,14 @@ class P4_Cookies extends P4_login {
 
 		// Validate button to close banner.
 		try {
-			$driver->findElement( By::id( 'hidecookie' ) )
-			       ->click();
+			$driver->findElement( By::id( 'hidecookie' ) )->click();
 			usleep( 1500000 );
 		} catch ( Exception $e ) {
 			$this->fail( '->Failed when trying to click on button to close cookie banner' );
 		}
 
 		// Validate banner is closed.
-		$val = $driver->findElement( By::id( 'set-cookie' ) )
-		              ->getCSSValue( 'display' );
+		$val = $driver->findElement( By::id( 'set-cookie' ) )->getCSSValue( 'display' );
 		if ( 'none' !== $val ) {
 			$this->fail( '->Failed due to cookie banner not hidden' );
 		}

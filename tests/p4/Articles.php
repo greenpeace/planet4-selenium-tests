@@ -1,7 +1,6 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
+use Facebook\WebDriver\WebDriverBy;
 
 class P4_Articles extends P4_login {
 
@@ -137,14 +136,14 @@ class P4_Articles extends P4_login {
 
 		//Validate elements are present
 		try {
-			$this->driver->findElement( WebDriverBy::className( "article-listing" ) );
-			$this->driver->findElement( WebDriverBy::className( "article-list-section" ) );
+			$this->driver->findElement( WebDriverBy::className( 'article-listing' ) );
+			$this->driver->findElement( WebDriverBy::className( 'article-list-section' ) );
 			$block_title_pg = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".article-listing .article-listing-intro h3.page-section-header" ) )->getText();
+				WebDriverBy::cssSelector( '.article-listing .article-listing-intro h3.page-section-header' ) )->getText();
 		} catch ( Exception $e ) {
 			$this->fail( '->Failed to see some of the created content on front end page' );
 		}
-		$this->assertContains( "$block_title", "$block_title_pg" );
+		$this->assertContains( $block_title, $block_title_pg );
 
 		echo "\n-> Articles block test PASSED";
 	}

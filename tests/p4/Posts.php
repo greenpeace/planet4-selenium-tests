@@ -1,7 +1,8 @@
 <?php
 
-//This class is needed to start the session and open/close the browser
-require_once __DIR__ . '/../wp-core/login.php';
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\WebDriverKeys;
 
 class P4_Posts extends P4_login {
 
@@ -135,6 +136,7 @@ class P4_Posts extends P4_login {
 			$image_path = pathinfo( $srcimg_pg, PATHINFO_FILENAME );
 			$srcimg_pg  = substr( $image_path, 0, strrpos( $image_path, '-' ) );
 		} catch ( Exception $e ) {
+			$this->fail( $e->getMessage() );
 			$this->fail( '->Failed to see some of the created content on front end page' );
 		}
 
