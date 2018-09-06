@@ -3,10 +3,7 @@
 <phpunit bootstrap="bootstrap.php">
 
     <php>
-        <var name="DB_HOST" value="dbhost"/>
-        <var name="DB_USER" value="dbuser"/>
-        <var name="DB_PASSWD" value="dbpass"/>
-        <var name="DB_DBNAME" value="dbname"/>
+        <var name="CREATE_TEST_DATA" value="true" />
     </php>
 
     <testsuites>
@@ -15,7 +12,10 @@
         </testsuite>
         <testsuite name="Planet4">
             <directory suffix=".php">p4</directory>
-            <exclude>./p4/EN_forms.php</exclude>
+            <exclude>./p4/ENPages.php</exclude>
+            <exclude>./p4/ActPage.php</exclude>
+            <exclude>./p4/ExplorePage.php</exclude>
+            <exclude>./p4/Homepage.php</exclude>
             <exclude>./p4/Varnish.php</exclude>
             <exclude>./p4/GoogleLogin.php</exclude>
             <exclude>./p4/CarouselSplit.php</exclude>
