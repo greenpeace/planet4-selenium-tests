@@ -140,7 +140,7 @@ class P4_Covers extends P4_login {
 
 			//Count how many cover cards were shown.
 			$covercardsnum = count( $this->driver->findElements(
-				By::cssSelector( '.covers-block .container .row .cover-card' ) ) );
+				By::cssSelector( '.covers-block .container .row .cover-card:enabled' ) ) );
 
 			//Get all the tags for each cover card and saves them in array.
 			for ( $i = 1; $i <= $covercardsnum; $i++ ) {

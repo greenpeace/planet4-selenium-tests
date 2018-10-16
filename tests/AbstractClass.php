@@ -64,9 +64,10 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
 
-		if ( isset($GLOBALS['CREATE_TEST_DATA']) && $GLOBALS['CREATE_TEST_DATA'] ) {
+		if ( isset($GLOBALS['CREATE_TEST_DATA']) && 'true' == $GLOBALS['CREATE_TEST_DATA'] ) {
 
 			$this->wpLogin();
+			$this->delete_content();
 			$data = $this->uploadMedia();
 			$this->createCategories();
 			$this->createTags();
@@ -75,6 +76,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 			$this->setPlanet4Options();
 			$this->createPosts();
 			$this->wpLogout();
+			$GLOBALS['CREATE_TEST_DATA'] = false;
 		}
 		$this->_driver->get( $this->_url );
 	}
