@@ -536,9 +536,9 @@ trait P4_Functions {
 		$input->setFileDetector( new LocalFileDetector() );
 
 		// Scan data images directory and upload each one to media library.
-		$images = array_diff( scandir( 'data/images' ), array( '..', '.' ) );
+		$images = array_diff( scandir( 'tests/data/images' ), array( '..', '.' ) );
 		foreach ( $images as $image ) {
-			$input->sendKeys( 'data/images/' . $image );
+			$input->sendKeys( 'tests/data/images/' . $image );
 		}
 
 		// Wait for images upload.
