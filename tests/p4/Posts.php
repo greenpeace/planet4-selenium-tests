@@ -79,7 +79,7 @@ class P4_Posts extends P4_login {
 
 	//Add category
 	try{
-		$this->webDriver->findElement(WebDriverBy::cssSelector("#categorychecklist li.popular-category:nth-child(4) input"))->click();
+		$this->webDriver->findElement(WebDriverBy::cssSelector("#categorychecklist li.popular-category:nth-child(2) input"))->click();
 	}catch(Exception $e){
 		$this->fail("->Failed to add category to post");
 	}
