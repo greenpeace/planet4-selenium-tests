@@ -16,7 +16,7 @@ class P4_CustomTaxonomyPages extends AbstractClass {
   	$this->webDriver->get($this->_url);
   	$this->webDriver->findElement(By::className('page-type'))->click();
   	//$url_act = $this->webDriver->getCurrentURL();
-  	$this->assertEquals($this->webDriver->getCurrentURL(), rtrim( $this->_url, '/' ) . "/page_type/press/");
+  	$this->assertEquals($this->webDriver->getCurrentURL(), rtrim( $this->_url, '/' ) . "/page_type/story/");
 
 	// Validate header block is present in page
 	try{
