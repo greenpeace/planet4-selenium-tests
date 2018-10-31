@@ -17,7 +17,7 @@ class P4_Search extends AbstractClass {
 		$ttl= $ttl[0];
 		$this->assertEquals('Search Results ' . $str, $ttl);
 		$t = $this->webDriver->findElement(By::cssSelector('h2.result-statement'))->getText();
-		$this->assertContains('results for \'' . $str . '\'', $t);
+		$this->assertContains('for \'' . $str . '\'', $t);
 		$res = explode(' ', $t);
 		if ($res[0] == '0') {
 			// If no results shown throw error

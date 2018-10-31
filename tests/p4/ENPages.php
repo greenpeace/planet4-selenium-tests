@@ -13,7 +13,7 @@ class P4_ENPages extends P4_login {
 		// Find EN menu link
 		$this->webDriver->wait( 3 );
 		try {
-			$ENlink = $this->webDriver->findElement( WebDriverBy::linktext( 'EngagingNetworks' ) );
+			$ENlink = $this->webDriver->findElement( WebDriverBy::linktext( 'Check Engaging Networks' ) );
 		} catch( Exception $e ) {
 			$this->fail( '->Could not find menu link for Engaging Networks plugin page' );
 		}
