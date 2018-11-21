@@ -133,7 +133,7 @@ class P4_CampaignThumbnail extends P4_login {
 			$this->driver->findElement( WebDriverBy::className( 'thumbnail-largeview-container' ) );
 
 			$subtg = substr( ( $this->driver->findElement(
-				WebDriverBy::cssSelector( '.yellow-cta' ) )->getText() ), 1 );
+				WebDriverBy::cssSelector( '.top-page-tags a' ) )->getText() ), 1 );
 		} catch ( Exception $e ) {
 			$this->fail( $e->getMessage() );
 			$this->fail( '->Failed to see some content in front end page' );
