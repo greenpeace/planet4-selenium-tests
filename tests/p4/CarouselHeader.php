@@ -166,10 +166,11 @@ class P4_CarouselHeader extends P4_login {
 		//Edit WYSIWYG text to add image 2 and 3
 		$this->driver->findElement( WebDriverBy::id( "content-html" ) )->click();
 		$this->driver->findElement( WebDriverBy::id( "content" ) )->click();
-		$this->driver->getKeyboard()->pressKey( WebDriverKeys::ARROW_RIGHT );
-		$this->driver->getKeyboard()->pressKey( WebDriverKeys::BACKSPACE );
-		$this->driver->getKeyboard()->pressKey( WebDriverKeys::BACKSPACE );
-		$this->driver->getKeyboard()->sendKeys( "image_2=$img2 /]" );
+		$content_element = $this->driver->findElement( WebDriverBy::id( "content" ) );
+		$content = $content_element->getAttribute('value');
+		$content = str_replace("/]", " image_2=$img2/]", $content);
+		$content_element->clear();
+		$content_element->sendKeys($content);
 
 		//Publish content
 		$this->driver->findElement(
