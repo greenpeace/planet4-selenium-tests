@@ -205,41 +205,37 @@ class P4_CarouselHeader extends P4_login {
 		} catch ( Exception $e ) {
 		}
 		//Validate elements from first slide
-		try {
-			$this->driver->findElement( WebDriverBy::className( "carousel-header" ) );
-			//Get image source and remove format extension so that we can compare it to the thumbnail src
-			$tmp         = explode( "-", $this->driver->findElement(
-				WebDriverBy::cssSelector( '#carousel-wrapper-header .carousel-item.active img' ) )->getAttribute( 'src' ) );
-			$srcimg      = $tmp[1];
-			$tmp         = explode( "-", $this->driver->findElement(
-				WebDriverBy::cssSelector( '#carousel-wrapper-header .carousel-item:nth-child(2) img' ) )->getAttribute( 'src' ) );
-			$srcimg2     = $tmp[1];
-			$titl1_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header h2" ) )->getText();
-			$subtitl1_pg = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header h3" ) )->getText();
-			$desc1_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header p" ) )->getText();
-			$blink1_pg   = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header .action-button" ) )->getText();
-			$burl1_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header .action-button a" ) )->getAttribute( 'href' );
-			//Change to next slide
-			$this->driver->findElement(
-				WebDriverBy::className( "carousel-control-next-icon" ) )->click();
-			$titl2_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header h2" ) )->getText();
-			$subtitl2_pg = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header h3" ) )->getText();
-			$desc2_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header p" ) )->getText();
-			$blink2_pg   = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header .action-button" ) )->getText();
-			$burl2_pg    = $this->driver->findElement(
-				WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header .action-button a" ) )->getAttribute( 'href' );
-		} catch ( Exception $e ) {
-			$this->fail( "->Some of the content created is not displayed in front end page" );
-		}
+        $this->driver->findElement( WebDriverBy::className( "carousel-header" ) );
+        //Get image source and remove format extension so that we can compare it to the thumbnail src
+        $tmp         = explode( "-", $this->driver->findElement(
+            WebDriverBy::cssSelector( '#carousel-wrapper-header .carousel-item.active img' ) )->getAttribute( 'src' ) );
+        $srcimg      = $tmp[1];
+        $tmp         = explode( "-", $this->driver->findElement(
+            WebDriverBy::cssSelector( '#carousel-wrapper-header .carousel-item:nth-child(2) img' ) )->getAttribute( 'src' ) );
+        $srcimg2     = $tmp[1];
+        $titl1_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header h2" ) )->getText();
+        $subtitl1_pg = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header h3" ) )->getText();
+        $desc1_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header p" ) )->getText();
+        $blink1_pg   = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header .action-button" ) )->getText();
+        $burl1_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(1) .carousel-caption .main-header .action-button a" ) )->getAttribute( 'href' );
+        //Change to next slide
+        $this->driver->findElement(
+            WebDriverBy::className( "carousel-control-next-icon" ) )->click();
+        $titl2_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header h2" ) )->getText();
+        $subtitl2_pg = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header h3" ) )->getText();
+        $desc2_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header p" ) )->getText();
+        $blink2_pg   = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header .action-button" ) )->getText();
+        $burl2_pg    = $this->driver->findElement(
+            WebDriverBy::cssSelector( ".carousel-item:nth-child(2) .carousel-caption .main-header .action-button a" ) )->getAttribute( 'href' );
 
 		$this->assertEquals( "$titl1", "$titl1_pg" );
 		$this->assertEquals( "$subtitl1", "$subtitl1_pg" );
