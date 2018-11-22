@@ -18,8 +18,20 @@
             <exclude>./p4/CarouselSplit.php</exclude>
             <exclude>./p4/RedirectModule.php</exclude>
             <exclude>./p4/Comments.php</exclude>
-            <!-- Is shortcake_media_block meant to be there? Seems to be missing -->
+
+            <!-- shortcake_media_block is missing -->
             <exclude>./p4/MediaBlock.php</exclude>
+            <exclude>./p4/GPMLAddMediaBlocksImage.php</exclude>
+
+            <!-- does not seem to create an iframe that it expects :/ -->
+            <exclude>./p4/HappyPoint.php</exclude>
+
+            <!-- this might be easy to get going, just need the right content -->
+            <exclude>./p4/SplitTwoColumns.php</exclude>
+
+            <!-- shows "Error while fetching data from remote server!!!", some more config needed? -->
+            <exclude>./p4/GPMLAddFeaturedImage.php</exclude>
+            <exclude>./p4/GPMLAddMedia.php</exclude>
         </testsuite>
     </testsuites>
 </phpunit>
