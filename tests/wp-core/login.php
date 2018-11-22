@@ -46,7 +46,7 @@ class P4_login extends AbstractClass {
     $login->click();
 
     // Wait until user is logged in and sees the Dashboard title
-    $this->driver->wait(10, 1000)->until(WebDriverExpectedCondition::titleContains('Dashboard'));
+    $this->driver->wait(30, 1000)->until(WebDriverExpectedCondition::titleContains('Dashboard'));
   }
 
   public function wpLogout() {
