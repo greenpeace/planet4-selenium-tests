@@ -44,10 +44,9 @@ class P4_login extends AbstractClass {
     //Click on log in
     $login = $this->driver->findElement(WebDriverBy::id('wp-submit'));
     $login->click();
-    $this->driver->wait(3);
 
-    // Validates user is logged in by locating dashboard
-    $this->assertContains('Dashboard', $this->driver->getTitle());
+    // Wait until user is logged in and sees the Dashboard title
+    $this->driver->wait(10, 1000)->until(WebDriverExpectedCondition::titleContains('Dashboard'));
   }
 
   public function wpLogout() {
