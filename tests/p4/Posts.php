@@ -57,6 +57,7 @@ class P4_Posts extends P4_login {
 		try {
 			$this->driver->findElement( WebDriverBy::id( 'insert-media-button' ) )->click();
 			$this->driver->findElement( WebDriverBy::className( 'media-modal-content' ) );
+			$this->driver->findElement( WebDriverBy::linkText('Media Library') )->click();
 			$this->driver->findElement( WebDriverBy::id( 'media-attachment-filters' ) )->click();
 			$this->driver->findElement( WebDriverBy::cssSelector( 'option[value=\'image\']' ) )->click();
 			//Wait for media library to load
