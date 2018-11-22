@@ -43,6 +43,7 @@ class P4_Cartomap extends P4_login {
 		$this->driver->getKeyboard()->sendKeys( 'Test automated - Cartomap' );
 
 		// Insert map link in body field.
+		$this->driver->findElement( WebDriverBy::id( 'content-html' ) )->click();
 		$field = $this->driver->findElement(
 			WebDriverBy::id( 'content' ) );
 		$field->click();
