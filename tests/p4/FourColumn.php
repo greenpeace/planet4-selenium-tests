@@ -53,7 +53,7 @@ class P4_FourColumn extends P4_login {
 		try {
 			$this->driver->findElement( WebDriverBy::name( 'title' ) );
 			$this->driver->findElement( WebDriverBy::name( 'select_tag' ) );
-			$this->driver->findElement( WebDriverBy::name( 'p4_page_type_press_release' ) );
+			$this->driver->findElement( WebDriverBy::name( 'p4_page_type_press' ) );
 			$this->driver->findElement( WebDriverBy::name( 'p4_page_type_publication' ) );
 			$this->driver->findElement( WebDriverBy::name( 'p4_page_type_story' ) );
 		} catch ( Exception $e ) {
