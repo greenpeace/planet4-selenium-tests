@@ -12,7 +12,7 @@ class P4_googlelogin extends AbstractClass {
    * @var \RemoteWebDriver
    */
 
-  protected $webDriver;
+  protected $driver;
 
   public function setUp()
   {
@@ -27,51 +27,51 @@ class P4_googlelogin extends AbstractClass {
     $email = $_config['email'];
     $pass = $_config['email_password'];
     $u = $this->_url . "/wp-admin";
-    $this->webDriver->get($u);
+    $this->driver->get($u);
     //find login form
-    $this->webDriver->findElement(WebDriverBy::id('loginform'));
-    $this->webDriver->wait(3);
-    $form = $this->webDriver->findElement(WebDriverBy::className('galogin'));
+    $this->driver->findElement(WebDriverBy::id('loginform'));
+    $this->driver->wait(3);
+    $form = $this->driver->findElement(WebDriverBy::className('galogin'));
     $form->click();
-    $this->webDriver->wait(10, 1000)->until(
+    $this->driver->wait(10, 1000)->until(
       WebDriverExpectedCondition::titleIs('Sign in - Google Accounts'));
 
-    $heading = $this->webDriver->findElement(WebDriverBy::id('headingText'))->getText();
+    $heading = $this->driver->findElement(WebDriverBy::id('headingText'))->getText();
 
     if ($heading=="Sign in"){
       //Enter email
-      $usernamefield = $this->webDriver->findElement(WebDriverBy::id('identifierId'));
+      $usernamefield = $this->driver->findElement(WebDriverBy::id('identifierId'));
       $usernamefield->click();
-      $this->webDriver->getKeyboard()->sendKeys("$email");
+      $this->driver->getKeyboard()->sendKeys("$email");
       usleep(2000000);
       //Click on Next
-      $this->webDriver->findElement(WebDriverBy::id('identifierNext'))->click();
+      $this->driver->findElement(WebDriverBy::id('identifierNext'))->click();
       //Enter password
       usleep(2000000);
-      $passfield = $this->webDriver->findElement(WebDriverBy::id('password'));
+      $passfield = $this->driver->findElement(WebDriverBy::id('password'));
       $passfield->click();
-      $passfield = $this->webDriver->findElement(WebDriverBy::name('password'));
+      $passfield = $this->driver->findElement(WebDriverBy::name('password'));
       $passfield->click();
-      $this->webDriver->getKeyboard()->sendKeys("$pass");
+      $this->driver->getKeyboard()->sendKeys("$pass");
       //Click on Next
-      $this->webDriver->findElement(WebDriverBy::id('passwordNext'))->click();
+      $this->driver->findElement(WebDriverBy::id('passwordNext'))->click();
     }elseif($heading=="Choose an account"){
-      $acc = $this->webDriver->findElement(
+      $acc = $this->driver->findElement(
         WebDriverBy::cssSelector("p[data-email='".$email."']"));
       $acc->click();
     }
 
     usleep(3000000);
 
-    $this->assertContains('Dashboard', $this->webDriver->getTitle());
+    $this->assertContains('Dashboard', $this->driver->getTitle());
     echo "\n-> Google Login test PASSED";
   }
 
 
   protected function assertElementNotFound($by)
   {
-	$this->webDriver->takeScreenshot('reports/screenshots/'.__CLASS__.'.png');
-	$els = $this->webDriver->findElements($by);
+	$this->driver->takeScreenshot( 'reports/screenshots/' . __CLASS__ . '.png');
+	$els = $this->driver->findElements($by);
 	if (count($els)) {
 		$this->fail("Unexpectedly element was found");
 	}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="bootstrap.php">
+
+    <php>
+        <var name="CREATE_TEST_DATA" value="false" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Planet4">
+            <directory suffix=".php">p4</directory>
+            <exclude>./p4/ENPages.php</exclude>
+            <exclude>./p4/ActPage.php</exclude>
+            <exclude>./p4/ExplorePage.php</exclude>
+            <exclude>./p4/Homepage.php</exclude>
+            <exclude>./p4/Varnish.php</exclude>
+            <exclude>./p4/GoogleLogin.php</exclude>
+            <exclude>./p4/CarouselSplit.php</exclude>
+            <exclude>./p4/RedirectModule.php</exclude>
+            <exclude>./p4/Comments.php</exclude>
+        </testsuite>
+    </testsuites>
+</phpunit>

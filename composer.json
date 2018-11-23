@@ -5,6 +5,11 @@
   "require": {
     "phpunit/phpunit": "~6.5",
     "doctrine/instantiator": "~1.0.0",
-    "facebook/webdriver": "dev-master"
+    "facebook/webdriver": "^1.6"
+  },
+  "config": {
+    "platform": {
+      "php": "7.0.13"
+    }
   }
 }

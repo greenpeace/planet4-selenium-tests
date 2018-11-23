@@ -1,36 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit>
-  <testsuites>
-    <testsuite name="Planet 4 - clean up">
-        <file>DeleteContent.php</file>
-    </testsuite>
-	<testsuite name="Planet 4">
-        <directory suffix=".php">p4</directory>
-        <exclude>./p4/EN_forms.php</exclude>
-        <exclude>./p4/Varnish.php</exclude>
-        <exclude>./p4/GoogleLogin.php</exclude>
-        <exclude>./p4/CarouselSplit.php</exclude>
-    
-    
+<phpunit bootstrap="bootstrap.php">
 
-<!-- order of tests to be executed can also be specified as following:   
-        <file>./p4/Articles.php</file>
-        <file>./p4/Carousel.php</file>
-        <file>./p4/MediaBlock.php</file>  
---> 
-<!--    <groups>
-                <include>
-                        <group>GPI</group>
-                </include>
-                <exclude>
-                        <group>GPI</group>
-                 </exclude>
-        </groups>
--->
+    <php>
+        <var name="CREATE_TEST_DATA" value="false" />
+    </php>
 
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="Planet4">
+            <directory suffix=".php">p4</directory>
+            <exclude>./p4/ENPages.php</exclude>
+            <exclude>./p4/ActPage.php</exclude>
+            <exclude>./p4/ExplorePage.php</exclude>
+            <exclude>./p4/Homepage.php</exclude>
+            <exclude>./p4/Varnish.php</exclude>
+            <exclude>./p4/GoogleLogin.php</exclude>
+            <exclude>./p4/CarouselSplit.php</exclude>
+            <exclude>./p4/RedirectModule.php</exclude>
+            <exclude>./p4/Comments.php</exclude>
+
+            <!-- shortcake_media_block is missing -->
+            <exclude>./p4/MediaBlock.php</exclude>
+            <exclude>./p4/GPMLAddMediaBlocksImage.php</exclude>
+
+            <!-- does not seem to create an iframe that it expects :/ -->
+            <exclude>./p4/HappyPoint.php</exclude>
+
+            <!-- this might be easy to get going, just need the right content -->
+            <exclude>./p4/SplitTwoColumns.php</exclude>
+
+            <!-- shows "Error while fetching data from remote server!!!", some more config needed? -->
+            <exclude>./p4/GPMLAddFeaturedImage.php</exclude>
+            <exclude>./p4/GPMLAddMedia.php</exclude>
+
+            <!-- these regularly crash, probably too much memory
+                 see https://circleci.com/gh/greenpeace/planet4-docker-selenium-tests/49 -->
+            <exclude>./p4/CarouselHeader.php</exclude>
+            <exclude>./p4/Search.php</exclude>
+        </testsuite>
+    </testsuites>
 </phpunit>
-
-

@@ -1,11 +1,21 @@
 <?php
 
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverExpectedCondition;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeOutException;
+
 include 'P4_Functions.php';
 
 abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 
+	use P4_Functions;
+
 	const CONFIG_FILE             = './config/config.php';
-	const TIMEOUT_IN_SECOND       = 5;
+	const TIMEOUT_IN_SECOND       = 20;
 	const INTERVAL_IN_MILLISECOND = 250;
 
 	/** @var array */
@@ -19,7 +29,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	/** @var string */
 	protected $_url = '';
 	/** @var \RemoteWebDriver */
-	protected $webDriver;
+	protected $driver;
 
 	/**
 	 * AbstractClass constructor.
@@ -44,28 +54,44 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 		$capabilities = DesiredCapabilities::{self::$_config['browser']}();
 		if ( 'chrome' === self::$_config['browser'] ) {
 			$options = new ChromeOptions();
-			$options->addArguments( array( '--window-size=1366,996', ) );
+			$options->addArguments( array( '--window-size=1366,1200', ) );
 			$capabilities->setCapability( ChromeOptions::CAPABILITY, $options );
 		}
-		$driver = $this->webDriver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
+		$driver = $this->driver = RemoteWebDriver::create( self::$_config['host'], $capabilities );
 
 		self::$_driverInstances[] = $driver;
-		$this->_driver = $driver;
+		$this->_driver            = $driver;
 		$this->_driver->get( $this->_url );
 		self::$_handle = $this->_driver->getWindowHandle();
+
+		if ( isset($GLOBALS['CREATE_TEST_DATA']) && 'true' == $GLOBALS['CREATE_TEST_DATA'] ) {
+
+			$this->wpLogin();
+			$this->delete_content();
+			$data = $this->uploadMedia();
+			$this->createCategories();
+			$this->createTags();
+			$this->createCustomTaxonomyTerms();
+			$this->setPermalinks();
+			$this->setPlanet4Options();
+			$this->createPosts();
+			$this->wpLogout();
+			$GLOBALS['CREATE_TEST_DATA'] = false;
+		}
+		$this->_driver->get( $this->_url );
 	}
 
 	/**
-	 * Tears down the fixture, for example, close a network connection.
-	 * This method is called after a test is executed.
+	 * Cleanup after test execution.
 	 */
 	public function tearDown() {
 		if ( parent::hasFailed() ) {
-			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
+			$this->driver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
 		}
 		try {
-			$this->webDriver->quit();
-		} catch ( Exception $e ) {}
+			$this->driver->quit();
+		} catch ( Exception $e ) {
+		}
 	}
 
 	/**
@@ -74,7 +100,7 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * @return mixed
 	 */
 	public function getBaseUrl() {
-    	return self::$_config['url'];
+		return self::$_config['url'];
 	}
 
 	/**
@@ -83,9 +109,9 @@ abstract class AbstractClass extends PHPUnit\Framework\TestCase {
 	 * @param string $selector Selector for locating the element.
 	 */
 	protected function assertElementNotFound( $selector ) {
-		$elements = $this->webDriver->findElements( WebDriverBy::cssSelector( $selector ) );
+		$elements = $this->driver->findElements( WebDriverBy::cssSelector( $selector ) );
 		if ( count( $elements ) > 0 ) {
-			$this->webDriver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
+			$this->driver->takeScreenshot( 'reports/screenshots/' . get_called_class() . '.png' );
 			$this->fail( 'Unexpectedly element with selector "' . $selector . '" exists' );
 		} else {
 			$this->assertTrue( true );                  // Increment assertion counter.
